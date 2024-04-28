@@ -1,10 +1,10 @@
-import axios from './config/axios'
+import Router from "./router/Router"
 
 function App() {
 
   return (
     <>
-      <h1 className="text-red-300 text-6xl">CoolestShop</h1>
+      <Router />
     </>
   )
 }
