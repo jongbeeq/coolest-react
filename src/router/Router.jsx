@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Layout from '../layout/Layout'
 import Home from '../pages/Home'
+import Login from '../pages/Login'
 
 const router = createBrowserRouter([{
     path: '/',
@@ -8,7 +9,7 @@ const router = createBrowserRouter([{
         <Layout />
     ),
     children: [
-        { path: 'login', element: <h1>Login</h1> },
+        { path: 'login', element: <Login /> },
         { path: '', element: <Home /> },
         { path: 'product/:id', element: <h1>product by id</h1> },
         { path: 'product/:category', element: <h1>product by category</h1> },

@@ -13,6 +13,7 @@ export default {
         'primary-sub-base': "#fff7e961",
         'secondary-base': "#0a7661",
         'neutral-base': "black",
+        'neutral-sub-base': "#A3A3A3",
         'neutral-fade': "#e5e5e5",
         'neutral-cross': "white"
       },

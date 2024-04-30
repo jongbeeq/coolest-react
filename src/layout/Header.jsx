@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import HeaderButton from "../components/HeaderButton";
 import { LOGO_URL } from "../config/env";
 import { CartIcon, SearchIcon } from "../utils/Icons";
+import { defaultDuration, loginTerm } from "../config/foundation";
 
 export default function Header() {
 
@@ -11,19 +12,21 @@ export default function Header() {
                 <Link to="/">
                     <img className="min-w-20 max-w-20" src={LOGO_URL} alt="Coolest" />
                 </Link>
-                <b className=" hover:text-neutral-200 cursor-pointer">Category</b>
+                <b className={"hover:text-neutral-200 cursor-pointer" + defaultDuration}>Category</b>
             </div>
             <div className="flex items-center justify-center ">
-                <form className="flex items-center gap-2 outline outline-1 outline-red-800">
-                    <input type="text" />
-                    <SearchIcon />
+                <form className="flex items-center gap-2">
+                    <input className="rounded-md ring-transparent py-1 px-3 outline-none bg-primary-sub-base border border-1 border-neutral-base " type="text" />
+                    <button type="submit" className={" hover:text-neutral-fade" + defaultDuration}>
+                        <SearchIcon />
+                    </button>
                 </form>
             </div>
             <div className="flex items-center justify-end gap-7">
                 <HeaderButton to={"/cart"}>
                     <CartIcon />
                 </HeaderButton>
-                <HeaderButton to={"/login"} title={"Login"} />
+                <HeaderButton to={"/login"} title={loginTerm} />
             </div>
         </div>
     )
