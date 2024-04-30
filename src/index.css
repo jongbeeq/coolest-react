@@ -1,7 +1,17 @@
+/* 
+Noto Sans Thai, weight: 100-900
+Rubik, weight: 300-900
+Pacifico, weight: 400
+Archivo Black, weight: 400
+*/
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+Thai:wght@100..900&family=Pacifico&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
+    font-family:  "Noto Sans Thai" , "Rubik";
     background-color: #fff7e961
 }

@@ -5,12 +5,23 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    // colors: {
-    //   transparent: 'transparent',
-    //   current: 'currentColor',
-    //   // 'secondary': '#FAE9CB'
-    // },
-    extend: {},
+    extend: {
+      colors: {
+        'primary-header': '#FE5223',
+        'primary-base': '#F59E0C',
+        'primary-background': "#FFFBF5",
+        'primary-sub-base': "#fff7e961",
+        'secondary-base': "#0a7661",
+        'neutral-base': "black",
+        'neutral-fade': "#e5e5e5",
+        'neutral-cross': "white"
+      },
+      fontFamily: {
+        'base': ["Rubik", '"Noto Sans Thai"'],
+        'header': ['"Archivo Black"'],
+        'creative': ["Pacifico"]
+      }
+    },
   },
   plugins: [],
 }
