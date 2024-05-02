@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import axios from '../../config/axios'
 import { addAcessToken } from '../../utils/local-storage'
+import { setProgress } from './loadingSlice'
 
 const initialState = {
     error: null,
@@ -10,10 +11,30 @@ const initialState = {
 }
 
 export const registerAction = createAsyncThunk("auth/register",
-    async (registerData) => {
+    async (registerData, { dispatch, getState }) => {
         try {
+            // console.log(setLoading)
+            // console.log(previousLoading)
+            // console.log(getState())
+            // dispatch(setProgress(55))
+            // console.log('qweqwe')
+
+            const config = {
+                onUploadProgress: (progressEvent) => {
+                    console.log({ ...progressEvent })
+                    let progress = (progressEvent.loaded * 50) / progressEvent.total
+                    dispatch(setProgress(progress))
+                },
+                onDownloadProgress: (progressEvent) => {
+                    console.log({ ...progressEvent })
+                    let previousLoading = getState().loading
+                    console.log(previousLoading)
+                    let progress = (progressEvent.loaded * 50) / progressEvent.total
+                    dispatch(setProgress(previousLoading + progress))
+                }
+            }
             console.log('GGG EZ')
-            const res = await axios.post('/auth/register', registerData)
+            const res = await axios.post('/auth/register', registerData, config)
             console.log(res)
             console.log(res.headers.get('content-length'))
             const contentLength = res.headers.get('content-length')

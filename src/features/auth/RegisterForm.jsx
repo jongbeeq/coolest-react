@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 // import axios from "../../config/axios";
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { registerTerm, switchToLoginTerm } from "../../config/foundation";
 import InputRow from "./InputRow";
 import SubmitButton from "./SubmitButton";
 import SwitchModeButton from "./SwitchModeButton";
 import { registerAction } from "../../store/slice/authSlice";
+import { setProgress } from "../../store/slice/loadingSlice";
 
 
 export default function RegisterForm(props) {
@@ -16,6 +17,7 @@ export default function RegisterForm(props) {
     const [registerData, setRegisterData] = useState({})
     const [keepPassword, setKeepPassword] = useState(null)
     const dispatch = useDispatch()
+    const previousProgress = useSelector((state) => state.loading)
 
     const registerRows = [
         {
@@ -95,6 +97,9 @@ export default function RegisterForm(props) {
 
     const handleSubmitForm = data => {
         console.log(data)
+        // const setLoading = (progress) => console.log('dispatch(setProgress(progress))')
+        // console.log(setLoading)
+        // console.log(previousProgress)
         dispatch(registerAction(data))
     }
 
