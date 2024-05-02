@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 // import axios from "../../config/axios";
 import { useForm } from 'react-hook-form'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { registerTerm, switchToLoginTerm } from "../../config/foundation";
 import InputRow from "./InputRow";
@@ -16,7 +16,6 @@ export default function RegisterForm(props) {
     const [registerData, setRegisterData] = useState({})
     const [keepPassword, setKeepPassword] = useState(null)
     const dispatch = useDispatch()
-    const user = useSelector((state) => state.user.data)
 
     const registerRows = [
         {

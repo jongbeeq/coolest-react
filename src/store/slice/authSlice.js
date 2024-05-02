@@ -14,7 +14,15 @@ export const registerAction = createAsyncThunk("auth/register",
         try {
             console.log('GGG EZ')
             const res = await axios.post('/auth/register', registerData)
-            console.log(res)
+            // console.log(res)
+            // console.log(res.headers.get('content-length'))
+            // const contentLength = res.headers.get('content-length')
+            // const readableStream = newnew ReadableStream({
+            //     start(controller) {
+
+            //     }
+            // })
+            // console.log(readableStream)
             addAcessToken(res.data.accessToken)
             return res.data.user
         } catch (error) {
