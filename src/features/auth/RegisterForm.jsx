@@ -1,16 +1,22 @@
+import { useEffect, useState } from "react";
+// import axios from "../../config/axios";
+import { useForm } from 'react-hook-form'
+import { useSelector, useDispatch } from 'react-redux'
+
 import { registerTerm, switchToLoginTerm } from "../../config/foundation";
 import InputRow from "./InputRow";
 import SubmitButton from "./SubmitButton";
 import SwitchModeButton from "./SwitchModeButton";
-import { useEffect, useState } from "react";
-import axios from "../../config/axios";
-// import { registerSchema } from "../../validators/auth-validator";
-import { useForm } from 'react-hook-form'
+import { registerAction } from "../../store/slice/authSlice";
+
 
 export default function RegisterForm(props) {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const { clickSwitch } = props
     const [registerData, setRegisterData] = useState({})
+    const [keepPassword, setKeepPassword] = useState(null)
+    const dispatch = useDispatch()
+    const user = useSelector((state) => state.user.data)
 
     const registerRows = [
         {
@@ -28,25 +34,52 @@ export default function RegisterForm(props) {
         {
             name: "email", title: "Email",
             validateCondition: {
-                required: 'Email is required'
+                required: 'Email is required',
+                pattern: {
+                    value: /\S+@\S+\.+\S/,
+                    message: 'Email is invalid format'
+                }
             }
         },
         {
             name: "mobile", title: "Mobile",
             validateCondition: {
-                required: 'Mobile is required'
+                required: 'Mobile is required',
+                minLength: {
+                    value: 10,
+                    message: 'Mobile must have 10 digits'
+                },
+                maxLength: {
+                    value: 10,
+                    message: 'Mobile must have 10 digits'
+                },
+                pattern: {
+                    value: /[0-9]/,
+                    message: 'Mobile must be a number'
+                },
             }
         },
         {
             name: "password", title: "Password", type: "password",
             validateCondition: {
-                required: 'Password is required'
+                required: 'Password is required',
+                minLength: {
+                    value: 6,
+                    message: 'Password must be at least 6 digits'
+                },
+                pattern: {
+                    value: /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])[a-zA-Z0-9#?!@$%^&*-]/,
+                    message: 'Password is invalid format'
+                },
+                onChange: e => setKeepPassword(e.target.value)
             }
         },
         {
             name: "confirmPassword", title: "Confirm Password", type: "password",
             validateCondition: {
-                required: 'Confirm Password is required'
+                required: 'Confirm Password is required',
+                onChange: () => console.log(keepPassword),
+                validate: (confirmPassword) => confirmPassword === keepPassword || 'Confirm Password must same as Password'
             }
         },
         {
@@ -56,13 +89,14 @@ export default function RegisterForm(props) {
         },
     ]
 
+    useEffect(() => console.log(keepPassword), [keepPassword])
     useEffect(() => console.log(errors), [errors])
 
     const handleClickSwitch = () => clickSwitch(false)
 
     const handleSubmitForm = data => {
         console.log(data)
-        // axios.post('/auth/register', registerData).then(console.log()).catch(console.log())
+        dispatch(registerAction(data))
     }
 
     return (
