@@ -7,8 +7,8 @@ export default function Login() {
 
     return (
         <>
-            {/* {isRegistration ? <RegisterForm clickSwitch={setIsRegistration} /> : <LoginForm clickSwitch={setIsRegistration} />} */}
-            <RegisterForm clickSwitch={setIsRegistration} />
+            {isRegistration ? <RegisterForm clickSwitch={setIsRegistration} /> : <LoginForm clickSwitch={setIsRegistration} />}
+            {/* <RegisterForm clickSwitch={setIsRegistration} /> */}
         </>
     )
 }

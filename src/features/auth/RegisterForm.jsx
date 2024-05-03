@@ -99,7 +99,7 @@ export default function RegisterForm(props) {
         <div className="flex flex-col items-center gap-5">
             <h1 className="font-medium text-4xl">{registerTerm}</h1>
             <form className="flex flex-col gap-2" onSubmit={handleSubmit(handleSubmitForm)}>
-                {registerRows.map(row => <InputRow register={register} key={row.name} name={row.name} title={row.title} type={row.type} formData={registerData} setFormData={setRegisterData} validateCondition={row.validateCondition} error={errors[row.name]?.message} info={row.info} />)}
+                {registerRows.map(row => <InputRow register={register} key={row.name} name={row.name} title={row.title} type={row.type} validateCondition={row.validateCondition} error={errors[row.name]?.message} info={row.info} />)}
                 <SubmitButton title={registerTerm} />
             </form>
             <div onClick={handleClickSwitch}>
