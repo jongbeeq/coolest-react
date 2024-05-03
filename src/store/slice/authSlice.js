@@ -28,7 +28,10 @@ export const registerAction = createAsyncThunk("auth/register",
             addAcessToken(res.data.accessToken)
             return res.data.user
         } catch (error) {
-            throw error.response.data
+            throw dispatch(setError(error.response.data))
+            // console.log(error)
+            // console.log(error.response.data)
+            // throw error.response.data.message
         } finally {
             setTimeout(() => dispatch(setProgress(0)), 500)
         }
@@ -42,6 +45,9 @@ const authSlice = createSlice({
         logOut: (state) => {
             removeAccesToken()
             state.data = null
+        },
+        setError: (state, action) => {
+            state.error = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -58,12 +64,12 @@ const authSlice = createSlice({
             .addCase(registerAction.rejected, (state, action) => {
                 console.log(action)
                 state.loading = false
-                state.error = action.error.message
+                // state.error = action.error
             })
 
     }
 })
 
 
-export const { logOut } = authSlice.actions
+export const { logOut, setError } = authSlice.actions
 export default authSlice.reducer
