@@ -2,9 +2,15 @@ import { Link } from "react-router-dom";
 import HeaderButton from "../components/HeaderButton";
 import { LOGO_URL } from "../config/env";
 import { CartIcon, SearchIcon } from "../utils/Icons";
-import { defaultDuration, loginTerm } from "../config/foundation";
+import { defaultDuration, loginTerm, logoutTerm } from "../config/foundation";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../store/slice/authSlice";
 
 export default function Header() {
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user.data)
+
+    const handleLogOut = () => dispatch(logOut())
 
     return (
         <div className="grid grid-cols-3 bg-primary-base px-10 py-2 border-b-[0.5px] border-neutral-base fixed top-0 w-full shadow-md font-base text-sm font-light">
@@ -26,7 +32,13 @@ export default function Header() {
                 <HeaderButton to={"/cart"}>
                     <CartIcon />
                 </HeaderButton>
-                <HeaderButton to={"/login"} title={loginTerm} />
+
+                {user ?
+                    (<div onClick={handleLogOut}>
+                        <HeaderButton title={logoutTerm} />
+                    </div>)
+                    :
+                    <HeaderButton to={"/login"} title={loginTerm} />}
             </div>
         </div>
     )
