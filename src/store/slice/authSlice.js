@@ -54,6 +54,8 @@ export const registerAction = createAsyncThunk("auth/register",
         } catch (error) {
             console.log(error)
             throw error.response.data
+        } finally {
+            setTimeout(() => dispatch(setProgress(0)), 500)
         }
     }
 )

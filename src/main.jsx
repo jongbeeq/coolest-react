@@ -7,7 +7,6 @@ import Loading from './components/Loading.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    {/* <Loading /> */}
     <App />
   </Provider>
 )
