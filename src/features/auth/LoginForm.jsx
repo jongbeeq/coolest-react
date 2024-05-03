@@ -1,12 +1,16 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginTerm, switchToRegisterTerm } from "../../config/foundation";
 import InputRow from "./InputRow";
 import SubmitButton from "./SubmitButton";
 import SwitchModeButton from "./SwitchModeButton";
 import { useForm } from "react-hook-form";
+import { loginAction } from "../../store/slice/authSlice";
+import { useEffect } from "react";
+import { toast } from 'react-toastify'
 
 export default function LoginForm(props) {
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const userError = useSelector(state => state.user.error)
     const dispatch = useDispatch()
 
     const loginRows = [
@@ -32,7 +36,7 @@ export default function LoginForm(props) {
 
     const handleSubmitForm = data => {
         console.log(data)
-        // dispatch(registerAction(data))
+        dispatch(loginAction(data))
     }
 
     return (

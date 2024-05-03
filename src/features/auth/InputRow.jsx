@@ -1,8 +1,3 @@
-import { useState } from "react"
-import { defaultDuration } from "../../config/foundation"
-import { InfoIcon } from "../../utils/Icons"
-import { useEffect } from "react"
-import { useRef } from "react"
 import Info from "../../components/Info"
 
 export default function InputRow(props) {

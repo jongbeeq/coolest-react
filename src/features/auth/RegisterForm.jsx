@@ -12,7 +12,6 @@ import { registerAction } from "../../store/slice/authSlice";
 export default function RegisterForm(props) {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const { clickSwitch } = props
-    const [registerData, setRegisterData] = useState({})
     const [keepPassword, setKeepPassword] = useState(null)
     const dispatch = useDispatch()
 

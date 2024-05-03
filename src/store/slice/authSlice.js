@@ -29,9 +29,32 @@ export const registerAction = createAsyncThunk("auth/register",
             return res.data.user
         } catch (error) {
             throw dispatch(setError(error.response.data))
-            // console.log(error)
-            // console.log(error.response.data)
-            // throw error.response.data.message
+        } finally {
+            setTimeout(() => dispatch(setProgress(0)), 500)
+        }
+    }
+)
+
+export const loginAction = createAsyncThunk('auth/login',
+    async (loginData, { dispatch, getState }) => {
+        try {
+            const config = {
+                onUploadProgress: (progressEvent) => {
+                    let progress = (progressEvent.loaded * 50) / progressEvent.total
+                    dispatch(setProgress(progress))
+                },
+                onDownloadProgress: (progressEvent) => {
+                    let previousLoading = getState().loading
+                    let progress = (progressEvent.loaded * 50) / progressEvent.total
+                    dispatch(setProgress(previousLoading + progress))
+                }
+            }
+            const res = await axios.post('/auth/login', loginData, config)
+            addAcessToken(res.data.accessToken)
+            return res.data.user
+        } catch (error) {
+            console.log(error)
+            throw error.response.data.message
         } finally {
             setTimeout(() => dispatch(setProgress(0)), 500)
         }
@@ -64,7 +87,20 @@ const authSlice = createSlice({
             .addCase(registerAction.rejected, (state, action) => {
                 console.log(action)
                 state.loading = false
-                // state.error = action.error
+            })
+            .addCase(loginAction.pending, (state, action) => {
+                console.log(action)
+                state.loading = true
+            })
+            .addCase(loginAction.fulfilled, (state, action) => {
+                console.log(action)
+                state.loading = false
+                state.data = action.payload
+            })
+            .addCase(loginAction.rejected, (state, action) => {
+                console.log(action)
+                state.loading = false
+                state.error = action.error
             })
 
     }
