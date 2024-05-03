@@ -14,8 +14,10 @@ export default {
         'secondary-base': "#0a7661",
         'neutral-base': "black",
         'neutral-sub-base': "#A3A3A3",
+        'neutral-sub-fade': "#D4D4D4",
         'neutral-fade': "#e5e5e5",
-        'neutral-cross': "white"
+        'neutral-cross': "white",
+        'error-base': "#F24A44",
       },
       fontFamily: {
         'base': ["Rubik", '"Noto Sans Thai"'],

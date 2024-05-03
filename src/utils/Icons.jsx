@@ -22,6 +22,16 @@ export function SearchIcon({ className }) {
     )
 }
 
+export function InfoIcon({ className }) {
+    return (
+        <div className={className}>
+            <i className="fa-solid fa-circle-info"></i>
+        </div>
+    )
+}
+
+
+
 
 
 

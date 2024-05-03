@@ -8,7 +8,8 @@ export default function LoginForm(props) {
     const loginRows = [
         {
             name: "emailOrMobile", title: "Email or Mobile", validateCondition: {
-                required: 'Must be input email or mobile'
+                required: 'Must be input email or mobile',
+
             }
         },
         { name: "password", title: "Password", type: "password" },

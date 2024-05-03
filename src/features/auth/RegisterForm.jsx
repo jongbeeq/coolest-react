@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 
-import { registerTerm, switchToLoginTerm } from "../../config/foundation";
+import { infoPassword, registerTerm, switchToLoginTerm } from "../../config/foundation";
 import InputRow from "./InputRow";
 import SubmitButton from "./SubmitButton";
 import SwitchModeButton from "./SwitchModeButton";
@@ -70,7 +70,8 @@ export default function RegisterForm(props) {
                     message: 'Password is invalid format'
                 },
                 onChange: e => setKeepPassword(e.target.value)
-            }
+            },
+            info: infoPassword
         },
         {
             name: "confirmPassword", title: "Confirm Password", type: "password",
@@ -98,7 +99,7 @@ export default function RegisterForm(props) {
         <div className="flex flex-col items-center gap-5">
             <h1 className="font-medium text-4xl">{registerTerm}</h1>
             <form className="flex flex-col gap-2" onSubmit={handleSubmit(handleSubmitForm)}>
-                {registerRows.map(row => <InputRow register={register} key={row.name} name={row.name} title={row.title} type={row.type} formData={registerData} setFormData={setRegisterData} validateCondition={row.validateCondition} error={errors[row.name]?.message} />)}
+                {registerRows.map(row => <InputRow register={register} key={row.name} name={row.name} title={row.title} type={row.type} formData={registerData} setFormData={setRegisterData} validateCondition={row.validateCondition} error={errors[row.name]?.message} info={row.info} />)}
                 <SubmitButton title={registerTerm} />
             </form>
             <div onClick={handleClickSwitch}>
