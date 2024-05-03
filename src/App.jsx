@@ -9,7 +9,6 @@ function App() {
   return (
     <>
       <Loading progressLoading={loading} />
-      <ToastContainer position="bottom-center" />
       <Router />
     </>
   )
