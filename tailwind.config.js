@@ -23,6 +23,30 @@ export default {
         'base': ["Rubik", '"Noto Sans Thai"'],
         'header': ['"Archivo Black"'],
         'creative': ["Pacifico"]
+      },
+      keyframes: {
+        "appear": {
+          "from": {
+            opacity: '0',
+          },
+          "to": {
+            opacity: '100'
+          }
+        },
+        "progress": {
+          "from": {
+            width: '0%',
+            opacity: '0'
+
+          },
+          "to": {
+            width: '100%',
+            opacity: '100'
+          }
+        }
+      },
+      animation: {
+        'fade-in': 'appear 1s ease-in backwards',
       }
     },
   },
