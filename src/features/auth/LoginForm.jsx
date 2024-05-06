@@ -1,12 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginTerm, switchToRegisterTerm } from "../../config/foundation";
 import InputRow from "./InputRow";
 import SubmitButton from "./SubmitButton";
 import SwitchModeButton from "./SwitchModeButton";
 import { useForm } from "react-hook-form";
-import { loginAction, setError } from "../../store/slice/authSlice";
-import { useEffect } from "react";
-import { toast } from 'react-toastify'
+import { loginAction } from "../../store/slice/authSlice";
 
 export default function LoginForm(props) {
     const { register, handleSubmit, formState: { errors } } = useForm()

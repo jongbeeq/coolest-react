@@ -1,14 +1,18 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Loading from "./components/Loading"
 import Router from "./router/Router"
 import AlertBox from "./components/AlertBox"
 import { useEffect } from "react"
+import { getMeAction } from "./store/slice/authSlice"
 
 function App() {
   const loading = useSelector(state => state.loading)
   const errorMessage = useSelector(state => state.user.error?.message)
+  const dispatch = useDispatch()
 
-  useEffect(() => { }, [])
+  useEffect(() => {
+    dispatch(getMeAction())
+  }, [])
 
   return (
     <div className="flex flex-col gap-3">

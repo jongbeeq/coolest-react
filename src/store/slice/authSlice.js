@@ -50,6 +50,7 @@ export const loginAction = createAsyncThunk('auth/login',
                 }
             }
             const res = await axios.post('/auth/login', loginData, config)
+            console.log(res)
             addAcessToken(res.data.accessToken)
             return res.data.user
         } catch (error) {
@@ -60,6 +61,17 @@ export const loginAction = createAsyncThunk('auth/login',
         }
     }
 )
+
+export const getMeAction = createAsyncThunk('auth/getMe', async () => {
+    try {
+        const res = await axios.get('/auth')
+        console.log(res)
+        return res.data.user
+    } catch (error) {
+        console.log(error)
+        throw error.response.data.message
+    }
+})
 
 const authSlice = createSlice({
     name: 'user',
@@ -98,6 +110,20 @@ const authSlice = createSlice({
                 state.data = action.payload
             })
             .addCase(loginAction.rejected, (state, action) => {
+                console.log(action)
+                state.loading = false
+                state.error = action.error
+            })
+            .addCase(getMeAction.pending, (state, action) => {
+                console.log(action)
+                state.loading = true
+            })
+            .addCase(getMeAction.fulfilled, (state, action) => {
+                console.log(action)
+                state.loading = false
+                state.data = action.payload
+            })
+            .addCase(getMeAction.rejected, (state, action) => {
                 console.log(action)
                 state.loading = false
                 state.error = action.error
