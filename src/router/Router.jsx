@@ -3,6 +3,7 @@ import Layout from '../layout/Layout'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Authenticated from '../features/auth/Authenticated'
+import ProductById from '../pages/ProductById'
 
 const router = createBrowserRouter([{
     path: '/',
@@ -17,8 +18,8 @@ const router = createBrowserRouter([{
                 </Authenticated>
         },
         { path: '', element: <Home /> },
-        { path: 'product/:id', element: <h1>product by id</h1> },
-        { path: 'product/:category', element: <h1>product by category</h1> },
+        { path: 'product/:productId', element: <ProductById /> },
+        { path: 'product/:categoryId', element: <h1>product by category</h1> },
         { path: 'cart', element: <h1>cart</h1> },
         { path: 'profile', element: <h1>profile</h1> }
     ]

@@ -38,6 +38,26 @@ export function ProfileIcon({ className }) {
     )
 }
 
+export function PressDownIcon({ className }) {
+    return (
+        <div className={className}>
+            <i className="fa-solid fa-chevron-down"></i>
+        </div>
+    )
+}
+
+export function PressDUpIcon({ className }) {
+    return (
+        <div className={className}>
+            <i className="fa-solid fa-chevron-up"></i>
+        </div>
+    )
+}
+
+
+
+
+
 
 
 
