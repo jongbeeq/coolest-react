@@ -9,7 +9,7 @@ export default function AlertBox(props) {
     return (
         <div className="flex justify-center ">
             <div className={"relative rounded overflow-hidden animate-[appear_0.5s_ease-in_backwards] " + "bg-error-base text-neutral-cross text-xs shadow-md w-[320px]"}>
-                <div className={'pl-3 pr-4 py-2 flex items-center gap-2'}>
+                <div className={'pl-3 pr-4 py-2 flex items-center gap-2 '}>
                     <InfoIcon className={'top-[2.5px] text-[30px]'} />
                     {detail}
                 </div>

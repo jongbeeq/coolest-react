@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import HeaderButton from "../components/HeaderButton";
 import { LOGO_URL } from "../config/env";
-import { CartIcon, SearchIcon } from "../utils/Icons";
+import { CartIcon, ProfileIcon, SearchIcon } from "../utils/Icons";
 import { defaultDuration, loginTerm, logoutTerm } from "../config/foundation";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../store/slice/authSlice";
@@ -34,9 +34,16 @@ export default function Header() {
                 </HeaderButton>
 
                 {user ?
-                    (<div onClick={handleLogOut}>
-                        <HeaderButton title={logoutTerm} />
-                    </div>)
+                    (
+                        <>
+                            <HeaderButton to={'/profile'}>
+                                <ProfileIcon />
+                            </HeaderButton>
+                            <div onClick={handleLogOut}>
+                                <HeaderButton title={logoutTerm} />
+                            </div>
+                        </>
+                    )
                     :
                     <HeaderButton to={"/login"} title={loginTerm} />}
             </div>

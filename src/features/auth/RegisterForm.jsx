@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 
@@ -68,7 +68,10 @@ export default function RegisterForm(props) {
                     value: /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])[a-zA-Z0-9#?!@$%^&*-]/,
                     message: 'Password is invalid format'
                 },
-                onChange: e => setKeepPassword(e.target.value)
+                onChange: value => {
+                    console.log(value)
+                    setKeepPassword(value)
+                }
             },
             info: infoPassword
         },
@@ -76,7 +79,6 @@ export default function RegisterForm(props) {
             name: "confirmPassword", title: "Confirm Password", type: "password",
             validateCondition: {
                 required: 'Confirm Password is required',
-                onChange: () => console.log(keepPassword),
                 validate: (confirmPassword) => confirmPassword === keepPassword || 'Confirm Password must same as Password'
             }
         },
@@ -93,6 +95,10 @@ export default function RegisterForm(props) {
         console.log(data)
         dispatch(registerAction(data))
     }
+
+    useEffect(() => {
+        console.log(keepPassword)
+    }, [keepPassword])
 
     return (
         <div className="flex flex-col items-center gap-5">

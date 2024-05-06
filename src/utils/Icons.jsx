@@ -30,6 +30,16 @@ export function InfoIcon({ className }) {
     )
 }
 
+export function ProfileIcon({ className }) {
+    return (
+        <div className={className}>
+            <i className="fa-solid fa-user"></i>
+        </div>
+    )
+}
+
+
+
 
 
 

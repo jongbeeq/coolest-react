@@ -9,11 +9,8 @@ import { useEffect } from "react";
 import { toast } from 'react-toastify'
 
 export default function LoginForm(props) {
-    const { register, handleSubmit, formState: { errors, touchedFields } } = useForm()
-    const userError = useSelector(state => state.user.error)
+    const { register, handleSubmit, formState: { errors } } = useForm()
     const dispatch = useDispatch()
-
-    useEffect(() => { console.log(touchedFields) }, [touchedFields])
 
     const loginRows = [
         {
@@ -41,9 +38,6 @@ export default function LoginForm(props) {
         dispatch(loginAction(data))
     }
 
-    useEffect(() => {
-        return () => dispatch(setError())
-    }, [])
     return (
         <div className="flex flex-col items-center gap-5">
             <h1 className="font-medium text-4xl">{loginTerm}</h1>
