@@ -43,7 +43,7 @@ export default {
             width: '100%',
             opacity: '100'
           }
-        }
+        },
       },
       animation: {
         'fade-in': 'appear 1s ease-in backwards',

@@ -12,14 +12,20 @@ export default function ImageSlideButton() {
         slideUp()
     }
 
+    const Button = ({ handleClick, children }) => (
+        <div onClick={handleClick} className="w-full h-[49%] text-xs bg-neutral-fade flex justify-center items-center hover:bg-neutral-sub-fade cursor-pointer">
+            {children}
+        </div>
+    )
+
     return (
         <div className={" aspect-square flex flex-col justify-between items-center"}>
-            <div onClick={handleClickPageUp} className="w-full h-[49%] bg-neutral-fade flex justify-center items-center">
+            <Button handleClick={handleClickPageUp}>
                 <PressDUpIcon />
-            </div>
-            <div onClick={handleClickPageDown} className="w-full h-[49%] bg-neutral-fade flex justify-center items-center">
+            </Button>
+            <Button handleClick={handleClickPageDown}>
                 <PressDownIcon />
-            </div>
+            </Button>
         </div>
     )
 }
