@@ -4,6 +4,7 @@ import Router from "./router/Router"
 import AlertBox from "./components/AlertBox"
 import { useEffect } from "react"
 import { getMeAction } from "./store/slice/authSlice"
+import { getAccesToken } from "./utils/local-storage"
 
 function App() {
   const loading = useSelector(state => state.loading)
@@ -11,7 +12,9 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getMeAction())
+    if (getAccesToken()) {
+      dispatch(getMeAction())
+    }
   }, [])
 
   return (
