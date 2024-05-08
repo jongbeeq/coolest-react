@@ -1,26 +1,8 @@
-import { useState } from "react"
 import SubmitButton from "../../components/SubmitButton"
 import useProductDetail from "../../hooks/use-productDetail"
 
 export default function ProductAction() {
-    const { TextTitle, selectedOption } = useProductDetail()
-
-    const [quantity, setQuantity] = useState(1)
-
-    const isMaxQuantity = quantity >= selectedOption.balance
-    const isMinQuantity = quantity <= 1
-
-    const increaseQuantity = () => {
-        if (!isMaxQuantity) {
-            setQuantity((state) => state + 1)
-        }
-    }
-
-    const decreaseQuantity = () => {
-        if (!isMinQuantity) {
-            setQuantity((state) => state - 1)
-        }
-    }
+    const { TextTitle, selectedOption, quantity, isMaxQuantity, isMinQuantity, increaseQuantity, decreaseQuantity } = useProductDetail()
 
     const disbleQuantityStyle = (condition) => {
         const style = condition ? " " + "border-neutral-fade text-neutral-fade" : " " + "border-neutral-base text-neutral-base hover:bg-neutral-fade cursor-pointer"

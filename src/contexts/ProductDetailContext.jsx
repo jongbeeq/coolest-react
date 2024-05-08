@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useState } from "react"
 
 
 export const ProductDetailContext = createContext()
@@ -30,9 +30,27 @@ export default function ProductDetailProvider({ children }) {
         setSelectedOption({ ...selectedOption, ...newSelected })
     }
 
-    useEffect(() => console.log(selectedOption), [selectedOption])
+    const [quantity, setQuantity] = useState(1)
+    const isMaxQuantity = quantity >= selectedOption.balance
+    const isMinQuantity = quantity <= 1
 
-    const value = { TextTitle, QuntityButton, selectedOption, setSelectedOption, optionArrays, changeOption }
+    const increaseQuantity = () => {
+        if (!isMaxQuantity) {
+            setQuantity((state) => state + 1)
+        }
+    }
+
+    const decreaseQuantity = () => {
+        if (!isMinQuantity) {
+            setQuantity((state) => state - 1)
+        }
+    }
+
+    const resetQuantity = () => {
+        setQuantity(1)
+    }
+
+    const value = { TextTitle, QuntityButton, selectedOption, setSelectedOption, optionArrays, changeOption, quantity, increaseQuantity, decreaseQuantity, resetQuantity, isMaxQuantity, isMinQuantity }
     return (
         <ProductDetailContext.Provider value={value}>
             {children}

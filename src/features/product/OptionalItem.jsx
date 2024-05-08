@@ -4,12 +4,13 @@ import useSlideImage from "../../hooks/use-slideImage"
 export default function OptionalItem(props) {
     const { optionProps, src, title, id } = props
 
-    const { changeOption, selectedOption } = useProductDetail()
+    const { changeOption, selectedOption, resetQuantity } = useProductDetail()
     const { switchShowImage } = useSlideImage()
 
     const handleClick = () => {
         changeOption(optionProps)
         switchShowImage((state) => { return { ...state, id: id, src: src } })
+        resetQuantity()
     }
 
     const isSelected = (selectedOption.id === id) ? ' ' + 'border-neutral-base' : ' ' + 'border-neutral-sub-fade'
