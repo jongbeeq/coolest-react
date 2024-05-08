@@ -5,10 +5,10 @@ import ProductDetailProvider from "../contexts/ProductDetailContext"
 export default function ProductById() {
 
     return (
-        <SlideImageContextProvider>
-            <ProductDetailProvider>
+        <ProductDetailProvider>
+            <SlideImageContextProvider>
                 <ProductContainer />
-            </ProductDetailProvider>
-        </SlideImageContextProvider>
+            </SlideImageContextProvider>
+        </ProductDetailProvider>
     )
 }

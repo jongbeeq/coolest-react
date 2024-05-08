@@ -1,4 +1,4 @@
-import { createContext } from "react"
+import { createContext, useEffect, useState } from "react"
 
 
 export const ProductDetailContext = createContext()
@@ -6,18 +6,15 @@ export const ProductDetailContext = createContext()
 export default function ProductDetailProvider({ children }) {
     const optionArrays = [
         {
-            type: 'amount', items: [
-                { title: 'Single Box', src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_782473__1200x1200.jpg" },
-                { title: 'Set Box', src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_776692__1200x1200.jpg" },
-                { title: 'Set Box', src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_776692__1200x1200.jpg" },
-                { title: 'Set Box', src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_776692__1200x1200.jpg" },
-                { title: 'Set Box', src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_776692__1200x1200.jpg" },
-                { title: 'Set Box', src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_776692__1200x1200.jpg" },
-                { title: 'Set Box', src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_776692__1200x1200.jpg" },
-                { title: 'Set Box', src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_776692__1200x1200.jpg" },
+            type: 'amount',
+            items: [
+                { id: 9, title: 'Single Box', src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_782473__1200x1200.jpg", price: 350, balance: 66 },
+                { id: 10, title: 'Set Box', src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_776692__1200x1200.jpg", price: 3000, balance: 324 },
             ]
         },
     ]
+
+    const [selectedOption, setSelectedOption] = useState({})
 
     const TextTitle = (props) => {
         const { title } = props
@@ -29,7 +26,13 @@ export default function ProductDetailProvider({ children }) {
         return <button type='button' className="w-[6%] flex items-center justify-center text-xs font-bold bg-neutral-cross border border-1 border-neutral-base text-neutral-base aspect-square hover:bg-neutral-fade">{title}</button>
     }
 
-    const value = { TextTitle, QuntityButton, optionArrays }
+    const changeOption = (newSelected) => {
+        setSelectedOption({ ...selectedOption, ...newSelected })
+    }
+
+    useEffect(() => console.log(selectedOption), [selectedOption])
+
+    const value = { TextTitle, QuntityButton, selectedOption, setSelectedOption, optionArrays, changeOption }
     return (
         <ProductDetailContext.Provider value={value}>
             {children}

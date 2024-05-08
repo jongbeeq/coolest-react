@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useProductDetail from "../../hooks/use-productDetail"
 import { PressDownIcon } from "../../utils/Icons"
 
@@ -11,8 +11,10 @@ export default function InfoDescription() {
         setOpen(!open)
     }
 
-    const hideDescription = open && ' hidden'
-    const dropdownRight = open && ' -rotate-90'
+    useEffect(() => console.log(open), [open])
+
+    const hideDescription = !open && ' hidden'
+    const dropdownRight = !open && ' -rotate-90'
 
     return (
         <div className="flex flex-col gap-2">

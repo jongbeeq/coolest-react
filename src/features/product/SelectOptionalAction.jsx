@@ -8,7 +8,7 @@ export default function SelectOptionalAction(props) {
         <div className="flex items-center justify-center ">
             <TextTitle title={type} />
             <div className='flex flex-wrap content-start px-2 gap-y-1 gap-x-[1%] w-full '>
-                {items.map((option, index) => <OptionalItem key={index} title={option.title} src={option.src} />)}
+                {items.map((option, index) => <OptionalItem key={index} optionProps={option} id={option.id} title={option.title} src={option.src} />)}
             </div>
         </div>
     )
