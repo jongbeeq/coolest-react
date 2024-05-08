@@ -5,12 +5,12 @@ import ImageSlideButton from "./ImageSlideButton";
 export default function SlideImage() {
     const { imageArrays, slidePage } = useSlideImage()
 
-    const positonPage = ` bottom-[${slidePage * 80}%]`
+    const positonPage = `${slidePage * 80}%`
 
     return (
         <>
             <div className="overflow-hidden h-[84%]">
-                <div className={`flex flex-col justify-between relative` + positonPage}>
+                <div style={{ bottom: positonPage }} className={`flex flex-col justify-between relative`}>
                     {imageArrays.map((src, index) => <IconImage key={index} src={src} />)}
                 </div>
             </div>

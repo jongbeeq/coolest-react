@@ -10,10 +10,10 @@ export default function ProductAction() {
                 <QuntityButton title='+' />
                 <p className="font-bold">1</p>
                 <QuntityButton title='-' />
-                <p className="text-neutral-sub-base">balance 10</p>
+                <p className="text-neutral-base">balance 10</p>
             </div>
-            <div className="text-[10px]">
-                <SubmitButton title='ADD TO CART' />
+            <div className="text-[10px] ">
+                <SubmitButton className=' w-[40%]' title='ADD TO CART' />
             </div>
         </div>
     )

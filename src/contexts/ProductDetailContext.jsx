@@ -26,7 +26,7 @@ export default function ProductDetailProvider({ children }) {
 
     const QuntityButton = (props) => {
         const { title } = props
-        return <button type='button' className="w-[6%] text-xs font-bold bg-neutral-cross border border-1 border-neutral-base text-neutral-base px-2 aspect-square hover:bg-neutral-fade">{title}</button>
+        return <button type='button' className="w-[6%] flex items-center justify-center text-xs font-bold bg-neutral-cross border border-1 border-neutral-base text-neutral-base aspect-square hover:bg-neutral-fade">{title}</button>
     }
 
     const value = { TextTitle, QuntityButton, optionArrays }

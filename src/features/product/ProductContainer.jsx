@@ -8,7 +8,7 @@ export default function ProductContainer() {
             <div className="flex-grow gap-1 flex min-w-[300px] max-w-[50%] h-full relative">
                 <ProductImageSection />
             </div>
-            <div className="flex-grow min-w-[300px] max-w-[40%] max-h-[870px] flex flex-col bg-neutral-cross shadow-md">
+            <div className="flex-grow min-w-[300px] max-w-[40%] min-h-[482px] h-full flex flex-col bg-neutral-cross shadow-md">
                 <ProductDetailSection />
             </div>
         </div>
