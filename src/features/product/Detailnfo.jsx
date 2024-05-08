@@ -12,6 +12,12 @@ export default function Detailnfo() {
                     <span className='text-[12px] font-semibold italic cursor-pointer hover:text-neutral-sub-base'>Toy</span>
                 </div>
             </div>
+            <div className="flex items-baseline py-[2%] border-b-[1px] border-neutral-fade">
+                <TextTitle title="Price Range:" />
+                <div className='flex gap-[2%] px-[2%] items-center w-[60%] overflow-hidden'>
+                    <span className='text-[12px] font-semibold italic'>&#3647; 450.00 - 650.00</span>
+                </div>
+            </div>
             <div className="py-[2%] border-b-[1px] border-neutral-fade">
                 <InfoDescription />
             </div>
