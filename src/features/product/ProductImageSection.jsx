@@ -4,12 +4,14 @@ import SlideImage from "./SlideImage"
 export default function ProductImageSection() {
     const { showImage } = useSlideImage()
 
+    console.log(showImage)
+
     return (
         <>
             <div className="flex flex-col justify-between w-[13%] h-full overflow-hidden absolute">
                 <SlideImage />
             </div>
-            <img className="w-[85%] ml-[14.5%] aspect-square object-cover" src={showImage}></img>
+            <img className="w-[85%] ml-[14.5%] aspect-square object-cover" src={showImage.src}></img>
         </>
     )
 }

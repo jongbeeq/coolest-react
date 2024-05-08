@@ -9,7 +9,7 @@ export default function OptionalItem(props) {
 
     const handleClick = () => {
         changeOption(optionProps)
-        switchShowImage(src)
+        switchShowImage((state) => { return { ...state, id: id, src: src } })
     }
 
     const isSelected = (selectedOption.id === id) ? ' ' + 'border-neutral-base' : ' ' + 'border-neutral-sub-fade'

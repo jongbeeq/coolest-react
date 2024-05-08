@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import SubmitButton from "../../components/SubmitButton"
 import useProductDetail from "../../hooks/use-productDetail"
 

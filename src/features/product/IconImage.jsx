@@ -1,13 +1,16 @@
 import useSlideImage from "../../hooks/use-slideImage"
 
 export default function IconImage(props) {
-    const { src } = props
-    const { switchShowImage } = useSlideImage()
+    const { image } = props
+    const { switchShowImage, showImage } = useSlideImage()
 
     const handleClickImage = () => {
-        switchShowImage(src)
+        switchShowImage({ ...image })
     }
+
+    const isShowImage = (image.id === showImage.id) && " " + "border-primary-header"
+
     return (
-        <img onClick={handleClickImage} className="aspect-square mb-[10.5%] object-cover cursor-pointer hover:border border-1 border-primary-header" src={src}></img>
+        <img onClick={handleClickImage} className={"aspect-square mb-[10.5%] object-cover cursor-pointer border border-1" + isShowImage} src={image.src}></img>
     )
 }
