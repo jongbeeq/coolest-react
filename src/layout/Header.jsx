@@ -13,7 +13,7 @@ export default function Header() {
     const handleLogOut = () => dispatch(logOut())
 
     return (
-        <div className="grid grid-cols-3 bg-primary-base px-10 py-2 border-b-[0.5px] border-neutral-base fixed top-0 w-full shadow-md font-base text-sm font-light">
+        <div className="z-50 grid grid-cols-3 bg-primary-base px-10 py-2 border-b-[0.5px] border-neutral-base fixed top-0 w-full shadow-md font-base text-sm font-light">
             <div className="flex items-center gap-7 ">
                 <Link to="/">
                     <img className="min-w-20 max-w-20" src={LOGO_URL} alt="Coolest" />

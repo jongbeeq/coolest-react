@@ -4,7 +4,7 @@ export default function Layout() {
     return (
         <>
             <Header />
-            <main className='mt-[100px] w-[80%] m-auto'>
+            <main className='my-[100px] w-[80%] m-auto'>
                 <Outlet />
             </main>
         </>

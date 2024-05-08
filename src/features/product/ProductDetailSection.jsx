@@ -1,15 +1,14 @@
-import { useParams } from "react-router-dom"
+import DetailAction from "./DetailAction"
+import Detailnfo from "./Detailnfo"
 
 export default function ProductDetailSection() {
-    const { productId } = useParams()
     return (
-        <div className="flex flex-col justify-between w-full h-full">
-            <div className="w-full h-[46%] bg-orange-400">
-                Main
-                Product {productId}
+        <div className="p-[2%] ">
+            <div className='h-[37vh]'>
+                <DetailAction />
             </div>
-            <div className="w-full h-[46%] bg-orange-400">
-                Detail
+            <div className='overflow-hidden h-[27vh]'>
+                <Detailnfo />
             </div>
         </div>
     )
