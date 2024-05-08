@@ -4,7 +4,7 @@ import Detailnfo from "./Detailnfo"
 export default function ProductDetailSection() {
     return (
         <div className="p-[2%] ">
-            <div className='h-[37vh]'>
+            <div className='min-h-[37vh]'>
                 <DetailAction />
             </div>
             <div className='overflow-hidden h-[27vh]'>

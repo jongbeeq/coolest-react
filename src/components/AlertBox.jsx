@@ -4,7 +4,6 @@ import { InfoIcon } from "../utils/Icons"
 
 export default function AlertBox(props) {
     const { detail, classname } = props
-    // const [error, setError] = useState()
 
     return (
         <div className="flex justify-center ">

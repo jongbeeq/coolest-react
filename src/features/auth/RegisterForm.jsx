@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 
 import { infoPassword, registerTerm, switchToLoginTerm } from "../../config/foundation";
 import InputRow from "./InputRow";
-import SubmitButton from "./SubmitButton";
+import SubmitButton from "../../components/SubmitButton";
 import SwitchModeButton from "./SwitchModeButton";
 import { registerAction } from "../../store/slice/authSlice";
 
