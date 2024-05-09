@@ -7,16 +7,29 @@ export default function SlideImage() {
 
     const positonPage = `${slidePage * 80}%`
 
-    console.log(totalPage)
+    const CountPage = (props) => {
+        const { page } = props
+        const isSelected = page === slidePage
+        const selectedPageStyle = (isSelected) ? "bg-neutral-sub-fade w-full" : "bg-neutral-sub-base w-[65%]"
+        const defaultStyle = "aspect-square rounded-full"
+        const pageStyle = defaultStyle + " " + selectedPageStyle
+        return <div className={pageStyle}></div>
+    }
+
+    const TotalCountPages = () => {
+        let TotalCountPagesComponent = []
+        for (let i = 0; i < totalPage; i++) {
+            TotalCountPagesComponent[i] = <CountPage page={i} />
+        }
+        return TotalCountPagesComponent
+    }
 
     return (
         <>
-            {/* <div className="absolute bg-red-300 left-5 w-full h-[58%] gap-[1%] flex flex-col justify-center items-center">
-                <div className="bg-neutral-sub-base w-[25%] aspect-square rounded-full opacity-85"></div>
-                <div className="bg-neutral-fade w-[15%] aspect-square rounded-full opacity-85"></div>
-                <div className="bg-neutral-fade w-[15%] aspect-square rounded-full opacity-85"></div>
-            </div> */}
-            <div className="overflow-hidden h-[84%]">
+            <div className="absolute left-[-15%] h-[83%] z-40  w-[10px] gap-[1%] flex flex-col justify-center items-center">
+                <TotalCountPages />
+            </div>
+            <div className="overflow-hidden h-[84%] relative">
                 <div style={{ bottom: positonPage }} className={`flex flex-col justify-between relative`}>
                     {imageArrays.map((image) => <IconImage key={image.id} image={image} />)}
                 </div>
