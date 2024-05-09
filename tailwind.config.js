@@ -11,7 +11,7 @@ export default {
         'primary-base': '#F59E0C',
         'primary-background': "#FFFBF5",
         'primary-sub-base': "#fff7e961",
-        'secondary-base': "#0a7661",
+        'secondary-base': "#F471B5",
         'neutral-base': "black",
         'neutral-sub-base': "#A3A3A3",
         'neutral-sub-fade': "#D4D4D4",

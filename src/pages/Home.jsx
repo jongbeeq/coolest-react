@@ -2,13 +2,24 @@ import ProductCard from "../features/product/ProductCard";
 
 export default function Home() {
 
+    const allProduct = [
+        {
+            id: 1, title: "Minion King of Cool", description: "minion model height 10cm Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, possimus voluptas earum vero dolor animi quidem maxime explicabo magni temporibus magnam pariatur quas!", balance: 27, maxPrice: 3280, minPrice: 350, images: [{ id: 1, src: "https://prod-eurasian-res.popmart.com/default/20231228_175528_391965__1200x1200.jpg?x-oss-process=image/resize,p_40,format,webp,format,webp" }], categorys: [{
+                id: 1, title: 'toy',
+            }]
+        },
+        {
+            id: 2, title: "Labubu Durian Gold Pillow", description: "minion model height 10cm Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, possimus voluptas earum vero dolor animi quidem maxime explicabo magni temporibus magnam pariatur quas!", balance: 27, maxPrice: 3280, minPrice: 350, images: [{ id: 1, src: "https://prod-eurasian-res.popmart.com/default/20231215_094230_101577__1200x1200.jpg" }], categorys: [{
+                id: 1, title: 'toy',
+            }]
+        },
+    ]
+
+
     return (
         <main>
-            <section className="grid grid-cols-4 ">
-                <ProductCard title={"Minion King of Cool"} image={"https://prod-eurasian-res.popmart.com/default/20231228_175528_391965__1200x1200.jpg?x-oss-process=image/resize,p_40,format,webp,format,webp"} price={350} />
-                <ProductCard title={"Po and Laura Funny Teletubbie"} image={"https://prod-eurasian-res.popmart.com/default/20240428_100718_402960__1200x1200.jpg?x-oss-process=image/resize,p_40,format,webp,format,webp"} price={450} />
-                <ProductCard title={"Labubu Durian Gold Pillow"} image={"https://scontent.fbkk5-4.fna.fbcdn.net/v/t39.30808-6/440378078_3734862780089082_5857508038075454752_n.jpg?stp=cp6_dst-jpg&_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=7OZHz5fpiTAQ7kNvgHNgCom&_nc_ht=scontent.fbkk5-4.fna&oh=00_AfCRwNbrel8I0hJ39DYR6xnRz_FwMWlHdRfbUY4i98JCSg&oe=6635A676"} price={300} />
-                <ProductCard title={"Faiz Gear"} image={"https://fg.lnwfile.com/_/fg/_raw/zi/m0/th.jpg"} price={290} />
+            <section className="grid grid-cols-4 gap-y-[2%] gap-x-[2%]">
+                {allProduct.map((product) => <ProductCard key={product.id} product={product} />)}
             </section>
         </main >
     )
