@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 
 
 export const ProductDetailContext = createContext()
@@ -15,6 +15,10 @@ export default function ProductDetailProvider({ children }) {
     ]
 
     const [selectedOption, setSelectedOption] = useState({})
+
+    useEffect(() => {
+        setSelectedOption({ ...optionArrays[0].items[0] })
+    }, [])
 
     const TextTitle = (props) => {
         const { title } = props
