@@ -19,7 +19,7 @@ export default function SlideImage() {
     const TotalCountPages = () => {
         let TotalCountPagesComponent = []
         for (let i = 0; i < totalPage; i++) {
-            TotalCountPagesComponent[i] = <CountPage page={i} />
+            TotalCountPagesComponent[i] = <CountPage key={i} page={i} />
         }
         return TotalCountPagesComponent
     }

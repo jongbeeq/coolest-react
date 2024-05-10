@@ -3,13 +3,13 @@ import { AddToCartIcon } from "../../utils/Icons"
 import { Link } from 'react-router-dom'
 
 function ProductCard(props) {
-    const { title, maxPrice, minPrice, description, balance, categorys } = props.product
+    const { id, title, maxPrice, minPrice, description, balance, categorys } = props.product
     const { src } = props.product.images[0]
 
     const priceRange = minPrice.toLocaleString() + (maxPrice && " - " + maxPrice.toLocaleString())
 
     return (
-        <Link to='/product/1'>
+        <Link to={`/product/${id}`} >
             <div className="w-full shadow-md bg-neutral-cross hover:outline outline-[1px] outline-neutral-sub-fade cursor-pointer rounded-md overflow-hidden flex flex-col gap-[0.5vw]">
                 <img className="w-full aspect-square object-cover" src={src}></img>
                 <div className="w-full flex flex-col justify-center gap-[0.5vw] p-[5%]">
@@ -33,7 +33,7 @@ function ProductCard(props) {
                     </div>
                 </div>
             </div>
-        </Link>
+        </Link >
     )
 }
 
