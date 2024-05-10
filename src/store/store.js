@@ -4,7 +4,7 @@ import loadingSlice from './slice/loadingSlice'
 
 const store = configureStore({
     reducer: {
-        user: authSlice,
+        account: authSlice,
         loading: loadingSlice,
     }
 })

@@ -8,7 +8,7 @@ import { getAccesToken } from "./utils/local-storage"
 
 function App() {
   const loading = useSelector(state => state.loading)
-  const errorMessage = useSelector(state => state.user.error?.message)
+  const errorMessage = useSelector(state => state.account.error?.message)
   const dispatch = useDispatch()
 
   useEffect(() => {

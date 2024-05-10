@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import Authenticateadmin from "../features/auth/Authenticateadmin";
+import AuthenticatedAdmin from "../features/auth/AuthenticatedAdmin";
 
 export default function AdminLayout() {
     return (
-        <Authenticateadmin>
+        <AuthenticatedAdmin>
             <Outlet />
-        </Authenticateadmin>
+        </AuthenticatedAdmin>
     )
 }

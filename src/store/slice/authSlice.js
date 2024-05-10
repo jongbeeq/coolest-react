@@ -52,7 +52,7 @@ export const loginAction = createAsyncThunk('auth/login',
             const res = await axios.post('/auth/login', loginData, config)
             console.log(res)
             addAcessToken(res.data.accessToken)
-            return res.data.user
+            return res.data.account
         } catch (error) {
             console.log(error)
             throw error.response.data.message
@@ -66,7 +66,7 @@ export const getMeAction = createAsyncThunk('auth/getMe', async () => {
     try {
         const res = await axios.get('/auth')
         console.log(res)
-        return res.data.user
+        return res.data.account
     } catch (error) {
         console.log(error)
         throw error.response.data.message

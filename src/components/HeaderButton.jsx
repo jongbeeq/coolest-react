@@ -7,7 +7,7 @@ export default function HeaderButton(props) {
     return (
         <>
             <Link to={to}>
-                <b className={"hover:text-neutral-fade" + defaultDuration}>
+                <b className={"text-[max(1.2vw,8px)] hover:text-neutral-fade " + defaultDuration}>
                     {title}{children}
                 </b>
             </Link>
