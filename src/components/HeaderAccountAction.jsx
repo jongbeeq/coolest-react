@@ -13,7 +13,7 @@ export default function HeaderAccountAction() {
     const handleLogOut = () => dispatch(logOut())
 
     return (
-        <div className="w-[9vw] min-w-[60px] flex justify-evenly items-center">
+        <div className="flex justify-between items-center gap-[1vw]">
             {
                 loading ?
                     <LoadingDiv className={"h-[2vw] w-[8vw]"} />

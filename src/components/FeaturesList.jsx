@@ -7,14 +7,14 @@ export default function FeaturesList() {
     const isAdmin = useSelector(state => state.account.data?.isAdmin)
     const loading = useSelector(state => state.account.loading)
     return (
-        <div className="flex-grow flex gap-[5%]">
+        <div className="flex-grow flex gap-[5%] max-[418px]:justify-between">
             {
                 loading ?
                     <LoadingDiv className={"h-[2vw] w-full"} />
                     :
                     <>
                         <HeaderButton title="Category" />
-                        {isAdmin && <AdminFeatures />}
+                        {isAdmin ? <AdminFeatures /> : <div className="w-[114px]"></div>}
                     </>
             }
         </div>

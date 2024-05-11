@@ -6,7 +6,7 @@ import { setProgress } from './loadingSlice'
 
 const initialState = {
     error: null,
-    loading: true,
+    loading: false,
     data: null,
 }
 
