@@ -1,22 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
-import HeaderButton from "../components/HeaderButton";
+import HeaderButton from "./HeaderButton";
 import { CartIcon, ProfileIcon } from "../utils/Icons";
 import { logOut } from "../store/slice/authSlice";
 import { loginTerm, logoutTerm } from "../config/foundation";
 
-export default function AccountAction() {
+export default function HeaderAccountAction() {
     const dispatch = useDispatch()
-    const user = useSelector(state => state.account.data)
+    const account = useSelector(state => state.account.data)
 
     const handleLogOut = () => dispatch(logOut())
+
     return (
-        <div className="flex items-center justify-end gap-[5%]">
+        <div className="w-[9vw] min-w-[60px] flex justify-evenly items-center">
             <HeaderButton to={"/cart"}>
                 <CartIcon className={"text-[max(1.2vw,8px)]"} />
             </HeaderButton>
 
             {
-                user ?
+                account ?
                     (
                         <>
                             <HeaderButton to={'/profile'}>
@@ -30,6 +31,6 @@ export default function AccountAction() {
                     :
                     <HeaderButton to={"/login"} className={"text-[max(1vw,8px)]"} title={loginTerm} />
             }
-        </div>
+        </div >
     )
 }

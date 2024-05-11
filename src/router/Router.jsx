@@ -5,6 +5,7 @@ import Login from '../pages/Login'
 import Authenticated from '../features/auth/Authenticated'
 import ProductById from '../pages/ProductById'
 import AdminLayout from '../layout/AdminLayout'
+import AdminProduct from '../pages/AdminProduct'
 
 
 const router = createBrowserRouter([
@@ -31,8 +32,7 @@ const router = createBrowserRouter([
                     <AdminLayout />
                 ,
                 children: [
-                    { path: '', element: <h1>Admin</h1> },
-                    { path: '2', element: <h1>Admin2</h1> },
+                    { path: 'product', element: <AdminProduct /> },
                 ],
 
             }
