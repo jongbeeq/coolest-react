@@ -10,7 +10,7 @@ export default {
         'primary-header': '#FE5223',
         'primary-base': '#F59E0C',
         'primary-background': "#FFFBF5",
-        'primary-sub-base': "#fff7e961",
+        'primary-sub-base': "#fbbf24",
         'secondary-base': "#F471B5",
         'neutral-base': "black",
         'neutral-sub-base': "#A3A3A3",

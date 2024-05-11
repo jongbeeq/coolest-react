@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
-import Loading from "./components/Loading"
 import Router from "./router/Router"
 import AlertBox from "./components/AlertBox"
 import { useEffect } from "react"
 import { getMeAction } from "./store/slice/authSlice"
 import { getAccesToken } from "./utils/local-storage"
+import LoadingProgressBar from "./components/LoadingProgressBar"
 
 function App() {
   const loading = useSelector(state => state.loading)
@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div className="flex flex-col gap-3">
-      <Loading progressLoading={loading} />
+      <LoadingProgressBar progressLoading={loading} />
       <Router />
       {errorMessage && <AlertBox detail={errorMessage} />}
     </div>
