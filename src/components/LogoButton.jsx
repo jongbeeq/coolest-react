@@ -9,8 +9,8 @@ export default function LogoButton() {
         loading ?
             <LoadingDiv className={"h-[3.6vw] w-[7vw]"} />
             :
-            <Link Link className="" to="/" >
+            <Link to="/">
                 <img className="min-w-[40px] w-[7.5vw]" src={LOGO_URL} alt="Coolest" />
-            </Link >
+            </Link>
     )
 }
