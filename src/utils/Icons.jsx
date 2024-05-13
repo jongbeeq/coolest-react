@@ -54,6 +54,17 @@ export function PressDUpIcon({ className }) {
     )
 }
 
+export function ImageIcon({ className }) {
+    return (
+        <div className={className}>
+            <i className="fa-regular fa-image"></i>
+        </div>
+    )
+}
+
+
+
+
 
 
 

@@ -5,7 +5,7 @@ export default function IconImage(props) {
     const { switchShowImage, showImage } = useSlideImage()
 
     const handleClickImage = () => {
-        switchShowImage({ ...image })
+        switchShowImage(image.src)
     }
 
     const isShowImage = (image.id === showImage.id) && " " + "border-primary-header"

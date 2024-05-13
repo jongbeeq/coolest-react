@@ -1,9 +1,13 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { createProductModeTerm, editProductModeTerm, viewProductModeTerm } from "../config/env"
 
 
 export const SlideImageContext = createContext()
 
 export default function SlideImageContextProvider({ children }) {
+    const productMode = useSelector((state) => state.productMode)
+
     const imageArrays = [
         { id: 1, src: "https://prod-eurasian-res.popmart.com/default/20231215_094230_101577__1200x1200.jpg" },
         { id: 2, src: "https://prod-eurasian-res.popmart.com/default/20231215_094236_700574__1200x1200.jpg" },
@@ -17,8 +21,27 @@ export default function SlideImageContextProvider({ children }) {
         { id: 10, src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_776692__1200x1200.jpg" }
     ]
 
+    let initialShowImage
+
+    // switch (productMode) {
+    //     case viewProductModeTerm:
+    //         initialShowImage = imageArrays[0].src;
+    //         break;
+    //     case createProductModeTerm:
+    //         initialShowImage = null;
+    //         break;
+    // }
+
+    console.log(initialShowImage)
+
     const [slidePage, setSlidePage] = useState(0)
     const [showImage, setShowImage] = useState(imageArrays[0])
+
+    useEffect(() => {
+        setShowImage(null)
+        return () => { setShowImage(imageArrays[0]) }
+    }
+        , [productMode])
 
     const totalPage = Math.ceil(imageArrays.length / 4)
 

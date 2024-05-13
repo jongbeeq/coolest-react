@@ -3,7 +3,7 @@ import IconImage from "./IconImage";
 import ImageSlideButton from "./ImageSlideButton";
 
 export default function SlideImage() {
-    const { imageArrays, slidePage, totalPage } = useSlideImage()
+    const { imageArrays, slidePage, totalPage, showImage } = useSlideImage()
 
     const positonPage = `${slidePage * 80}%`
 
@@ -31,7 +31,7 @@ export default function SlideImage() {
             </div>
             <div className="overflow-hidden h-[84%] relative">
                 <div style={{ bottom: positonPage }} className={`flex flex-col justify-between relative`}>
-                    {imageArrays.map((image) => <IconImage key={image.id} image={image} />)}
+                    {showImage && imageArrays.map((image) => <IconImage key={image.id} image={image} />)}
                 </div>
             </div>
             <ImageSlideButton />

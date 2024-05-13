@@ -1,5 +1,6 @@
 import useSlideImage from "../../hooks/use-slideImage"
 import SlideImage from "./SlideImage"
+import AddMediaProduct from "../admin-product/AddMediaProduct"
 
 export default function ProductImageSection() {
     const { showImage } = useSlideImage()
@@ -11,7 +12,14 @@ export default function ProductImageSection() {
             <div className="flex flex-col justify-between w-[13%] h-full absolute ">
                 <SlideImage />
             </div>
-            <img className="w-[85%] ml-[14.5%] aspect-square object-cover" src={showImage.src}></img>
+            <div className="w-[55vw] min-w-[255px] aspect-square ml-[14.5%]">
+                {
+                    showImage ?
+                        <img className=" object-cover" src={showImage.src}></img>
+                        :
+                        <AddMediaProduct />
+                }
+            </div>
         </>
     )
 }
