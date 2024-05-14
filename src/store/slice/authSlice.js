@@ -24,7 +24,7 @@ export const registerAction = createAsyncThunk("auth/register",
                     dispatch(setProgress(previousLoading + progress))
                 }
             }
-            const res = await axios.post('/auth/register', registerData, config)
+            const res = await axios.post('/auth/register/user', registerData, config)
             addAcessToken(res.data.accessToken)
             return res.data.user
         } catch (error) {

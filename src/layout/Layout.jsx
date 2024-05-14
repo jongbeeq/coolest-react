@@ -8,13 +8,9 @@ export default function Layout() {
     return (
         <>
             <Header />
-            <main className='h-[110vh] flex justify-center my-[10%] min-w-[300px] max-[418px]:my-[15%] w-[80%] m-auto'>
-                {
-                    loading ?
-                        <LoadingPage />
-                        :
-                        <Outlet />
-                }
+            <main className='h-[100vh] flex flex-col items-center my-[10%] min-w-[300px] max-[418px]:my-[15%] w-[80%] m-auto'>
+                {loading && <LoadingPage />}
+                <Outlet />
             </main>
         </>
     )

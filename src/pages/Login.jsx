@@ -11,7 +11,7 @@ export default function Login() {
     return (
         <div className="flex flex-col gap-2">
             {isRegistration ? <RegisterForm clickSwitch={setIsRegistration} /> : <LoginForm clickSwitch={setIsRegistration} />}
-            <div className="bg-green-500 relative flex justify-center">
+            <div className="relative flex justify-center">
                 {errorMessage && <AlertBox detail={errorMessage} className={"text-[max(1vw,8px)]"} />}
             </div>
         </div>
