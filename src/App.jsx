@@ -21,7 +21,7 @@ function App() {
     <div className="flex flex-col gap-3">
       <LoadingProgressBar progressLoading={loading} />
       <Router />
-      {errorMessage && <AlertBox detail={errorMessage} />}
+      {errorMessage && <AlertBox detail={errorMessage} className={"left-[41.5vw] top-[55vh] text-xs"} />}
     </div>
   )
 }
