@@ -14,7 +14,7 @@ const store = configureStore({
                 // Ignore these field paths in all actions
                 // ignoredActionPaths: ['payload'],
                 // Ignore these paths in the state
-                ignoredPaths: ['productUpload.body'],
+                ignoredPaths: ['productUpload.formData'],
             },
         }),
     reducer: {

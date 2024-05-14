@@ -1,12 +1,13 @@
 import { Outlet } from "react-router-dom";
 import AuthenticatedAdmin from "../features/auth/AuthenticatedAdmin";
 import { useSelector } from "react-redux";
+import LoadingPage from "../components/LoadingPage";
 
 export default function AdminLayout() {
-    const loading = useSelector(state => state.account.loading)
+    const account = useSelector(state => state.account.data)
 
     return (
-        loading ? <div className="animate-pulse bg-black w-[100vw] h-[100vh] absolute"></div>
+        !account ? <LoadingPage />
             :
             < AuthenticatedAdmin >
                 <Outlet />

@@ -15,7 +15,7 @@ export default function ProductImageSection() {
             <div className="w-[55vw] min-w-[255px] aspect-square ml-[14.5%]">
                 {
                     showImage ?
-                        <img className=" object-cover" src={showImage.src}></img>
+                        <img className="w-full aspect-square object-cover" src={showImage.src}></img>
                         :
                         <AddMediaProduct />
                 }

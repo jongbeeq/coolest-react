@@ -9,7 +9,7 @@ export default function AddMediaProduct() {
     const inputEl = useRef(null)
     const dispatch = useDispatch()
     const productUpload = useSelector(state => state.productUpload)
-    const { switchShowImage } = useSlideImage()
+    const { switchShowImage, setImageArrays, imageArrays } = useSlideImage()
 
 
     const handleClick = () => {
@@ -19,18 +19,18 @@ export default function AddMediaProduct() {
     const [file, setFile] = useState()
 
     const handleChange = (e) => {
-        switchShowImage(e.target.files[0])
-        // console.dir(e.target.files)
-        // console.log([...e.target.files])
-        // console.log(e.target.files.length)
-        // // const uploadData = { image: [...e.target.files] }
-        // const formData = new FormData()
-        // const uploadData = { image: e.target.files[0] }
-        // formData.append('image', e.target.files[0])
-        // console.log(formData)
-        // // dispatch(changeUploadAction(formData))
-        // dispatch(changeUploadAction(URL.createObjectURL(e.target.files[0])))
-        // setFile(e.target.files)
+
+        // const imageShow = { id: imageArrays.length + 1, src: URL.createObjectURL(e.target.files[0]) }
+        console.log(productUpload.image)
+        const files = [...e.target.files]
+        console.log(files)
+        let imageShow = files.map((file, index) => {
+            return { id: index + 1, src: URL.createObjectURL(file) }
+        })
+        console.log(imageShow)
+        setImageArrays([...imageArrays, ...imageShow])
+        const imageUpload = { image: productUpload.image ? [...productUpload.image, ...e.target.files] : [...e.target.files] }
+        dispatch(changeUploadAction(imageUpload))
     }
 
     useEffect(() => console.log(file), [file])

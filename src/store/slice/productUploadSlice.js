@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    body: {}
+    formData: {}
 }
 
 const productUploadSlice = createSlice({
@@ -10,7 +10,9 @@ const productUploadSlice = createSlice({
     reducers: {
         changeUploadAction: (state, action) => {
             console.log(action)
-            state.body = action.payload
+            const prevData = state.formData
+            const newData = action.payload
+            state.formData = { ...prevData, ...newData }
         }
     },
     // extraReducers: (builder) => {

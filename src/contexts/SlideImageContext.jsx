@@ -1,14 +1,17 @@
 import { createContext, useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { createProductModeTerm, editProductModeTerm, viewProductModeTerm } from "../config/env"
+import { useLocation } from "react-router-dom"
 
 
 export const SlideImageContext = createContext()
 
 export default function SlideImageContextProvider({ children }) {
     const productMode = useSelector((state) => state.productMode)
+    const pathPage = useLocation().pathname
+    console.log(pathPage)
 
-    const imageArrays = [
+    const imageFetch = [
         { id: 1, src: "https://prod-eurasian-res.popmart.com/default/20231215_094230_101577__1200x1200.jpg" },
         { id: 2, src: "https://prod-eurasian-res.popmart.com/default/20231215_094236_700574__1200x1200.jpg" },
         { id: 3, src: "https://prod-eurasian-res.popmart.com/default/20231215_094237_661749__1200x1200.jpg" },
@@ -21,25 +24,24 @@ export default function SlideImageContextProvider({ children }) {
         { id: 10, src: "https://prod-eurasian-res.popmart.com/default/20231215_094241_776692__1200x1200.jpg" }
     ]
 
-    let initialShowImage
-
-    // switch (productMode) {
-    //     case viewProductModeTerm:
-    //         initialShowImage = imageArrays[0].src;
-    //         break;
-    //     case createProductModeTerm:
-    //         initialShowImage = null;
-    //         break;
-    // }
-
-    console.log(initialShowImage)
+    const initialImageArrays = pathPage === "/admin/product" ? [] : imageFetch
+    const [imageArrays, setImageArrays] = useState(initialImageArrays)
 
     const [slidePage, setSlidePage] = useState(0)
     const [showImage, setShowImage] = useState(imageArrays[0])
 
+    useEffect(() => setShowImage(imageArrays[0]), [imageArrays])
+
     useEffect(() => {
-        setShowImage(null)
-        return () => { setShowImage(imageArrays[0]) }
+        switch (productMode) {
+            case viewProductModeTerm:
+                setImageArrays(imageFetch);
+                break;
+            case createProductModeTerm:
+                setImageArrays([]);
+                setShowImage(null);
+                break;
+        }
     }
         , [productMode])
 
@@ -63,7 +65,7 @@ export default function SlideImageContextProvider({ children }) {
         setShowImage(src)
     }
 
-    const value = { imageArrays, slidePage, showImage, totalPage, slideDown, slideUp, switchShowImage }
+    const value = { imageArrays, slidePage, showImage, totalPage, slideDown, slideUp, switchShowImage, setImageArrays }
     return (
         <SlideImageContext.Provider value={value}>
             {children}

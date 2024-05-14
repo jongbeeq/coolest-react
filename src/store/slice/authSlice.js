@@ -24,6 +24,7 @@ export const registerAction = createAsyncThunk("auth/register",
                     dispatch(setProgress(previousLoading + progress))
                 }
             }
+            dispatch(setError(null))
             const res = await axios.post('/auth/register/user', registerData, config)
             addAcessToken(res.data.accessToken)
             return res.data.user
@@ -49,6 +50,7 @@ export const loginAction = createAsyncThunk('auth/login',
                     dispatch(setProgress(previousLoading + progress))
                 }
             }
+            dispatch(setError(null))
             const res = await axios.post('/auth/login', loginData, config)
             console.log(res)
             addAcessToken(res.data.accessToken)

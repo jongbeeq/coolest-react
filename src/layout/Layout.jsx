@@ -8,7 +8,7 @@ export default function Layout() {
     return (
         <>
             <Header />
-            <main className='h-[100vh] flex flex-col items-center my-[10%] min-w-[300px] max-[418px]:my-[15%] w-[80%] m-auto'>
+            <main className='min-w-[300px] h-[100vh] w-[80%] m-auto my-[10%] flex flex-col items-center'>
                 {loading && <LoadingPage />}
                 <Outlet />
             </main>
