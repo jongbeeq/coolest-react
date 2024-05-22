@@ -5,7 +5,7 @@ import AdminFeatures from "./AdminFeatures"
 
 export default function FeaturesList() {
     const isAdmin = useSelector(state => state.account.data?.isAdmin)
-    const loading = useSelector(state => state.account.loading)
+    const loading = useSelector(state => state.loading)
     return (
         <div className="flex-grow flex gap-[5%] max-[418px]:justify-between">
             {

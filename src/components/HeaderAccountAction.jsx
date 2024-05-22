@@ -8,7 +8,7 @@ import LoadingDiv from "./LoadingDiv";
 export default function HeaderAccountAction() {
     const dispatch = useDispatch()
     const account = useSelector(state => state.account.data)
-    const loading = useSelector(state => state.account.loading)
+    const loading = useSelector(state => state.loading)
 
     const handleLogOut = () => dispatch(logOut())
 

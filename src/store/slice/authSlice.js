@@ -3,14 +3,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from '../../config/axios'
 import { addAcessToken, removeAccesToken } from '../../utils/local-storage'
 import { setProgress } from './loadingSlice'
+import { loginModeTerm } from '../../config/env'
+import asyncThunkPayloadCreator from '../../utils/asyncThunkPayloadCreator'
 
 const initialState = {
     error: null,
-    loading: false,
     data: null,
+    authMode: loginModeTerm
 }
 
-export const registerAction = createAsyncThunk("auth/register",
+export const registerAction = createAsyncThunk("auth/registerUser",
     async (registerData, { dispatch, getState }) => {
         try {
             const config = {
@@ -36,33 +38,14 @@ export const registerAction = createAsyncThunk("auth/register",
     }
 )
 
-export const loginAction = createAsyncThunk('auth/login',
-    async (loginData, { dispatch, getState }) => {
-        try {
-            const config = {
-                onUploadProgress: (progressEvent) => {
-                    let progress = (progressEvent.loaded * 50) / progressEvent.total
-                    dispatch(setProgress(progress))
-                },
-                onDownloadProgress: (progressEvent) => {
-                    let previousLoading = getState().loading
-                    let progress = (progressEvent.loaded * 50) / progressEvent.total
-                    dispatch(setProgress(previousLoading + progress))
-                }
-            }
-            dispatch(setError(null))
-            const res = await axios.post('/auth/login', loginData, config)
-            console.log(res)
-            addAcessToken(res.data.accessToken)
-            return res.data.account
-        } catch (error) {
-            console.log(error)
-            throw error.response.data.message
-        } finally {
-            setTimeout(() => dispatch(setProgress(0)), 500)
-        }
-    }
-)
+
+export const loginAction = asyncThunkPayloadCreator('auth/login', { method: 'post', path: '/auth/login' }, (res) => {
+    console.log(res)
+    addAcessToken(res.data.accessToken)
+    return res.data.account
+})
+
+
 
 export const getMeAction = createAsyncThunk('auth/getMe', async () => {
     try {
@@ -75,6 +58,12 @@ export const getMeAction = createAsyncThunk('auth/getMe', async () => {
     }
 })
 
+// export const getMeAction = asyncThunkPayloadCreator('auth/getMe', { method: 'get', path: '/auth' }, (res) => {
+//     console.log(res)
+//     return res.data.account
+// })
+
+
 const authSlice = createSlice({
     name: 'user',
     initialState,
@@ -85,36 +74,36 @@ const authSlice = createSlice({
         },
         setError: (state, action) => {
             state.error = action.payload
+        },
+        switchAuthMode: (state, action) => {
+            state.authMode = action.payload
         }
     },
     extraReducers: (builder) => {
         builder
             .addCase(registerAction.pending, (state, action) => {
                 console.log(action)
-                state.loading = true
             })
             .addCase(registerAction.fulfilled, (state, action) => {
                 console.log(action)
-                state.loading = false
                 state.data = action.payload
+                setProgress(0)
             })
             .addCase(registerAction.rejected, (state, action) => {
                 console.log(action)
-                state.loading = false
+                setProgress(0)
             })
             .addCase(loginAction.pending, (state, action) => {
                 console.log(action)
-                state.loading = true
             })
             .addCase(loginAction.fulfilled, (state, action) => {
                 console.log(action)
-                state.loading = false
                 state.data = action.payload
+                setProgress(0)
             })
             .addCase(loginAction.rejected, (state, action) => {
                 console.log(action)
-                state.loading = false
-                state.error = action.error
+                setProgress(0)
             })
             .addCase(getMeAction.pending, (state, action) => {
                 console.log(action)
@@ -122,18 +111,18 @@ const authSlice = createSlice({
             })
             .addCase(getMeAction.fulfilled, (state, action) => {
                 console.log(action)
-                state.loading = false
                 state.data = action.payload
+                setProgress(0)
             })
             .addCase(getMeAction.rejected, (state, action) => {
                 console.log(action)
-                state.loading = false
                 state.error = action.error
+                setProgress(0)
             })
 
     }
 })
 
 
-export const { logOut, setError } = authSlice.actions
+export const { logOut, setError, switchAuthMode } = authSlice.actions
 export default authSlice.reducer

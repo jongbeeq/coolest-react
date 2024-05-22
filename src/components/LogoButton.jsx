@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import LoadingDiv from './LoadingDiv'
 
 export default function LogoButton() {
-    const loading = useSelector(state => state.account.loading)
+    const loading = useSelector(state => state.loading)
     return (
         loading ?
             <LoadingDiv className={"h-[3.6vw] w-[7vw]"} />

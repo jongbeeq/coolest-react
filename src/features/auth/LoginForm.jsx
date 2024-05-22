@@ -4,9 +4,10 @@ import InputRow from "./InputRow";
 import SubmitButton from "../../components/SubmitButton";
 import SwitchModeButton from "./SwitchModeButton";
 import { useForm } from "react-hook-form";
-import { loginAction } from "../../store/slice/authSlice";
+import { loginAction, setError, switchAuthMode } from "../../store/slice/authSlice";
+import { registerModeTerm } from "../../config/env";
 
-export default function LoginForm(props) {
+export default function LoginForm() {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const dispatch = useDispatch()
 
@@ -28,8 +29,10 @@ export default function LoginForm(props) {
         },
     ]
 
-    const { clickSwitch } = props
-    const handleClickSwitch = () => clickSwitch(true)
+    const handleClickSwitch = () => {
+        dispatch(setError(null))
+        dispatch(switchAuthMode(registerModeTerm))
+    }
 
     const handleSubmitForm = data => {
         console.log(data)

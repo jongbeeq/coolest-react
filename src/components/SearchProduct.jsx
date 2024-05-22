@@ -4,7 +4,7 @@ import { SearchIcon } from "../utils/Icons";
 import LoadingDiv from "./LoadingDiv";
 
 export default function SearchProduct() {
-    const loading = useSelector(state => state.account.loading)
+    const loading = useSelector(state => state.loading)
     return (
         <form className="flex items-center gap-[2%] justify-center">
             {

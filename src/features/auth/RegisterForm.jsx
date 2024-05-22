@@ -6,12 +6,12 @@ import { infoPassword, registerTerm, switchToLoginTerm } from "../../config/foun
 import InputRow from "./InputRow";
 import SubmitButton from "../../components/SubmitButton";
 import SwitchModeButton from "./SwitchModeButton";
-import { registerAction } from "../../store/slice/authSlice";
+import { registerAction, setError, switchAuthMode } from "../../store/slice/authSlice";
+import { loginModeTerm } from "../../config/env";
 
 
-export default function RegisterForm(props) {
+export default function RegisterForm() {
     const { register, handleSubmit, formState: { errors } } = useForm()
-    const { clickSwitch } = props
     const [keepPassword, setKeepPassword] = useState(null)
     const dispatch = useDispatch()
 
@@ -89,7 +89,10 @@ export default function RegisterForm(props) {
         },
     ]
 
-    const handleClickSwitch = () => clickSwitch(false)
+    const handleClickSwitch = () => {
+        dispatch(setError(null))
+        dispatch(switchAuthMode(loginModeTerm))
+    }
 
     const handleSubmitForm = data => {
         console.log(data)

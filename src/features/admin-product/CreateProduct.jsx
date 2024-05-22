@@ -5,6 +5,7 @@ import ProductContainer from "../product/ProductContainer"
 import { useDispatch, useSelector } from "react-redux"
 import { switchproductModeAction } from "../../store/slice/productModeSlice"
 import { createProductModeTerm } from "../../config/env"
+import axios from "../../config/axios"
 
 export default function CreateProduct() {
     const dispatch = useDispatch()
@@ -24,20 +25,25 @@ export default function CreateProduct() {
     //     setProductImages([...productImages, image])
     // }
 
+
     useEffect(() => { dispatch(switchproductModeAction(createProductModeTerm)) }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const formData = new FormData()
-        for (let key in productUploadFormData) {
-            console.log(key)
-            console.log(productUploadFormData)
-            console.log(productUploadFormData[key])
-            for (let item of productUploadFormData[key]) {
-                formData.append(key, item)
-            }
-        }
-        console.log(formData)
+
+        formData.append('optionals', [{ title: 'Car', balance: 35, price: 350 }])
+        axios.post('/product/create', formData).then(res => console.log(res))
+
+        // for (let key in productUploadFormData) {
+        //     console.log(key)
+        //     console.log(productUploadFormData)
+        //     console.log(productUploadFormData[key])
+        //     for (let item of productUploadFormData[key]) {
+        //         formData.append(key, item)
+        //     }
+        // }
+        // console.log(formData)
     }
 
     return (
