@@ -4,10 +4,6 @@ import { setError } from "../store/slice/authSlice"
 import axios from '../config/axios'
 
 export default function asyncThunkPayloadCreator(typePrefix, apiFn, otherFn) {
-    // const { typePrefix, apiFn, otherFn } = props
-    console.log(typePrefix)
-    console.log(apiFn)
-    console.log(otherFn)
     const { method, path } = apiFn
 
     const haveBody = method !== ('get' || 'delete')
