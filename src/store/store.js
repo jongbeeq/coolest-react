@@ -4,6 +4,9 @@ import loadingSlice from './slice/loadingSlice'
 import productModeSlice from './slice/productModeSlice'
 import productByIdSlice from './slice/productByIdSlice'
 import productUploadSlice from './slice/productUploadSlice'
+import productImageSlice from './slice/productImageSlice'
+import productSelectSlice from './slice/productSelectSlice'
+import errorSlice from './slice/errorSlice'
 
 const store = configureStore({
     middleware: (getDefaultMiddleware) =>
@@ -18,9 +21,12 @@ const store = configureStore({
     reducer: {
         account: authSlice,
         loading: loadingSlice,
+        error: errorSlice,
         productMode: productModeSlice,
         productById: productByIdSlice,
+        productImage: productImageSlice,
         productUpload: productUploadSlice,
+        productSelect: productSelectSlice,
     }
 })
 

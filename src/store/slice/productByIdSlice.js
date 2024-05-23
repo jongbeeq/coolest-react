@@ -1,17 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = 0
+const initialState = {}
 
 const productByIdSlice = createSlice({
     name: 'productById',
     initialState,
     reducers: {
-        // logOut: (state) => {
-        //     removeAccesToken()
-        //     state.data = null
-        // },
-        setError: (state, action) => {
-            return state.error = action.payload
+        setProductData: (state, action) => {
+            console.log(action.payload)
+            return state = action.payload
         }
     },
     // extraReducers: (builder) => {
@@ -32,4 +29,5 @@ const productByIdSlice = createSlice({
     // }
 })
 
+export const { setProductData } = productByIdSlice.actions
 export default productByIdSlice.reducer

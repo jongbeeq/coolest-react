@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux";
 import { loginTerm, switchToRegisterTerm } from "../../config/foundation";
-import InputRow from "./InputRow";
 import SubmitButton from "../../components/SubmitButton";
 import SwitchModeButton from "./SwitchModeButton";
 import { useForm } from "react-hook-form";
-import { loginAction, setError, switchAuthMode } from "../../store/slice/authSlice";
+import { loginAction, switchAuthMode } from "../../store/slice/authSlice";
 import { registerModeTerm } from "../../config/env";
+import { setError } from "../../store/slice/errorSlice";
+import InputRow from "../../components/InputRow";
 
 export default function LoginForm() {
     const { register, handleSubmit, formState: { errors } } = useForm()
@@ -24,7 +25,6 @@ export default function LoginForm() {
         {
             name: "password", title: "Password", type: "password", validateCondition: {
                 required: 'Password is required',
-
             }
         },
     ]

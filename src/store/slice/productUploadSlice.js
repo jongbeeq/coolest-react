@@ -1,37 +1,47 @@
 import { createSlice } from "@reduxjs/toolkit";
+import asyncThunkPayloadCreator from "../../utils/asyncThunkPayloadCreator";
+import { setProgress } from "./loadingSlice";
 
 const initialState = {
-    formData: {}
+    formData: new FormData()
 }
+
+export const uploadProductAction = asyncThunkPayloadCreator('auth/registerUser',
+    { method: 'post', path: '/product/create' },
+    (res) => {
+        console.log(res)
+        return res.data
+    }
+)
 
 const productUploadSlice = createSlice({
     name: 'productUpload',
     initialState,
     reducers: {
-        changeUploadAction: (state, action) => {
-            console.log(action)
-            const prevData = state.formData
-            const newData = action.payload
-            state.formData = { ...prevData, ...newData }
+        changeInputUploadAction: (state, action) => {
+            console.log(action.payload)
+            console.log(state.formData)
+            for (let key in action.payload) {
+                state.formData.set(key, action.payload[key])
+            }
         }
     },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(registerAction.pending, (state, action) => {
-    //             console.log(action)
-    //             state.loading = true
-    //         })
-    //         .addCase(registerAction.fulfilled, (state, action) => {
-    //             console.log(action)
-    //             state.loading = false
-    //             state.data = action.payload
-    //         })
-    //         .addCase(registerAction.rejected, (state, action) => {
-    //             console.log(action)
-    //             state.loading = false
-    //         })
-    // }
+    extraReducers: (builder) => {
+        builder
+            .addCase(uploadProductAction.pending, (state, action) => {
+                console.log(action)
+            })
+            .addCase(uploadProductAction.fulfilled, (state, action) => {
+                console.log(action)
+                state.data = action.payload
+                setProgress(0)
+            })
+            .addCase(uploadProductAction.rejected, (state, action) => {
+                console.log(action)
+                setProgress(0)
+            })
+    }
 })
 
-export const { changeUploadAction } = productUploadSlice.actions
+export const { changeInputUploadAction } = productUploadSlice.actions
 export default productUploadSlice.reducer

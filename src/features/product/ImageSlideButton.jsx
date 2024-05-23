@@ -1,15 +1,16 @@
-import useSlideImage from "../../hooks/use-slideImage";
+import { useDispatch } from "react-redux";
 import { PressDUpIcon, PressDownIcon } from "../../utils/Icons";
+import { slidePageDown, slidePageUp } from "../../store/slice/productImageSlice";
 
 export default function ImageSlideButton() {
-    const { slideDown, slideUp } = useSlideImage()
+    const diapatch = useDispatch()
 
     const handleClickPageDown = () => {
-        slideDown()
+        diapatch(slidePageDown())
     }
 
     const handleClickPageUp = () => {
-        slideUp()
+        diapatch(slidePageUp())
     }
 
     const Button = ({ handleClick, children }) => (

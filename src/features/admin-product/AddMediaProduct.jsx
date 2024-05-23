@@ -2,14 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import { defaultDuration } from "../../config/foundation";
 import { ImageIcon } from "../../utils/Icons";
 import { useDispatch, useSelector } from "react-redux";
-import { changeUploadAction } from "../../store/slice/productUploadSlice";
-import useSlideImage from "../../hooks/use-slideImage";
+// import { changeUploadAction } from "../../store/slice/productUploadSlice";
+// import useSlideImage from "../../hooks/use-slideImage";
+import { initializeImage } from "../../store/slice/productImageSlice";
+import { changeInputUploadAction } from "../../store/slice/productUploadSlice";
 
 export default function AddMediaProduct() {
-    const inputEl = useRef(null)
     const dispatch = useDispatch()
+    const inputEl = useRef(null)
     const productUpload = useSelector(state => state.productUpload)
-    const { switchShowImage, setImageArrays, imageArrays } = useSlideImage()
+    const imagesData = useSelector(state => state.productImage.data)
+    // const { switchShowImage, setImageArrays, imageArrays } = useSlideImage()
 
 
     const handleClick = () => {
@@ -19,7 +22,6 @@ export default function AddMediaProduct() {
     const [file, setFile] = useState()
 
     const handleChange = (e) => {
-
         // const imageShow = { id: imageArrays.length + 1, src: URL.createObjectURL(e.target.files[0]) }
         console.log(productUpload.image)
         const files = [...e.target.files]
@@ -28,9 +30,10 @@ export default function AddMediaProduct() {
             return { id: index + 1, src: URL.createObjectURL(file) }
         })
         console.log(imageShow)
-        setImageArrays([...imageArrays, ...imageShow])
+        // setImageArrays([...imagesData, ...imageShow])
+        dispatch(initializeImage([...imagesData, ...imageShow]))
         const imageUpload = { image: productUpload.image ? [...productUpload.image, ...e.target.files] : [...e.target.files] }
-        dispatch(changeUploadAction(imageUpload))
+        dispatch(changeInputUploadAction(imageUpload))
     }
 
     useEffect(() => console.log(file), [file])

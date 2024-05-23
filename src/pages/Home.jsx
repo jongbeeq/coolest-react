@@ -18,7 +18,7 @@ export default function Home() {
 
     return (
         <main>
-            <section className="grid grid-cols-4 gap-y-[2%] gap-x-[2%]">
+            <section className="w-[80vw] m-auto grid grid-cols-4 gap-y-[2%] gap-x-[2%]">
                 {allProduct.map((product) => <ProductCard key={product.id} product={product} />)}
             </section>
         </main >

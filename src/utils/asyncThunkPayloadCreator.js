@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { setProgress } from "../store/slice/loadingSlice"
-import { setError } from "../store/slice/authSlice"
 import axios from '../config/axios'
+import { setError } from "../store/slice/errorSlice"
 
 export default function asyncThunkPayloadCreator(typePrefix, apiFn, otherFn) {
     const { method, path } = apiFn

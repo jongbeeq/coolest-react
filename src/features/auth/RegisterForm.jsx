@@ -3,11 +3,12 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 
 import { infoPassword, registerTerm, switchToLoginTerm } from "../../config/foundation";
-import InputRow from "./InputRow";
 import SubmitButton from "../../components/SubmitButton";
 import SwitchModeButton from "./SwitchModeButton";
-import { registerAction, setError, switchAuthMode } from "../../store/slice/authSlice";
+import { registerAction, switchAuthMode } from "../../store/slice/authSlice";
 import { loginModeTerm } from "../../config/env";
+import { setError } from "../../store/slice/errorSlice";
+import InputRow from "../../components/InputRow";
 
 
 export default function RegisterForm() {
@@ -70,7 +71,7 @@ export default function RegisterForm() {
                 },
                 onChange: value => {
                     console.log(value)
-                    setKeepPassword(value)
+                    setKeepPassword(value.target.value)
                 }
             },
             info: infoPassword

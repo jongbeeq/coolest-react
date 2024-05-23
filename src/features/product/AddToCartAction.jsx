@@ -1,31 +1,27 @@
+import { useDispatch, useSelector } from "react-redux"
 import SubmitButton from "../../components/SubmitButton"
-import useProductDetail from "../../hooks/use-productDetail"
+import QuantityButton from "./QuantityButton"
+import { decreaseAmount, increaseAmount } from "../../store/slice/productSelectSlice"
+import TextTitle from "../../components/TextTitle"
+import TextDetail from "../../components/TextDetail"
 
 export default function ProductAction() {
-    const { TextTitle, selectedOption, quantity, isMaxQuantity, isMinQuantity, increaseQuantity, decreaseQuantity } = useProductDetail()
-
-    const disbleQuantityStyle = (condition) => {
-        const style = condition ? " " + "border-neutral-fade text-neutral-fade" : " " + "border-neutral-base text-neutral-base hover:bg-neutral-fade cursor-pointer"
-        return style
-    }
-
-    const QuntityButton = (props) => {
-        const { title, onClick, condition } = props
-        return <div onClick={onClick} className={"w-[6%] flex items-center justify-center text-xs font-bold bg-neutral-cross border border-1 aspect-square" + disbleQuantityStyle(condition)}>{title}</div>
-    }
+    const dispatch = useDispatch()
+    const selectedOption = useSelector(state => state.productSelect.selectedOption)
+    const isMaxAmount = useSelector(state => state.productSelect.isMaxAmount)
+    const isMinAmount = useSelector(state => state.productSelect.isMinAmount)
+    const amount = useSelector(state => state.productSelect.amount)
 
     return (
         <div className=" flex flex-col gap-2">
-            <TextTitle title='Quantity' />
+            <TextTitle>Quantity</TextTitle>
             <div className="flex items-center gap-2 text-xs">
-                <QuntityButton onClick={decreaseQuantity} condition={isMinQuantity} title='-' />
-                <p className="font-bold">{quantity}</p>
-                <QuntityButton onClick={increaseQuantity} condition={isMaxQuantity} title='+' />
-                <p className="text-neutral-base">balance {selectedOption.balance}</p>
+                <QuantityButton onClick={() => { dispatch(decreaseAmount()) }} condition={isMinAmount} title='-' />
+                <TextDetail className={'font-bold'}>{amount}</TextDetail>
+                <QuantityButton onClick={() => { dispatch(increaseAmount()) }} condition={isMaxAmount} title='+' />
+                <TextDetail>balance {selectedOption.balance}</TextDetail>
             </div>
-            <div className="text-[10px] ">
-                <SubmitButton className=' w-[40%]' title='ADD TO CART' />
-            </div>
+            <SubmitButton className='w-[30%] max-[765px]:w-[20%] py-[2%] text-[max(0.8vw,8px)]' title='ADD TO CART' />
         </div>
     )
 }

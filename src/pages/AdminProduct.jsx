@@ -3,6 +3,7 @@ import CreateProduct from "../features/admin-product/CreateProduct";
 import { useDispatch } from "react-redux";
 import { switchproductModeAction } from "../store/slice/productModeSlice";
 import { createProductModeTerm, viewProductModeTerm } from "../config/env";
+import CreateProductProvider from "../context/CreateProductContext";
 
 export default function AdminProduct() {
     const dispatch = useDispatch()
@@ -15,8 +16,8 @@ export default function AdminProduct() {
     }, [])
 
     return (
-        <div className="flex flex-col">
+        <CreateProductProvider>
             <CreateProduct />
-        </div>
+        </CreateProductProvider>
     )
 }

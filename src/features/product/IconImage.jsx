@@ -1,11 +1,13 @@
-import useSlideImage from "../../hooks/use-slideImage"
+import { useDispatch, useSelector } from "react-redux"
+import { setShowImage } from "../../store/slice/productImageSlice"
 
 export default function IconImage(props) {
     const { image } = props
-    const { switchShowImage, showImage } = useSlideImage()
+    const showImage = useSelector((state) => state.productImage.showImage)
+    const dispatch = useDispatch()
 
     const handleClickImage = () => {
-        switchShowImage(image)
+        dispatch(setShowImage(image))
     }
 
     const isShowImage = (image.id === showImage.id) && " " + "border-primary-header"

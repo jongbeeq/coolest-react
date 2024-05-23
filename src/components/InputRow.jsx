@@ -1,12 +1,10 @@
 import { useDispatch } from "react-redux"
-import Info from "../../components/Info"
-import { setError } from "../../store/slice/authSlice"
+import Info from "./Info"
+import { setError } from "../store/slice/errorSlice"
 
 export default function InputRow(props) {
     const { name, title, type, register, validateCondition, error, info } = props
     const dispatch = useDispatch()
-
-    console.log(validateCondition.onChange)
 
     const errorBorder = error ? "border-error-base" : "border-neutral-base"
 
@@ -17,7 +15,7 @@ export default function InputRow(props) {
                     ...validateCondition, onChange: (e) => {
                         dispatch(setError(null))
                         if (validateCondition.onChange) {
-                            validateCondition.onChange(e.target.value)
+                            validateCondition.onChange(e)
                         }
                     }
                 })}
