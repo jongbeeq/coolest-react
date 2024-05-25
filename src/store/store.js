@@ -13,7 +13,7 @@ const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: {
                 // Ignore these action types
-                ignoredActions: ["productUpload/changeUploadAction"],
+                ignoredActions: ["productUpload/changeInputUploadAction"],
                 // Ignore these paths in the state
                 ignoredPaths: ['productUpload.formData'],
             },

@@ -6,7 +6,7 @@ const initialState = {
     formData: new FormData()
 }
 
-export const uploadProductAction = asyncThunkPayloadCreator('auth/registerUser',
+export const uploadProductAction = asyncThunkPayloadCreator('productUpload/createProduct',
     { method: 'post', path: '/product/create' },
     (res) => {
         console.log(res)
@@ -20,9 +20,13 @@ const productUploadSlice = createSlice({
     reducers: {
         changeInputUploadAction: (state, action) => {
             console.log(action.payload)
-            console.log(state.formData)
             for (let key in action.payload) {
-                state.formData.set(key, action.payload[key])
+                if (key === 'images') {
+                    console.log(state.formData.getAll(key))
+                    state.formData.append(key, action.payload[key])
+                } else {
+                    state.formData.set(key, action.payload[key])
+                }
             }
         }
     },

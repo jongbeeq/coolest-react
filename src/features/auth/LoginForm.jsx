@@ -29,6 +29,8 @@ export default function LoginForm() {
         },
     ]
 
+    const authInputStyle = "text-sm pl-3 pr-7 py-3 w-80 rounded-none border border-1  outline-none focus:ring-2 ring-neutral-fade"
+
     const handleClickSwitch = () => {
         dispatch(setError(null))
         dispatch(switchAuthMode(registerModeTerm))
@@ -43,7 +45,7 @@ export default function LoginForm() {
         <div className="flex flex-col items-center gap-5">
             <h1 className="font-medium text-4xl">{loginTerm}</h1>
             <form className="flex flex-col gap-2" onSubmit={handleSubmit(handleSubmitForm)}>
-                {loginRows.map(row => <InputRow register={register} key={row.name} name={row.name} title={row.title} type={row.type} validateCondition={row.validateCondition} error={errors[row.name]?.message} info={row.info} />)}
+                {loginRows.map(row => <InputRow className={authInputStyle} register={register} key={row.name} name={row.name} title={row.title} type={row.type} validateCondition={row.validateCondition} error={errors[row.name]?.message} info={row.info} />)}
                 <SubmitButton title={loginTerm} />
             </form>
             <div onClick={handleClickSwitch}>

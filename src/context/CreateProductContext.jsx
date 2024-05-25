@@ -46,7 +46,20 @@ export default function CreateProductProvider({ children }) {
         },
     ]
 
+    // const createProductImageRows = [
+    //     {
+    //         name: "images",
+    //         title: "Product Image",
+    //         validateCondition: {
+    //             required: 'Product Title is required',
+    //             onChange
+    //         },
+    //         type: 'file'
+    //     },
+    // ]
 
+
+    // const value = { handleSubmit, register, errors, createProductRows, createProductImageRows }
     const value = { handleSubmit, register, errors, createProductRows }
 
     return (

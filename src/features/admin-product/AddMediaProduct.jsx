@@ -6,14 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 // import useSlideImage from "../../hooks/use-slideImage";
 import { initializeImage } from "../../store/slice/productImageSlice";
 import { changeInputUploadAction } from "../../store/slice/productUploadSlice";
+import useCreateProduct from "../../hooks/use-createProduct";
+import InputRow from "../../components/InputRow";
 
 export default function AddMediaProduct() {
     const dispatch = useDispatch()
     const inputEl = useRef(null)
     const productUpload = useSelector(state => state.productUpload)
     const imagesData = useSelector(state => state.productImage.data)
-    // const { switchShowImage, setImageArrays, imageArrays } = useSlideImage()
+    const { createProductImageRows, register, errors } = useCreateProduct()
 
+    const onChange = (data) => { dispatch(changeInputUploadAction({ [data.target.name]: data.target.value })) }
 
     const handleClick = () => {
         inputEl.current.click()
@@ -22,18 +25,16 @@ export default function AddMediaProduct() {
     const [file, setFile] = useState()
 
     const handleChange = (e) => {
-        // const imageShow = { id: imageArrays.length + 1, src: URL.createObjectURL(e.target.files[0]) }
         console.log(productUpload.image)
+        // const imageUpload = { images: productUpload.images ? [...productUpload.images, ...e.target.files] : [...e.target.files] }
         const files = [...e.target.files]
         console.log(files)
         let imageShow = files.map((file, index) => {
+            // dispatch(dispatch(changeInputUploadAction(imageUpload)))
+            dispatch(dispatch(changeInputUploadAction({ images: file })))
             return { id: index + 1, src: URL.createObjectURL(file) }
         })
-        console.log(imageShow)
-        // setImageArrays([...imagesData, ...imageShow])
         dispatch(initializeImage([...imagesData, ...imageShow]))
-        const imageUpload = { image: productUpload.image ? [...productUpload.image, ...e.target.files] : [...e.target.files] }
-        dispatch(changeInputUploadAction(imageUpload))
     }
 
     useEffect(() => console.log(file), [file])
