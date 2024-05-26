@@ -11,14 +11,25 @@ export default function InputRow(props) {
     return (
         <div>
             <div className="flex items-center relative">
-                <input {...otherAttributes} type={type} className={className + " " + errorBorder} placeholder={title} {...register(name, {
-                    ...validateCondition, onChange: (e) => {
-                        dispatch(setError(null))
-                        if (validateCondition.onChange) {
-                            validateCondition.onChange(e)
-                        }
-                    }
-                })} />
+                {
+                    type !== 'textarea' ?
+                        <input {...otherAttributes} type={type} className={className + " " + errorBorder} placeholder={title} {...register(name, {
+                            ...validateCondition, onChange: (e) => {
+                                dispatch(setError(null))
+                                if (validateCondition.onChange) {
+                                    validateCondition.onChange(e)
+                                }
+                            }
+                        })} />
+                        :
+                        <textarea {...otherAttributes} className={className + " " + errorBorder} placeholder={title} {...register(name, {
+                            ...validateCondition, onChange: (e) => {
+                                dispatch(setError(null))
+                                if (validateCondition.onChange) {
+                                    validateCondition.onChange(e)
+                                }
+                            }
+                        })} />}
                 {info && <Info info={info} />}
             </div>
             <p className=" text-error-base text-xs ">{error}</p>

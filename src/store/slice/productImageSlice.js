@@ -28,22 +28,6 @@ const productImageSlice = createSlice({
             state.slidePage = isFirstPage ? state.totalPage - 1 : state.slidePage - 1
         },
     },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(registerAction.pending, (state, action) => {
-    //             console.log(action)
-    //             state.loading = true
-    //         })
-    //         .addCase(registerAction.fulfilled, (state, action) => {
-    //             console.log(action)
-    //             state.loading = false
-    //             state.data = action.payload
-    //         })
-    //         .addCase(registerAction.rejected, (state, action) => {
-    //             console.log(action)
-    //             state.loading = false
-    //         })
-    // }
 })
 
 export const { initializeImage, setShowImage, slidePageDown, slidePageUp } = productImageSlice.actions

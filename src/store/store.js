@@ -15,7 +15,7 @@ const store = configureStore({
                 // Ignore these action types
                 ignoredActions: ["productUpload/changeInputUploadAction"],
                 // Ignore these paths in the state
-                ignoredPaths: ['productUpload.formData'],
+                ignoredPaths: ['productUpload'],
             },
         }),
     reducer: {

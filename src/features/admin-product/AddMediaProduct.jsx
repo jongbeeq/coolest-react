@@ -2,43 +2,31 @@ import { useEffect, useRef, useState } from "react";
 import { defaultDuration } from "../../config/foundation";
 import { ImageIcon } from "../../utils/Icons";
 import { useDispatch, useSelector } from "react-redux";
-// import { changeUploadAction } from "../../store/slice/productUploadSlice";
-// import useSlideImage from "../../hooks/use-slideImage";
 import { initializeImage } from "../../store/slice/productImageSlice";
 import { changeInputUploadAction } from "../../store/slice/productUploadSlice";
-import useCreateProduct from "../../hooks/use-createProduct";
-import InputRow from "../../components/InputRow";
 
 export default function AddMediaProduct() {
     const dispatch = useDispatch()
     const inputEl = useRef(null)
-    const productUpload = useSelector(state => state.productUpload)
     const imagesData = useSelector(state => state.productImage.data)
-    const { createProductImageRows, register, errors } = useCreateProduct()
-
-    const onChange = (data) => { dispatch(changeInputUploadAction({ [data.target.name]: data.target.value })) }
+    const [openInput, setOpenInput] = useState(false)
 
     const handleClick = () => {
-        inputEl.current.click()
+        setOpenInput(true)
     }
 
-    const [file, setFile] = useState()
+    useEffect(() => { inputEl.current?.click() }, [openInput])
 
     const handleChange = (e) => {
-        console.log(productUpload.image)
-        // const imageUpload = { images: productUpload.images ? [...productUpload.images, ...e.target.files] : [...e.target.files] }
         const files = [...e.target.files]
         console.log(files)
         let imageShow = files.map((file, index) => {
-            // dispatch(dispatch(changeInputUploadAction(imageUpload)))
-            dispatch(dispatch(changeInputUploadAction({ images: file })))
-            return { id: index + 1, src: URL.createObjectURL(file) }
+            dispatch(changeInputUploadAction({ images: file }))
+            return { id: imagesData.length + index + 1, src: URL.createObjectURL(file) }
         })
         dispatch(initializeImage([...imagesData, ...imageShow]))
+        setOpenInput(false)
     }
-
-    useEffect(() => console.log(file), [file])
-    useEffect(() => console.log(productUpload), [productUpload])
 
     return (
         <>
@@ -46,7 +34,7 @@ export default function AddMediaProduct() {
                 <ImageIcon />
                 <p>Add Images/Videos</p>
             </div>
-            <input onChange={handleChange} ref={inputEl} type="file" multiple className="hidden" />
+            {openInput && <input onChange={handleChange} ref={inputEl} type="file" multiple className="hidden" />}
         </>
     )
 }
