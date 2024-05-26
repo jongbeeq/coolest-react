@@ -9,6 +9,7 @@ export default function AddMediaProduct() {
     const dispatch = useDispatch()
     const inputEl = useRef(null)
     const imagesData = useSelector(state => state.productImage.data)
+    const errorImages = useSelector(state => state.productUpload.error.images)
     const [openInput, setOpenInput] = useState(false)
 
     const handleClick = () => {
@@ -28,12 +29,16 @@ export default function AddMediaProduct() {
         setOpenInput(false)
     }
 
+    const errorBorder = errorImages ? "border-error-base" : "border-neutral-base"
+    console.log(errorBorder)
+
     return (
         <>
-            <div onClick={handleClick} className={"w-full h-full border flex justify-center items-center gap-[2%] text-[max(1.2vw,10px)] border-neutral-base text-neutral-base font-bold cursor-pointer hover:border-neutral-sub-base hover:text-neutral-sub-base" + defaultDuration} >
+            <div onClick={handleClick} className={"w-full h-full border flex justify-center items-center gap-[2%] text-[max(1.2vw,10px)] text-neutral-base font-bold cursor-pointer hover:border-neutral-sub-base hover:text-neutral-sub-base" + defaultDuration + " " + errorBorder} >
                 <ImageIcon />
                 <p>Add Images/Videos</p>
             </div>
+            <p className=" text-error-base text-xs ">{errorImages}</p>
             {openInput && <input onChange={handleChange} ref={inputEl} type="file" multiple className="hidden" />}
         </>
     )

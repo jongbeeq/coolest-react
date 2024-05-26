@@ -10,7 +10,8 @@ import ProductContainer from "../product/ProductContainer"
 import useCreateProduct from "../../hooks/use-createProduct"
 import SubmitButton from "../../components/SubmitButton"
 import { useDispatch, useSelector } from "react-redux"
-import { changeInputUploadAction, uploadProductAction } from "../../store/slice/productUploadSlice"
+import { changeInputUploadAction, setErrorFormAction, uploadProductAction } from "../../store/slice/productUploadSlice"
+import { setError } from "../../store/slice/errorSlice"
 
 export default function CreateProduct() {
     const dispatch = useDispatch()
@@ -32,12 +33,20 @@ export default function CreateProduct() {
 
 
     // useEffect(() => { dispatch(switchproductModeAction(createProductModeTerm)) }, [])
+    const haveImagesData = productUploadFormData.getAll('images').length
 
     const handleSubmitForm = (data) => {
         console.log(data)
-
-
-        dispatch(uploadProductAction(productUploadFormData))
+        console.log(productUploadFormData.getAll('images'))
+        // const haveImagesData = productUploadFormData.getAll('images').length
+        if (haveImagesData) {
+            console.log('welcome submit!!!!!!!!!!!!!!')
+            dispatch(uploadProductAction(productUploadFormData))
+        } else {
+            console.log('cannot submit!!!!!!!!!!!!!!')
+            // dispatch(setError({ images: 'Product Image/Video is required' }))
+        }
+        // dispatch(uploadProductAction(productUploadFormData))
         // axios.post('/product/create', formData).then(res => console.log(res))
 
         // for (let key in productUploadFormData) {
@@ -56,12 +65,17 @@ export default function CreateProduct() {
     // console.log(formData.has('optionals'))
     // console.log(formData)
 
+    const validateImagesData = () => {
+        console.log(haveImagesData)
+        !haveImagesData && dispatch(setErrorFormAction({ images: 'Product Image/Video is required' }))
+    }
+
     const { handleSubmit } = useCreateProduct()
 
     return (
         <form onSubmit={handleSubmit(handleSubmitForm)} className="flex flex-col items-center gap-3">
             <ProductContainer />
-            <SubmitButton title="Create" className='w-[20vw] text-[max(1.3vw,10px)] min-w-[100px] min-[766px]:py-[1%] max-[765px]:w-[30vw] max-[765px]:text-[max(2vw,10px)]' />
+            <SubmitButton onClick={validateImagesData} title="Create" className='w-[20vw] text-[max(1.3vw,10px)] min-w-[100px] min-[766px]:py-[1%] max-[765px]:w-[30vw] max-[765px]:text-[max(2vw,10px)]' />
         </form>
     )
 }

@@ -4,6 +4,7 @@ import { setProgress } from "./loadingSlice";
 
 const initialState = {
     formData: new FormData(),
+    error: {}
 }
 
 export const uploadProductAction = asyncThunkPayloadCreator('productUpload/createProduct',
@@ -28,6 +29,10 @@ const productUploadSlice = createSlice({
                 }
             }
             state.countChange++
+        },
+        setErrorFormAction: (state, action) => {
+            console.log(action.payload)
+            state.error = { ...state.error, ...action.payload }
         }
     },
     extraReducers: (builder) => {
@@ -47,5 +52,5 @@ const productUploadSlice = createSlice({
     }
 })
 
-export const { changeInputUploadAction } = productUploadSlice.actions
+export const { changeInputUploadAction, setErrorFormAction } = productUploadSlice.actions
 export default productUploadSlice.reducer
