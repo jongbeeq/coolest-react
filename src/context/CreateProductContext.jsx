@@ -11,42 +11,50 @@ export default function CreateProductProvider({ children }) {
 
     const onChange = (data) => { dispatch(changeInputUploadAction({ [data.target.name]: data.target.value })) }
 
+    const createProductStyle = 'w-full rounded-none border border-1 border-neutral-sub-base outline-none focus:ring-2 ring-neutral-fade'
+
     const createProductRows = [
         {
             name: "title",
-            title: "Product Title",
+            title: "Title",
+            className: createProductStyle + ' ' + 'w-full',
             validateCondition: {
-                required: 'Product Title is required',
-                onChange
-            }
-        },
-        {
-            name: "description",
-            title: "Product Description",
-            validateCondition: {
-                required: 'Product Description is required',
+                required: 'Title is required',
                 onChange
             }
         },
         {
             name: "balance",
-            title: "Product Balance",
+            title: "Balance",
+            className: createProductStyle,
             validateCondition: {
-                required: 'Product Balance is required',
+                required: 'Balance is required',
                 onChange
             }
         },
         {
             name: "price",
-            title: "Product Price",
+            title: "Price",
+            className: createProductStyle,
             validateCondition: {
-                required: 'Product Price is required',
+                required: 'Price is required',
+                onChange
+            }
+        },
+        {
+            name: "description",
+            title: "Description",
+            type: 'textarea',
+            otherAttributes: { cols: '50', rows: '5' },
+            className: createProductStyle,
+            validateCondition: {
+                required: 'Description is required',
                 onChange
             }
         },
     ]
 
-    const value = { handleSubmit, register, errors, createProductRows }
+    const value = { handleSubmit, register, errors, createProductRows, createProductStyle }
 
     return (
         <CreateProductContext.Provider value={value}>

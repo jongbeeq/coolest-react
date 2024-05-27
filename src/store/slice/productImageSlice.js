@@ -14,7 +14,8 @@ const productImageSlice = createSlice({
         initializeImage: (state, action) => {
             state.data = action.payload
             state.showImage = action.payload[0]
-            state.totalPage = Math.ceil(action.payload.length / 4)
+            state.totalPage = Math.ceil(action.payload.length / 4),
+                state.slidePage = 0
         },
         setShowImage: (state, action) => {
             state.showImage = action.payload

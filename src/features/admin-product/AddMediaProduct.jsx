@@ -4,6 +4,7 @@ import { ImageIcon } from "../../utils/Icons";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeImage } from "../../store/slice/productImageSlice";
 import { changeInputUploadAction } from "../../store/slice/productUploadSlice";
+import TextDetail from "../../components/TextDetail";
 
 export default function AddMediaProduct() {
     const dispatch = useDispatch()
@@ -13,32 +14,42 @@ export default function AddMediaProduct() {
     const [openInput, setOpenInput] = useState(false)
 
     const handleClick = () => {
+        console.log('Click!!!!!!')
         setOpenInput(true)
     }
 
-    useEffect(() => { inputEl.current?.click() }, [openInput])
-
     const handleChange = (e) => {
-        const files = [...e.target.files]
-        console.log(files)
-        let imageShow = files.map((file, index) => {
-            dispatch(changeInputUploadAction({ images: file }))
-            return { id: imagesData.length + index + 1, src: URL.createObjectURL(file) }
-        })
-        dispatch(initializeImage([...imagesData, ...imageShow]))
-        setOpenInput(false)
+        if (e?.target?.files[0]) {
+            const files = [...e.target.files]
+            console.log(files)
+            let imageShow = files.map((file, index) => {
+                dispatch(changeInputUploadAction({ images: file }))
+                return { id: imagesData.length + index + 1, src: URL.createObjectURL(file) }
+            })
+            dispatch(initializeImage([...imagesData, ...imageShow]))
+            setOpenInput(false)
+            return e?.target?.files[0]
+        }
     }
 
-    const errorBorder = errorImages ? "border-error-base" : "border-neutral-base"
-    console.log(errorBorder)
+    useEffect(() => {
+        if (openInput) {
+            inputEl.current?.click()
+            console.log(handleChange())
+            !handleChange() && setOpenInput(false)
+        }
+    }
+        , [openInput])
+
+    const errorBorder = errorImages ? "border-error-base" : "border-neutral-sub-base"
 
     return (
         <>
-            <div onClick={handleClick} className={"w-full h-full border flex justify-center items-center gap-[2%] text-[max(1.2vw,10px)] text-neutral-base font-bold cursor-pointer hover:border-neutral-sub-base hover:text-neutral-sub-base" + defaultDuration + " " + errorBorder} >
+            <div onClick={handleClick} className={"w-full h-full border flex justify-center items-center gap-[2%] text-[max(1.2vw,10px)] text-neutral-sub-base font-bold cursor-pointer hover:border-neutral-base hover:text-neutral-base" + defaultDuration + " " + errorBorder} >
                 <ImageIcon />
                 <p>Add Images/Videos</p>
             </div>
-            <p className=" text-error-base text-xs ">{errorImages}</p>
+            <TextDetail className={'text-error-base'}>{errorImages}</TextDetail>
             {openInput && <input onChange={handleChange} ref={inputEl} type="file" multiple className="hidden" />}
         </>
     )
