@@ -21,8 +21,8 @@ export default function AddMediaProduct({ className }) {
         dispatch(setErrorFormAction({ images: null }))
         const files = [...e.target.files]
         console.log(files)
-        let imageShow = files.map((file, index) => {
-            dispatch(changeInputUploadAction({ images: file }))
+        dispatch(changeInputUploadAction({ images: files }))
+        const imageShow = files.map((file, index) => {
             return { id: imagesData.length + index + 1, src: URL.createObjectURL(file), file }
         })
         dispatch(initializeImage([...imagesData, ...imageShow]))

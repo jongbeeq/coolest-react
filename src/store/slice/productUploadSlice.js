@@ -28,29 +28,24 @@ const productUploadSlice = createSlice({
     reducers: {
         changeInputUploadAction: (state, action) => {
             console.log(action.payload)
-            for (let key in action.payload) {
-                if (key === 'images') {
+            const key = Object.keys(action.payload)[0]
+            console.log(key)
+            if (key === 'images') {
+                action.payload[key].length ?
                     state.formData.append(key, action.payload[key])
-                } else {
+                    :
+                    state.formData.delete(key)
+            } else {
+                action.payload[key] ?
                     state.formData.set(key, action.payload[key])
-                }
+                    :
+                    state.formData.delete(key)
             }
-            state.countChange++
         },
         setErrorFormAction: (state, action) => {
             console.log(action.payload)
             state.error = { ...state.error, ...action.payload }
         },
-        // removeImagesUploadAction: (state, action) => {
-        //     console.log(action.payload)
-        //     const imagesData = state.formData.getAll('images')
-        //     console.log(imagesData)
-        //     // const newimagesData = imagesData.filter((item, index) => index !== action.payload)
-        //     // console.log(newimagesData)
-        //     // state.formData.set('images', newimagesData)
-        //     state.formData.set('images', action.payload)
-        //     console.log(state.formData.getAll('images'))
-        // }
     },
     extraReducers: (builder) => {
         builder
@@ -68,12 +63,13 @@ const productUploadSlice = createSlice({
             })
             .addCase(removeImagesUploadAction.fulfilled, (state, action) => {
                 console.log(action.payload)
-                state.formData.set('images', action.payload)
-                console.log(state.formData.getAll('images'))
+                action.payload.length ?
+                    state.formData.set('images', action.payload)
+                    :
+                    state.formData.delete('images')
             })
     }
 })
 
 export const { changeInputUploadAction, setErrorFormAction } = productUploadSlice.actions
-// export const { changeInputUploadAction, setErrorFormAction, removeImagesUploadAction } = productUploadSlice.actions
 export default productUploadSlice.reducer
