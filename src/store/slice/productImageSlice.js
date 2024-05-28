@@ -28,8 +28,25 @@ const productImageSlice = createSlice({
             const isFirstPage = state.slidePage === 0
             state.slidePage = isFirstPage ? state.totalPage - 1 : state.slidePage - 1
         },
+        removeShowImagesAction: (state, action) => {
+            let newImagesData = []
+            if (state.showImage.id === action.payload) {
+                const isLastImage = action.payload === state.data.length ? state.data[0] : state.data[action.payload]
+                const notHaveImage = state.data.length === 1 ? {} : isLastImage
+                state.showImage = notHaveImage
+            }
+            for (let item of state.data) {
+                if (item.id !== action.payload) {
+                    item.id = newImagesData.length + 1
+                    newImagesData = [...newImagesData, item]
+                }
+            }
+            console.log(newImagesData)
+            state.data = newImagesData
+        }
+
     },
 })
 
-export const { initializeImage, setShowImage, slidePageDown, slidePageUp } = productImageSlice.actions
+export const { initializeImage, setShowImage, slidePageDown, slidePageUp, removeShowImagesAction } = productImageSlice.actions
 export default productImageSlice.reducer

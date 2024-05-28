@@ -25,6 +25,7 @@ export default function SlideImage() {
         , [productMode])
 
     const positonPage = `${slidePage * heightDisplay}%`
+    const haveUploadImage = (productMode !== viewProductModeTerm) && (imageDatas.length > 0)
 
     return (
         <>
@@ -36,8 +37,7 @@ export default function SlideImage() {
                     {showImage && imageDatas.map((image) => <IconImage key={image.id} image={image} />)}
                 </div>
                 {
-                    productMode !== viewProductModeTerm &&
-                    <AddMediaProduct className={'w-full aspect-square absolute bottom-[1.9%] bg-primary-background text-[max(0.7vw,6px)] font-bold'} />
+                    haveUploadImage && <AddMediaProduct className={'w-full aspect-square absolute bottom-[1.9%] bg-primary-background text-[max(0.7vw,6px)] font-bold'} />
                 }
             </div>
             <ImageSlideButton />

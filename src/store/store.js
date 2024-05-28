@@ -13,9 +13,9 @@ const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: {
                 // Ignore these action types
-                ignoredActions: ["productUpload/changeInputUploadAction"],
+                ignoredActions: ["productUpload/changeInputUploadAction", 'productUpload/removeImagesUploadAction/fulfilled', 'productImage/initializeImage', 'productImage/setShowImage'],
                 // Ignore these paths in the state
-                ignoredPaths: ['productUpload'],
+                ignoredPaths: ['productUpload', 'productImage'],
             },
         }),
     reducer: {

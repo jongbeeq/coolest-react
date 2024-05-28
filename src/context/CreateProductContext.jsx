@@ -11,12 +11,13 @@ export default function CreateProductProvider({ children }) {
 
     const onChange = (data) => { dispatch(changeInputUploadAction({ [data.target.name]: data.target.value })) }
 
-    const createProductStyle = 'w-full rounded-none border border-1 border-neutral-sub-base outline-none focus:ring-2 ring-neutral-fade'
+    const createProductStyle = 'w-full rounded-none border border-1 outline-none focus:ring-2 ring-neutral-fade'
 
     const titleRow = {
         name: "title",
         title: "Title",
-        className: createProductStyle + ' ' + 'w-full',
+        className: createProductStyle,
+        borderColor: 'border-neutral-sub-base',
         validateCondition: {
             required: 'Title is required',
             onChange
@@ -26,8 +27,13 @@ export default function CreateProductProvider({ children }) {
         name: "balance",
         title: "Balance",
         className: createProductStyle,
+        borderColor: 'border-neutral-sub-base',
         validateCondition: {
             required: 'Balance is required',
+            pattern: {
+                value: /[0-9]/,
+                message: 'Balance must be a number'
+            },
             onChange
         }
     }
@@ -35,8 +41,13 @@ export default function CreateProductProvider({ children }) {
         name: "price",
         title: "Price",
         className: createProductStyle,
+        borderColor: 'border-neutral-sub-base',
         validateCondition: {
             required: 'Price is required',
+            pattern: {
+                value: /[0-9]/,
+                message: 'Balance must be a number'
+            },
             onChange
         }
     }
@@ -46,6 +57,7 @@ export default function CreateProductProvider({ children }) {
         type: 'textarea',
         otherAttributes: { cols: '50', rows: '5' },
         className: createProductStyle,
+        borderColor: 'border-neutral-sub-base',
         validateCondition: {
             required: 'Description is required',
             onChange

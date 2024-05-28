@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import asyncThunkPayloadCreator from "../../utils/asyncThunkPayloadCreator";
 import { setProgress } from "./loadingSlice";
 
@@ -14,6 +14,13 @@ export const uploadProductAction = asyncThunkPayloadCreator('productUpload/creat
         return res.data
     }
 )
+
+export const removeImagesUploadAction = createAsyncThunk('productUpload/removeImagesUploadAction',
+    (data, { getState }) => {
+        console.dir(getState().productImage.data)
+        const newImagesUpload = getState().productImage.data.map(img => img.file)
+        return newImagesUpload
+    })
 
 const productUploadSlice = createSlice({
     name: 'productUpload',
@@ -33,7 +40,17 @@ const productUploadSlice = createSlice({
         setErrorFormAction: (state, action) => {
             console.log(action.payload)
             state.error = { ...state.error, ...action.payload }
-        }
+        },
+        // removeImagesUploadAction: (state, action) => {
+        //     console.log(action.payload)
+        //     const imagesData = state.formData.getAll('images')
+        //     console.log(imagesData)
+        //     // const newimagesData = imagesData.filter((item, index) => index !== action.payload)
+        //     // console.log(newimagesData)
+        //     // state.formData.set('images', newimagesData)
+        //     state.formData.set('images', action.payload)
+        //     console.log(state.formData.getAll('images'))
+        // }
     },
     extraReducers: (builder) => {
         builder
@@ -49,8 +66,14 @@ const productUploadSlice = createSlice({
                 console.log(action)
                 setProgress(0)
             })
+            .addCase(removeImagesUploadAction.fulfilled, (state, action) => {
+                console.log(action.payload)
+                state.formData.set('images', action.payload)
+                console.log(state.formData.getAll('images'))
+            })
     }
 })
 
 export const { changeInputUploadAction, setErrorFormAction } = productUploadSlice.actions
+// export const { changeInputUploadAction, setErrorFormAction, removeImagesUploadAction } = productUploadSlice.actions
 export default productUploadSlice.reducer

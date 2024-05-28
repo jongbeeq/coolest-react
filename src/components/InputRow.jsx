@@ -4,10 +4,10 @@ import { setError } from "../store/slice/errorSlice"
 import TextDetail from "./TextDetail"
 
 export default function InputRow(props) {
-    const { name, title, type, register, validateCondition, error, info, className, otherAttributes } = props
+    const { name, title, type, register, validateCondition, error, info, className, borderColor, otherAttributes } = props
     const dispatch = useDispatch()
 
-    const errorBorder = error ? "border-error-base" : "border-neutral-base"
+    const errorBorder = error ? "border-error-base" : (borderColor || "border-neutral-base")
 
     return (
         <div>
@@ -15,7 +15,7 @@ export default function InputRow(props) {
             <div className="flex items-center relative">
                 {
                     type !== 'textarea' ?
-                        <input {...otherAttributes} type={type} className={className + " " + errorBorder} {...register(name, {
+                        <input {...otherAttributes} type={type} className={errorBorder + " " + className} {...register(name, {
                             ...validateCondition, onChange: (e) => {
                                 dispatch(setError(null))
                                 if (validateCondition.onChange) {
@@ -34,7 +34,7 @@ export default function InputRow(props) {
                         })} />}
                 {info && <Info info={info} />}
             </div>
-            <TextDetail className={'text-error-base'}>{error}</TextDetail>
+            <TextDetail className={'text-error-base leading-4'}>{error}</TextDetail>
         </div>
     )
 }
