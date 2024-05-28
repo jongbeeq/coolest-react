@@ -1,5 +1,5 @@
 export default function TextDetail({ className, children }) {
     return (
-        <p className={'text-[max(0.9vw,10px)]' + ' ' + className}>{children}</p>
+        <p className={'text-[max(0.9vw,10px)] leading-[max(0.9vw,10px)]' + ' ' + className}>{children}</p>
     )
 }

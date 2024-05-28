@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import LoadingPage from '../components/LoadingPage'
 export default function Layout() {
     const loading = useSelector(state => state.loading)
-    console.log(loading)
+
     return (
         <>
             <Header />

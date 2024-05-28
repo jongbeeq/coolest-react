@@ -37,10 +37,11 @@ export default function ProductImageSection() {
             </div>
             <div className="w-[55vw] min-w-[255px] aspect-square ml-[14.5%]">
                 {
-                    (showImage && (productMode === viewProductModeTerm)) ?
+                    (showImage) ?
                         <img className="w-full aspect-square object-cover" src={showImage.src}></img>
                         :
-                        <AddMediaProduct />
+                        (productMode !== viewProductModeTerm) &&
+                        <AddMediaProduct className={'w-full h-full text-[max(1.2vw,10px)] font-bold'} />
                 }
             </div>
         </>

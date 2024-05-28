@@ -11,5 +11,5 @@ export default function TotalNumPages() {
 
     console.log(TotalCountPagesComponent)
 
-    return TotalCountPagesComponent
+    return totalPage > 1 && TotalCountPagesComponent
 }
