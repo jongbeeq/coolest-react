@@ -1,16 +1,11 @@
-import ItemInput from "./ItemInput";
-import TypeActions from "./TypeActions";
-import TypeTitle from "./TypeTitle";
+import OptionalProductProvider from "../../context/OptionalProductContext";
+import OptionalInput from "./OptionalInput";
 
-export default function OptionalType() {
+export default function OptionalType(props) {
 
     return (
-        <div className="flex flex-col items-center gap-[0.5vw] pt-[2%] pb-[5%] border border-neutral-sub-base">
-            <div className="w-[90%] flex justify-between items-center">
-                <TypeTitle />
-                <TypeActions />
-            </div>
-            <ItemInput />
-        </div>
+        <OptionalProductProvider {...props}>
+            <OptionalInput />
+        </OptionalProductProvider>
     )
 }

@@ -4,7 +4,7 @@ import { setProgress } from "./loadingSlice";
 
 const initialState = {
     formData: new FormData(),
-    error: {}
+    error: {},
 }
 
 export const uploadProductAction = asyncThunkPayloadCreator('productUpload/createProduct',
@@ -28,8 +28,8 @@ const productUploadSlice = createSlice({
         changeInputUploadAction: (state, action) => {
             console.log(action.payload)
             const key = Object.keys(action.payload)[0]
-            console.log(key)
-            if (key === 'images') {
+            // if (key === 'images' || key === 'types') {
+            if (key === 'images' || key === 'types') {
                 action.payload[key].length ?
                     state.formData.append(key, action.payload[key])
                     :
@@ -39,6 +39,9 @@ const productUploadSlice = createSlice({
                     state.formData.set(key, action.payload[key])
                     :
                     state.formData.delete(key)
+            }
+            for (let pair of state.formData.entries()) {
+                console.log(pair[0], pair[1])
             }
         },
         setErrorFormAction: (state, action) => {

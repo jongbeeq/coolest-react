@@ -7,6 +7,7 @@ import productUploadSlice from './slice/productUploadSlice'
 import productImageSlice from './slice/productImageSlice'
 import productSelectSlice from './slice/productSelectSlice'
 import errorSlice from './slice/errorSlice'
+import productOptionSlice from './slice/productOptionSlice'
 
 const store = configureStore({
     middleware: (getDefaultMiddleware) =>
@@ -27,6 +28,7 @@ const store = configureStore({
         productImage: productImageSlice,
         productUpload: productUploadSlice,
         productSelect: productSelectSlice,
+        productOption: productOptionSlice,
     }
 })
 

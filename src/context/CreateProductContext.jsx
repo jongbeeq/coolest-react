@@ -64,7 +64,7 @@ export default function CreateProductProvider({ children }) {
         }
     }
 
-    const value = { handleSubmit, register, errors, titleRow, balanceRow, priceRow, descriptioneRow, createProductStyle }
+    const value = { handleSubmit, register, onChange, errors, titleRow, balanceRow, priceRow, descriptioneRow, createProductStyle }
 
     return (
         <CreateProductContext.Provider value={value}>

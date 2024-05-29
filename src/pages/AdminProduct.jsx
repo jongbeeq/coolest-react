@@ -14,6 +14,7 @@ export default function AdminProduct() {
         for (let pair of productUploadformData.entries()) {
             console.log(pair[0], pair[1])
             haveData = true
+            break
         }
         haveData && event.preventDefault();
     });
