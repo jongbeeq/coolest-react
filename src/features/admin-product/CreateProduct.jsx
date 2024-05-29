@@ -1,76 +1,25 @@
-// import SlideImage from "../product/SlideImage";
-
-// import { useEffect, useState } from "react"
 import ProductContainer from "../product/ProductContainer"
-// import { useDispatch, useSelector } from "react-redux"
-// import { switchproductModeAction } from "../../store/slice/productModeSlice"
-// import { createProductModeTerm } from "../../config/env"
-// import axios from "../../config/axios"
-// import { useForm } from "react-hook-form"
 import useCreateProduct from "../../hooks/use-createProduct"
 import SubmitButton from "../../components/SubmitButton"
 import { useDispatch, useSelector } from "react-redux"
-import { changeInputUploadAction, setErrorFormAction, uploadProductAction } from "../../store/slice/productUploadSlice"
-import { setError } from "../../store/slice/errorSlice"
+import { setErrorFormAction, uploadProductAction } from "../../store/slice/productUploadSlice"
 
 export default function CreateProduct() {
     const dispatch = useDispatch()
+    const { handleSubmit } = useCreateProduct()
     const productUploadFormData = useSelector(state => state.productUpload.formData)
-    // console.log(productUploadFormData)
-
-    // useEffect(() => console.log(productUploadFormData), [productUploadFormData])
-    // // const [productImages, setProductImages] = useState([])
-
-    // // const handleChangeFile = (e) => {
-    // //     console.dir(e.target)
-    // //     console.log(typeof e.target.files[0])
-    // //     const image = URL.createObjectURL(e.target.files[0])
-    // //     console.dir(image)
-    // //     console.log(typeof image)
-
-    // //     setProductImages([...productImages, image])
-    // // }
-
-
-    // useEffect(() => { dispatch(switchproductModeAction(createProductModeTerm)) }, [])
     const haveImagesData = productUploadFormData.getAll('images').length
 
-    const handleSubmitForm = (data) => {
-        console.log(data)
-        console.log(productUploadFormData.getAll('images'))
-        // const haveImagesData = productUploadFormData.getAll('images').length
+    const handleSubmitForm = () => {
         if (haveImagesData) {
-            console.log('welcome submit!!!!!!!!!!!!!!')
             dispatch(uploadProductAction(productUploadFormData))
-        } else {
-            console.log('cannot submit!!!!!!!!!!!!!!')
-            // dispatch(setError({ images: 'Product Image/Video is required' }))
         }
-        // dispatch(uploadProductAction(productUploadFormData))
-        // axios.post('/product/create', formData).then(res => console.log(res))
-
-        // for (let key in productUploadFormData) {
-        //     console.log(key)
-        //     console.log(productUploadFormData)
-        //     console.log(productUploadFormData[key])
-        //     for (let item of productUploadFormData[key]) {
-        //         formData.append(key, item)
-        //     }
-        // }
-        // console.log(formData)
     }
-
-    // const formData = new FormData()
-    // formData.append('optionals', [{ title: 'Car', balance: 35, price: 350 }])
-    // console.log(formData.has('optionals'))
-    // console.log(formData)
 
     const validateImagesData = () => {
         console.log(haveImagesData)
         !haveImagesData && dispatch(setErrorFormAction({ images: 'Product Image/Video is required' }))
     }
-
-    const { handleSubmit } = useCreateProduct()
 
     return (
         <form onSubmit={handleSubmit(handleSubmitForm)} className="flex flex-col items-center gap-3">

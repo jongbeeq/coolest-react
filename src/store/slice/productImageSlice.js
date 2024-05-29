@@ -31,7 +31,7 @@ const productImageSlice = createSlice({
         removeShowImagesAction: (state, action) => {
             let newImagesData = []
             if (state.showImage.id === action.payload) {
-                const isLastImage = action.payload === state.data.length ? state.data[0] : state.data[action.payload]
+                const isLastImage = action.payload === state.data.length ? state.data[state.data.length - 2] : state.data[action.payload]
                 const notHaveImage = state.data.length === 1 ? {} : isLastImage
                 state.showImage = notHaveImage
             }

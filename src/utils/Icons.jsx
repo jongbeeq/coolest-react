@@ -60,6 +60,35 @@ export function ImageIcon({ className }) {
     )
 }
 
+export function TrashIcon({ className }) {
+    return (
+        <div className={className}>
+            <i className="fa-solid fa-trash-can"></i>
+        </div>
+    )
+}
+
+export function PenIcon({ className }) {
+    return (
+        <div className={className}>
+            <i className="fa-solid fa-pencil"></i>
+        </div>
+    )
+}
+
+export function SquarePlusIcon({ className }) {
+    return (
+        <div className={className}>
+            <i className="fa-solid fa-square-plus"></i>
+        </div>
+    )
+}
+
+
+
+
+
+
 
 
 

@@ -17,7 +17,6 @@ export const uploadProductAction = asyncThunkPayloadCreator('productUpload/creat
 
 export const removeImagesUploadAction = createAsyncThunk('productUpload/removeImagesUploadAction',
     (data, { getState }) => {
-        console.dir(getState().productImage.data)
         const newImagesUpload = getState().productImage.data.map(img => img.file)
         return newImagesUpload
     })

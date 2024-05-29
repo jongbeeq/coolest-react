@@ -9,32 +9,29 @@ export default function InputRow(props) {
 
     const errorBorder = error ? "border-error-base" : (borderColor || "border-neutral-base")
 
+    const spreadRegister = register && register(name, {
+        ...validateCondition, onChange: (e) => {
+            dispatch(setError(null))
+            if (validateCondition.onChange) {
+                validateCondition.onChange(e)
+            }
+        }
+    })
+
+
     return (
-        <div>
+        <div className="flex flex-col gap-[3px]">
             <TextDetail className={'text-neutral-sub-base font-bold'}>{title}</TextDetail>
             <div className="flex items-center relative">
                 {
                     type !== 'textarea' ?
-                        <input {...otherAttributes} type={type} className={errorBorder + " " + className} {...register(name, {
-                            ...validateCondition, onChange: (e) => {
-                                dispatch(setError(null))
-                                if (validateCondition.onChange) {
-                                    validateCondition.onChange(e)
-                                }
-                            }
-                        })} />
+                        <input {...otherAttributes} type={type} className={errorBorder + " " + className} {...spreadRegister} />
                         :
-                        <textarea {...otherAttributes} className={className + " " + errorBorder} {...register(name, {
-                            ...validateCondition, onChange: (e) => {
-                                dispatch(setError(null))
-                                if (validateCondition.onChange) {
-                                    validateCondition.onChange(e)
-                                }
-                            }
-                        })} />}
+                        <textarea {...otherAttributes} type={type} className={errorBorder + " " + className} {...spreadRegister} />
+                }
                 {info && <Info info={info} />}
             </div>
-            <TextDetail className={'text-error-base leading-4'}>{error}</TextDetail>
+            <TextDetail className={'text-error-base'}>{error}</TextDetail>
         </div>
     )
 }
