@@ -16,12 +16,10 @@ export default function ItemEntityRow(props) {
         textClassName: "w-max absolute top-[130%] right-[10%] shadow-md z-10  text-balance text-[max(0.5vw,8px)] text-neutral-base border border-1 border-neutral-sub-base rounded-md bg-neutral-cross px-2 py-1"
     }
 
-    const errorMessage = errorBeforeCreateNew(errorKey, errorValue) || errors[name]?.message
+    const errorMessage = errors[name]?.message || errorBeforeCreateNew(errorKey, errorValue[0], errorValue[1])
     const errorStyle = errorMessage && (" " + 'border border-error-base')
 
     useEffect(() => {
-        console.log(options.length)
-        console.log(Boolean(options.length))
         options.length && dispatch(validateFinishOption(indexType))
     }, [errorMessage])
 

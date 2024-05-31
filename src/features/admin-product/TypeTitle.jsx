@@ -15,7 +15,7 @@ export default function TypeTitle() {
 
     const name = `types${index + 1}`
     const notHaveTitleErrorMessage = (validateExistDataActive && !optionTypeTitle) && 'Plaese fill type title before add new option'
-    const errorMessage = notHaveTitleErrorMessage || errors[name]?.message
+    const errorMessage = errors[name]?.message || notHaveTitleErrorMessage
 
     const onChange = (data) => {
         dispatch(editTypeTitleAction([index, data.target.value]))

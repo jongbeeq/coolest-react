@@ -6,13 +6,15 @@ export const OptionalProductContext = createContext();
 export default function OptionalProductProvider(props) {
     const { children, index } = props
     const [confirmRemoveOption, setConFirmRemoveOption] = useState(null)
-    const optionTypeTitle = useSelector(state => state.productOption.option[index].title)
+    const { title: optionTypeTitle, items: optionItem, finishOption } = useSelector(state => state.productOption.option[index])
     const validateExistDataActive = useSelector(state => state.productOption.validateExistDataActive)
-    const finishOption = useSelector(state => state.productOption.option[index].finishOption)
+    const lastIndexItem = optionItem.length === 0 ? 0 : optionItem.length
+    console.log('optionItem.length ------', optionItem.length)
+    console.log('lastIndexItem ------', lastIndexItem)
 
     const validatefinishOption = validateExistDataActive && finishOption
 
-    const value = { index, validateExistDataActive, optionTypeTitle, finishOption, validatefinishOption, confirmRemoveOption, setConFirmRemoveOption }
+    const value = { index, lastIndexItem, optionItem, validateExistDataActive, optionTypeTitle, finishOption, validatefinishOption, confirmRemoveOption, setConFirmRemoveOption }
 
     return (
         <OptionalProductContext.Provider value={value}>

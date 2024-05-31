@@ -14,13 +14,16 @@ export default function ItemEntity({ indexItem }) {
     const dispatch = useDispatch()
 
     const toggleFocus = {
-        onBlur: () => setIsFocus(false),
+        // onBlur: () => setIsFocus(false),
         onFocus: () => setIsFocus(true)
     }
 
-    const errorBeforeCreateNew = (message, condition) => {
-        if (validateExistDataActive && condition) {
+    const errorBeforeCreateNew = (message, ...condition) => {
+        if (validateExistDataActive && condition[0]) {
             return `Plaese fill item ${message} before add new option`
+        }
+        if (validateExistDataActive && condition[1]) {
+            return `Item ${message} must be number`
         }
     }
 
@@ -39,7 +42,7 @@ export default function ItemEntity({ indexItem }) {
             name: `types${indexType + 1}/item-title${indexItem + 1}`,
             value: optionItem?.title,
             errorKey: 'title',
-            errorValue: Boolean(!optionItem?.title),
+            errorValue: [Boolean(!optionItem?.title), isNaN(optionItem?.title)],
             errorBeforeCreateNew: errorBeforeCreateNew,
             validateCondition: {
                 required: 'Item title is required',
@@ -50,7 +53,7 @@ export default function ItemEntity({ indexItem }) {
             name: `types${indexType + 1}/item-price${indexItem + 1}`,
             value: optionItem?.price,
             errorKey: 'price',
-            errorValue: Boolean(!optionItem?.price),
+            errorValue: [Boolean(!optionItem?.price), isNaN(optionItem?.price)],
             errorBeforeCreateNew: errorBeforeCreateNew,
             validateCondition: {
                 required: 'Item price is required',
@@ -65,7 +68,7 @@ export default function ItemEntity({ indexItem }) {
             name: `types${indexType + 1}/item-balance${indexItem + 1}`,
             value: optionItem?.balance,
             errorKey: 'balance',
-            errorValue: Boolean(!optionItem?.balance),
+            errorValue: [Boolean(!optionItem?.balance), isNaN(optionItem?.balance)],
             errorBeforeCreateNew: errorBeforeCreateNew,
             validateCondition: {
                 required: 'Item balance is required',
@@ -84,7 +87,7 @@ export default function ItemEntity({ indexItem }) {
                 <ItemEntityRow value={col.value} resetField={resetField} key={index} index={index} name={col.name} errorBeforeCreateNew={col.errorBeforeCreateNew} register={register} validateCondition={col.validateCondition} errorKey={col.errorKey} errorValue={col.errorValue} errors={errors} />
             )}
             <div className='absolute right-[-24px]'>
-                {isFocus && <ItemActions />}
+                {isFocus && <ItemActions indexItem={indexItem} />}
             </div>
         </div>
     )

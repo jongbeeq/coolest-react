@@ -23,7 +23,13 @@ const newOption = {
     isCollapse: false
 }
 
-
+const createErrorHasData = (index) => {
+    return {
+        [`item_title${index}`]: false,
+        [`item_price${index}`]: false,
+        [`item_balance${index}`]: false,
+    }
+}
 
 const productOptionSlice = createSlice({
     name: 'productOption',
@@ -51,15 +57,21 @@ const productOptionSlice = createSlice({
             state.option[indexType].finishOption = validateValue
         },
         createItemAction: (state, action) => {
+            console.log(action.payload)
             const [indexType, indexItem, itemData] = action.payload
+            const haveItemData = itemData || {}
             const prevItemData = state.option[indexType].items[indexItem]
             state.option[indexType].items[indexItem] = prevItemData ?
-                { ...prevItemData, ...itemData }
+                { ...prevItemData, ...haveItemData }
                 :
-                { ...defaultItemData, ...itemData }
-            const errorKey = 'item_' + Object.keys(itemData)[0] + (indexItem + 1)
-            state.option[indexType].itemHasData[errorKey] = Boolean(Object.values(itemData)[0])
-
+                { ...defaultItemData, ...haveItemData }
+            if (itemData) {
+                const errorKey = 'item_' + Object.keys(itemData)[0] + (indexItem + 1)
+                state.option[indexType].itemHasData[errorKey] = Boolean(Object.values(itemData)[0])
+            } else {
+                const errorKeysNew = createErrorHasData(indexItem)
+                state.option[indexType].itemHasData = { ...state.option[indexType].itemHasData, ...errorKeysNew }
+            }
             const validateValue = Object.values(state.option[indexType].itemHasData)
                 .reduce((prev, next) => prev && next)
             state.option[indexType].finishOption = validateValue
@@ -86,6 +98,12 @@ const productOptionSlice = createSlice({
             const itemHasDataValue = Object.values(itemHasData).find((item) => item)
             state.option[indexType].optionHasData = Boolean(title) && itemHasDataValue
         },
+        insertItemAcion: (state, action) => {
+            console.log(action.payload)
+            const [indexType, indexNewItem] = action.payload
+            state.option[indexType].splice(indexNewItem, 0, defaultItemData)
+            state.option[indexType].itemHasData = { ...state.option[indexType].itemHasData, ...createErrorHasData(state.option[indexType].items.length) }
+        },
         resetOptional: (state) => {
             state = initialState
             return state
@@ -93,5 +111,5 @@ const productOptionSlice = createSlice({
     },
 })
 
-export const { createOptionAction, editTypeTitleAction, createItemAction, setOptionValidate, validateFinishOption, resetOptional, collapseOptionAction, removeOptionAction, valdateOptionHasDataAction } = productOptionSlice.actions
+export const { createOptionAction, editTypeTitleAction, createItemAction, setOptionValidate, validateFinishOption, resetOptional, collapseOptionAction, removeOptionAction, valdateOptionHasDataAction, insertItemAcion } = productOptionSlice.actions
 export default productOptionSlice.reducer
