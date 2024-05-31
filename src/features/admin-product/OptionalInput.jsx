@@ -5,12 +5,15 @@ import TypeTitle from "./TypeTitle";
 import useOptionalProduct from "../../hooks/use-optionalProduct";
 import { setOptionValidate } from "../../store/slice/productOptionSlice";
 import { useEffect } from "react";
+import ConfirmRemoveOption from "./ConfirmRemoveOption";
 
 export default function OptionalInput() {
-    const { validateExistDataActive, finishOption, index } = useOptionalProduct()
+    const { validateExistDataActive, finishOption, confirmRemoveOption, index } = useOptionalProduct()
     const optionCollapse = useSelector(state => state.productOption.option[index].isCollapse)
+    const optionHasData = useSelector(state => state.productOption.option[index].optionHasData)
     const dispatch = useDispatch()
 
+    console.log(optionHasData)
 
     useEffect(() => { dispatch(setOptionValidate(false)) }, [])
 
@@ -18,7 +21,11 @@ export default function OptionalInput() {
     const style = validateExistDataActive ? validateOptinalStyle : 'border-neutral-sub-base'
 
     return (
-        <div className={"flex flex-col items-center gap-[0.5vw] pt-[2%] pb-[5%] border" + " " + style}>
+        <div className={"relative flex flex-col items-center gap-[0.5vw] pt-[2%] pb-[5%] border" + " " + style}>
+            {(optionHasData && confirmRemoveOption === null) &&
+                <div className="absolute z-20 left-[0%] top-[0%] w-full h-full">
+                    <ConfirmRemoveOption />
+                </div>}
             <div className="w-[90%] flex justify-between items-center">
                 <TypeTitle />
                 <TypeActions />

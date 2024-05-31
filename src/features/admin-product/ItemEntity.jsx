@@ -37,6 +37,7 @@ export default function ItemEntity({ indexItem }) {
     const itemDataCols = [
         {
             name: `types${indexType + 1}/item-title${indexItem + 1}`,
+            value: optionItem?.title,
             errorKey: 'title',
             errorValue: Boolean(!optionItem?.title),
             errorBeforeCreateNew: errorBeforeCreateNew,
@@ -47,6 +48,7 @@ export default function ItemEntity({ indexItem }) {
         },
         {
             name: `types${indexType + 1}/item-price${indexItem + 1}`,
+            value: optionItem?.price,
             errorKey: 'price',
             errorValue: Boolean(!optionItem?.price),
             errorBeforeCreateNew: errorBeforeCreateNew,
@@ -61,6 +63,7 @@ export default function ItemEntity({ indexItem }) {
         },
         {
             name: `types${indexType + 1}/item-balance${indexItem + 1}`,
+            value: optionItem?.balance,
             errorKey: 'balance',
             errorValue: Boolean(!optionItem?.balance),
             errorBeforeCreateNew: errorBeforeCreateNew,
@@ -78,7 +81,7 @@ export default function ItemEntity({ indexItem }) {
     return (
         <div {...toggleFocus} className="w-full flex items-center gap-[2px] relative text-[max(0.8vw,8px)]">
             {itemDataCols.map((col, index) =>
-                <ItemEntityRow resetField={resetField} key={index} index={index} name={col.name} errorBeforeCreateNew={col.errorBeforeCreateNew} register={register} validateCondition={col.validateCondition} errorKey={col.errorKey} errorValue={col.errorValue} errors={errors} />
+                <ItemEntityRow value={col.value} resetField={resetField} key={index} index={index} name={col.name} errorBeforeCreateNew={col.errorBeforeCreateNew} register={register} validateCondition={col.validateCondition} errorKey={col.errorKey} errorValue={col.errorValue} errors={errors} />
             )}
             <div className='absolute right-[-24px]'>
                 {isFocus && <ItemActions />}

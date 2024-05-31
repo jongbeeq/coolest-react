@@ -5,7 +5,7 @@ import TextDetail from "./TextDetail"
 import { useEffect } from "react"
 
 export default function InputRow(props) {
-    const { resetField, name, title, type, register, validateCondition, error, info, className, borderColor, infoClassName, otherAttributes } = props
+    const { value, resetField, name, title, type, register, validateCondition, error, info, className, borderColor, infoClassName, otherAttributes } = props
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function InputRow(props) {
             <div className="flex items-center relative">
                 {
                     type !== 'textarea' ?
-                        <input {...otherAttributes} type={type} className={errorBorder + " " + className} {...spreadRegister} />
+                        <input value={value} {...otherAttributes} type={type} className={errorBorder + " " + className} {...spreadRegister} />
                         :
                         <textarea {...otherAttributes} type={type} className={errorBorder + " " + className} {...spreadRegister} />
                 }
