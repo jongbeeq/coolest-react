@@ -6,6 +6,7 @@ import { createProductModeTerm, viewProductModeTerm } from "../config/env";
 import CreateProductProvider from "../context/CreateProductContext";
 import { resetOptional } from "../store/slice/productOptionSlice";
 import { resetProductUpload } from "../store/slice/productUploadSlice";
+import log from "../utils/log";
 
 export default function AdminProduct() {
     const dispatch = useDispatch()
@@ -14,7 +15,7 @@ export default function AdminProduct() {
     window.addEventListener('beforeunload', function (event) {
         let haveData = false
         for (let pair of productUploadformData.entries()) {
-            console.log(pair[0], pair[1])
+            log(pair[0], pair[1])
             haveData = true
             break
         }

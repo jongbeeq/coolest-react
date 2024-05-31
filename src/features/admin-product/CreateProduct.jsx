@@ -3,6 +3,8 @@ import useCreateProduct from "../../hooks/use-createProduct"
 import SubmitButton from "../../components/SubmitButton"
 import { useDispatch, useSelector } from "react-redux"
 import { setErrorFormAction, uploadProductAction } from "../../store/slice/productUploadSlice"
+import log from "../../utils/log"
+import { setOptionValidate, validateFinishOption } from "../../store/slice/productOptionSlice"
 
 export default function CreateProduct() {
     const dispatch = useDispatch()
@@ -14,11 +16,11 @@ export default function CreateProduct() {
     const handleSubmitForm = (e) => {
         e.preventDefault()
         // if (productOption.length) {
-        //     console.log(productOption)
+        //     log(productOption)
         //     const optionFormData = productOption.map((option) => {
 
         //     })
-        //     console.log(optionFormData)
+        //     log(optionFormData)
         // }
         if (haveImagesData) {
             dispatch(uploadProductAction(productUploadFormData))
@@ -26,7 +28,8 @@ export default function CreateProduct() {
     }
 
     const validateImagesData = () => {
-        console.log(haveImagesData)
+        log(haveImagesData)
+        dispatch(setOptionValidate(true))
         !haveImagesData && dispatch(setErrorFormAction({ images: 'Product Image/Video is required' }))
     }
 

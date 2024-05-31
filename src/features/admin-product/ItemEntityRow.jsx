@@ -3,14 +3,15 @@ import InputRow from "../../components/InputRow";
 import { validateFinishOption } from "../../store/slice/productOptionSlice";
 import useOptionalProduct from "../../hooks/use-optionalProduct";
 import { useDispatch } from "react-redux";
+import log from "../../utils/log";
 
 export default function ItemEntityRow(props) {
     const { errorBeforeCreateNew, name, index, register, validateCondition, errorKey, errorValue, errors } = props
     const { index: indexType } = useOptionalProduct()
     const dispatch = useDispatch()
-    console.log(errorBeforeCreateNew)
-    console.log(errorKey)
-    console.log(errorValue)
+    log(errorBeforeCreateNew)
+    log(errorKey)
+    log(errorValue)
 
     const itemDataStyle = 'w-[90%] bg-transparent m-auto outline-none'
     const infoClassName = {
@@ -22,7 +23,7 @@ export default function ItemEntityRow(props) {
     const errorMessage = errorBeforeCreateNew(errorKey, errorValue) || errors[name]?.message
     const errorStyle = errorMessage && (" " + 'border border-error-base')
 
-    console.log(errorMessage)
+    log(errorMessage)
 
     useEffect(() => {
         dispatch(validateFinishOption(indexType))

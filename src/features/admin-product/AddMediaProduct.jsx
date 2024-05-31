@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { initializeImage } from "../../store/slice/productImageSlice";
 import { changeInputUploadAction, setErrorFormAction } from "../../store/slice/productUploadSlice";
 import TextDetail from "../../components/TextDetail";
+import log from "../../utils/log";
 
 export default function AddMediaProduct({ className }) {
     const dispatch = useDispatch()
@@ -20,7 +21,7 @@ export default function AddMediaProduct({ className }) {
     const handleChange = (e) => {
         dispatch(setErrorFormAction({ images: null }))
         const files = [...e.target.files]
-        console.log(files)
+        log(files)
         dispatch(changeInputUploadAction({ images: files }))
         const imageShow = files.map((file, index) => {
             return { id: imagesData.length + index + 1, src: URL.createObjectURL(file), file }

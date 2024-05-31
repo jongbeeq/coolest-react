@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import log from '../../utils/log'
 
 const initialState = 0
 
@@ -7,7 +8,7 @@ const loadingSlice = createSlice({
     initialState,
     reducers: {
         setProgress: (state, action) => {
-            console.log(action)
+            log(action)
             state = action.payload
             return state
         }

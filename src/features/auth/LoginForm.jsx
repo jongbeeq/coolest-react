@@ -7,6 +7,7 @@ import { loginAction, switchAuthMode } from "../../store/slice/authSlice";
 import { registerModeTerm } from "../../config/env";
 import { setError } from "../../store/slice/errorSlice";
 import InputRow from "../../components/InputRow";
+import log from "../../utils/log";
 
 export default function LoginForm() {
     const { register, handleSubmit, formState: { errors } } = useForm()
@@ -37,7 +38,7 @@ export default function LoginForm() {
     }
 
     const handleSubmitForm = data => {
-        console.log(data)
+        log(data)
         dispatch(loginAction(data))
     }
 

@@ -9,6 +9,7 @@ import { registerAction, switchAuthMode } from "../../store/slice/authSlice";
 import { loginModeTerm } from "../../config/env";
 import { setError } from "../../store/slice/errorSlice";
 import InputRow from "../../components/InputRow";
+import log from "../../utils/log";
 
 
 export default function RegisterForm() {
@@ -70,7 +71,7 @@ export default function RegisterForm() {
                     message: 'Password is invalid format'
                 },
                 onChange: value => {
-                    console.log(value)
+                    log(value)
                     setKeepPassword(value.target.value)
                 }
             },
@@ -102,12 +103,12 @@ export default function RegisterForm() {
     }
 
     const handleSubmitForm = data => {
-        console.log(data)
+        log(data)
         dispatch(registerAction(data))
     }
 
     useEffect(() => {
-        console.log(keepPassword)
+        log(keepPassword)
     }, [keepPassword])
 
     return (

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { PressDownIcon } from "../../utils/Icons"
 import TextTitle from "../../components/TextTitle"
 import TextDetail from "../../components/TextDetail"
+import log from "../../utils/log"
 
 export default function InfoDescription() {
     const [open, setOpen] = useState(false)
@@ -10,7 +11,7 @@ export default function InfoDescription() {
         setOpen(!open)
     }
 
-    useEffect(() => console.log(open), [open])
+    useEffect(() => log(open), [open])
 
     const hideDescription = !open && ' hidden'
     const dropdownRight = !open && ' -rotate-90'

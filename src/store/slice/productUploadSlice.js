@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import asyncThunkPayloadCreator from "../../utils/asyncThunkPayloadCreator";
 import { setProgress } from "./loadingSlice";
+import log from "../../utils/log";
 
 const initialState = {
     formData: new FormData(),
@@ -10,7 +11,7 @@ const initialState = {
 export const uploadProductAction = asyncThunkPayloadCreator('productUpload/createProduct',
     { method: 'post', path: '/product/create' },
     (res) => {
-        console.log(res)
+        log(res)
         return res.data
     }
 )
@@ -26,13 +27,13 @@ const productUploadSlice = createSlice({
     initialState,
     reducers: {
         changeInputUploadAction: (state, action) => {
-            console.log(action.payload)
+            log(action.payload)
             const key = Object.keys(action.payload)[0]
             if (key === 'images') {
-                console.log('key ', key)
+                log('key ', key)
                 state.formData.append(key, action.payload[key])
             } else {
-                console.log('key not img ', key)
+                log('key not img ', key)
                 action.payload[key] ?
                     state.formData.set(key, action.payload[key])
                     :
@@ -40,13 +41,13 @@ const productUploadSlice = createSlice({
             }
             let formData = {}
             for (let pair of state.formData.entries()) {
-                console.log(pair[0], pair[1])
+                log(pair[0], pair[1])
                 formData[pair[0]] = pair[0] === 'images' ? (formData[pair[0]] ? [...formData[pair[0]], pair[1]] : [pair[1]]) : pair[1]
             }
-            console.log('formData ', formData)
+            log('formData ', formData)
         },
         setErrorFormAction: (state, action) => {
-            console.log(action.payload)
+            log(action.payload)
             state.error = { ...state.error, ...action.payload }
         },
         resetProductUpload: (state) => {
@@ -57,19 +58,19 @@ const productUploadSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(uploadProductAction.pending, (state, action) => {
-                console.log(action)
+                log(action)
             })
             .addCase(uploadProductAction.fulfilled, (state, action) => {
-                console.log(action)
+                log(action)
                 state.data = action.payload
                 setProgress(0)
             })
             .addCase(uploadProductAction.rejected, (state, action) => {
-                console.log(action)
+                log(action)
                 setProgress(0)
             })
             .addCase(removeImagesUploadAction.fulfilled, (state, action) => {
-                console.log(action.payload)
+                log(action.payload)
                 action.payload.length ?
                     state.formData.set('images', action.payload)
                     :

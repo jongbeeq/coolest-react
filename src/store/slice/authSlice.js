@@ -4,6 +4,7 @@ import { addAcessToken, removeAccesToken } from '../../utils/local-storage'
 import { setProgress } from './loadingSlice'
 import { loginModeTerm } from '../../config/env'
 import asyncThunkPayloadCreator from '../../utils/asyncThunkPayloadCreator'
+import log from '../../utils/log'
 
 const initialState = {
     error: null,
@@ -12,20 +13,20 @@ const initialState = {
 }
 
 export const registerAction = asyncThunkPayloadCreator('auth/registerUser', { method: 'post', path: '/auth/register/user' }, (res) => {
-    console.log(res)
+    log(res)
     addAcessToken(res.data.accessToken)
     return res.data.account
 })
 
 
 export const loginAction = asyncThunkPayloadCreator('auth/login', { method: 'post', path: '/auth/login' }, (res) => {
-    console.log(res)
+    log(res)
     addAcessToken(res.data.accessToken)
     return res.data.account
 })
 
 export const getMeAction = asyncThunkPayloadCreator('auth/getMe', { method: 'get', path: '/auth' }, (res) => {
-    console.log(res)
+    log(res)
     return res.data.account
 })
 
@@ -45,40 +46,40 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(registerAction.pending, (state, action) => {
-                console.log(action)
+                log(action)
             })
             .addCase(registerAction.fulfilled, (state, action) => {
-                console.log(action)
+                log(action)
                 state.data = action.payload
                 setProgress(0)
             })
             .addCase(registerAction.rejected, (state, action) => {
-                console.log(action)
+                log(action)
                 setProgress(0)
             })
             .addCase(loginAction.pending, (state, action) => {
-                console.log(action)
+                log(action)
             })
             .addCase(loginAction.fulfilled, (state, action) => {
-                console.log(action)
+                log(action)
                 state.data = action.payload
                 setProgress(0)
             })
             .addCase(loginAction.rejected, (state, action) => {
-                console.log(action)
+                log(action)
                 setProgress(0)
             })
             .addCase(getMeAction.pending, (state, action) => {
-                console.log(action)
+                log(action)
                 state.loading = true
             })
             .addCase(getMeAction.fulfilled, (state, action) => {
-                console.log(action)
+                log(action)
                 state.data = action.payload
                 setProgress(0)
             })
             .addCase(getMeAction.rejected, (state, action) => {
-                console.log(action)
+                log(action)
                 state.error = action.error
                 setProgress(0)
             })

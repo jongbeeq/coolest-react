@@ -5,6 +5,7 @@ import useOptionalProduct from "../../hooks/use-optionalProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { createItemAction } from "../../store/slice/productOptionSlice";
 import ItemEntityRow from "./ItemEntityRow";
+import log from "../../utils/log";
 
 export default function ItemEntity({ indexItem }) {
     const [isFocus, setIsFocus] = useState(false)
@@ -13,8 +14,8 @@ export default function ItemEntity({ indexItem }) {
     const optionItem = useSelector(state => state.productOption.option[indexType].items[indexItem])
     const dispatch = useDispatch()
 
-    console.log(optionItem)
-    console.log(validateExistDataActive)
+    log(optionItem)
+    log(validateExistDataActive)
 
     const toggleFocus = {
         onBlur: () => setIsFocus(false),
@@ -22,8 +23,8 @@ export default function ItemEntity({ indexItem }) {
     }
 
     const errorBeforeCreateNew = (message, condition) => {
-        console.log(message)
-        console.log(condition)
+        log(message)
+        log(condition)
         if (validateExistDataActive && condition) {
             return `Plaese fill item ${message} before add new option`
         }
@@ -57,6 +58,10 @@ export default function ItemEntity({ indexItem }) {
             errorBeforeCreateNew: errorBeforeCreateNew,
             validateCondition: {
                 required: 'Item price is required',
+                pattern: {
+                    value: /[0-9]/,
+                    message: 'Item price must be a number'
+                },
                 onChange: createOnchange('price')
             }
         },
@@ -67,6 +72,10 @@ export default function ItemEntity({ indexItem }) {
             errorBeforeCreateNew: errorBeforeCreateNew,
             validateCondition: {
                 required: 'Item balance is required',
+                pattern: {
+                    value: /[0-9]/,
+                    message: 'Item balance must be a number'
+                },
                 onChange: createOnchange('balance')
             }
         },

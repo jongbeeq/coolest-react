@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import NumPage from "./NumPage";
+import log from "../../utils/log";
 
 export default function TotalNumPages() {
     const totalPage = useSelector((state) => state.productImage.totalPage)
@@ -9,7 +10,7 @@ export default function TotalNumPages() {
         TotalCountPagesComponent[i] = <NumPage key={i} page={i} />
     }
 
-    console.log(TotalCountPagesComponent)
+    log(TotalCountPagesComponent)
 
     return totalPage > 1 && TotalCountPagesComponent
 }

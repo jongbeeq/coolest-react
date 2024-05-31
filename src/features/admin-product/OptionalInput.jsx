@@ -10,7 +10,7 @@ export default function OptionalInput() {
     const { validateExistDataActive, finishOption } = useOptionalProduct()
     const dispatch = useDispatch()
 
-    useEffect(() => { finishOption && dispatch(setOptionValidate(false)) }, [])
+    useEffect(() => { dispatch(setOptionValidate(false)) }, [])
 
     const validateOptinalStyle = finishOption ? 'border-neutral-sub-base' : 'border-error-base'
     const style = validateExistDataActive ? validateOptinalStyle : 'border-neutral-sub-base'
