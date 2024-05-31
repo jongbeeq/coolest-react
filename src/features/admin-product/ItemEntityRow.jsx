@@ -6,12 +6,9 @@ import { useDispatch } from "react-redux";
 import log from "../../utils/log";
 
 export default function ItemEntityRow(props) {
-    const { errorBeforeCreateNew, name, index, register, validateCondition, errorKey, errorValue, errors } = props
+    const { resetField, errorBeforeCreateNew, name, index, register, validateCondition, errorKey, errorValue, errors } = props
     const { index: indexType } = useOptionalProduct()
     const dispatch = useDispatch()
-    log(errorBeforeCreateNew)
-    log(errorKey)
-    log(errorValue)
 
     const itemDataStyle = 'w-[90%] bg-transparent m-auto outline-none'
     const infoClassName = {
@@ -31,7 +28,7 @@ export default function ItemEntityRow(props) {
 
     return (
         <div key={index} className={"w-[33%] bg-neutral-50" + errorStyle}>
-            <InputRow className={itemDataStyle} register={register} name={name} validateCondition={validateCondition} info={errorMessage} infoClassName={infoClassName} />
+            <InputRow resetField={resetField} className={itemDataStyle} register={register} name={name} validateCondition={validateCondition} info={errorMessage} infoClassName={infoClassName} />
         </div>
     )
 }

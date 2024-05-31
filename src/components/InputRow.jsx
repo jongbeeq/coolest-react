@@ -2,10 +2,15 @@ import { useDispatch } from "react-redux"
 import Info from "./Info"
 import { setError } from "../store/slice/errorSlice"
 import TextDetail from "./TextDetail"
+import { useEffect } from "react"
 
 export default function InputRow(props) {
-    const { name, title, type, register, validateCondition, error, info, className, borderColor, infoClassName, otherAttributes } = props
+    const { resetField, name, title, type, register, validateCondition, error, info, className, borderColor, infoClassName, otherAttributes } = props
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        return () => resetField && resetField(name)
+    }, [])
 
     const errorBorder = error ? "border-error-base" : (borderColor || "border-neutral-base")
 

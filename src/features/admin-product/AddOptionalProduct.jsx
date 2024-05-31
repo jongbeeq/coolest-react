@@ -12,8 +12,6 @@ export default function AddOptionalProduct() {
         log('click addOption !!!!')
         productOption.length !== 0 && dispatch(setOptionValidate(true))
         dispatch(createOptionAction())
-        // const addNewAvailable = productOption.length === 0 || productOption.finishOption
-        // addNewAvailable && dispatch(createOptionAction())
     }
 
     return (

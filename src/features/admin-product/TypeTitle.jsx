@@ -8,7 +8,7 @@ import { editTypeTitleAction, validateFinishOption } from "../../store/slice/pro
 import { useEffect } from "react";
 
 export default function TypeTitle() {
-    const { register, errors } = useCreateProduct()
+    const { register, errors, resetField } = useCreateProduct()
     const { index, validateExistDataActive, optionTypeTitle } = useOptionalProduct()
     const productOptionTypes = useSelector(state => state.productOption.types)
     const dispatch = useDispatch()
@@ -35,7 +35,7 @@ export default function TypeTitle() {
         <div className="w-full px-[3%] flex gap-2 items-center ">
             <TextDetail className={'text-neutral-sub-base font-bold'}>Type{index + 1}</TextDetail>
             <div className="flex flex-col">
-                <InputRow className='w-[18vw] max-[765px]:w-[40vw] bg-transparent border-b-[1px] outline-none' register={register} name={name} validateCondition={validateCondition} error={errorMessage} />
+                <InputRow resetField={resetField} className='w-[18vw] max-[765px]:w-[40vw] bg-transparent border-b-[1px] outline-none' register={register} name={name} validateCondition={validateCondition} error={errorMessage} />
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ItemInput from "./ItemInput";
 import TypeActions from "./TypeActions";
 import TypeTitle from "./TypeTitle";
@@ -7,8 +7,10 @@ import { setOptionValidate } from "../../store/slice/productOptionSlice";
 import { useEffect } from "react";
 
 export default function OptionalInput() {
-    const { validateExistDataActive, finishOption } = useOptionalProduct()
+    const { validateExistDataActive, finishOption, index } = useOptionalProduct()
+    const optionCollapse = useSelector(state => state.productOption.option[index].isCollapse)
     const dispatch = useDispatch()
+
 
     useEffect(() => { dispatch(setOptionValidate(false)) }, [])
 
@@ -21,7 +23,7 @@ export default function OptionalInput() {
                 <TypeTitle />
                 <TypeActions />
             </div>
-            <ItemInput />
+            {!optionCollapse && <ItemInput />}
         </div>
     )
 }

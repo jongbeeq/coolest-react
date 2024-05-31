@@ -5,17 +5,13 @@ import useOptionalProduct from "../../hooks/use-optionalProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { createItemAction } from "../../store/slice/productOptionSlice";
 import ItemEntityRow from "./ItemEntityRow";
-import log from "../../utils/log";
 
 export default function ItemEntity({ indexItem }) {
     const [isFocus, setIsFocus] = useState(false)
-    const { register, errors } = useCreateProduct()
+    const { register, errors, resetField } = useCreateProduct()
     const { index: indexType, validateExistDataActive } = useOptionalProduct()
     const optionItem = useSelector(state => state.productOption.option[indexType].items[indexItem])
     const dispatch = useDispatch()
-
-    log(optionItem)
-    log(validateExistDataActive)
 
     const toggleFocus = {
         onBlur: () => setIsFocus(false),
@@ -23,8 +19,6 @@ export default function ItemEntity({ indexItem }) {
     }
 
     const errorBeforeCreateNew = (message, condition) => {
-        log(message)
-        log(condition)
         if (validateExistDataActive && condition) {
             return `Plaese fill item ${message} before add new option`
         }
@@ -84,7 +78,7 @@ export default function ItemEntity({ indexItem }) {
     return (
         <div {...toggleFocus} className="w-full flex items-center gap-[2px] relative text-[max(0.8vw,8px)]">
             {itemDataCols.map((col, index) =>
-                <ItemEntityRow key={index} index={index} name={col.name} errorBeforeCreateNew={col.errorBeforeCreateNew} register={register} validateCondition={col.validateCondition} errorKey={col.errorKey} errorValue={col.errorValue} errors={errors} />
+                <ItemEntityRow resetField={resetField} key={index} index={index} name={col.name} errorBeforeCreateNew={col.errorBeforeCreateNew} register={register} validateCondition={col.validateCondition} errorKey={col.errorKey} errorValue={col.errorValue} errors={errors} />
             )}
             <div className='absolute right-[-24px]'>
                 {isFocus && <ItemActions />}

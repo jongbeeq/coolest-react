@@ -7,7 +7,7 @@ export const CreateProductContext = createContext();
 
 export default function CreateProductProvider({ children }) {
     const dispatch = useDispatch()
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, resetField, formState: { errors } } = useForm()
 
     const onChange = (data) => { dispatch(changeInputUploadAction({ [data.target.name]: data.target.value })) }
 
@@ -64,7 +64,7 @@ export default function CreateProductProvider({ children }) {
         }
     }
 
-    const value = { handleSubmit, register, onChange, errors, titleRow, balanceRow, priceRow, descriptioneRow, createProductStyle }
+    const value = { resetField, handleSubmit, register, onChange, errors, titleRow, balanceRow, priceRow, descriptioneRow, createProductStyle }
 
     return (
         <CreateProductContext.Provider value={value}>

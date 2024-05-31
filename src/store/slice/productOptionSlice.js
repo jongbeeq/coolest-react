@@ -29,7 +29,8 @@ const productOptionSlice = createSlice({
                         item_title1: false,
                         item_price1: false,
                         item_balance1: false,
-                    }
+                    },
+                    isCollapse: false
                 }
                 state.option = [...state.option, newOption]
             }
@@ -46,10 +47,8 @@ const productOptionSlice = createSlice({
             state.option[indexType].finishOption = validateValue
         },
         createItemAction: (state, action) => {
-            console.log('createItemAction -------', action.payload)
             const [indexType, indexItem, itemData] = action.payload
             const prevItemData = state.option[indexType].items[indexItem]
-            console.log('prevItemData ', prevItemData)
             const defaultData = { title: null, price: null, balance: null }
             state.option[indexType].items[indexItem] = prevItemData ?
                 { ...prevItemData, ...itemData }
@@ -67,11 +66,18 @@ const productOptionSlice = createSlice({
             state.validateExistDataActive = action.payload
         },
         validateFinishOption: (state, action) => {
-            console.log(action.payload)
             const indexType = action.payload
-            const validateValue = Object.values(state.option[indexType].errorOption)
+            const validateValue = Object.values(state.option[indexType]?.errorOption)
                 .reduce((prev, next) => prev && next)
             state.option[indexType].finishOption = validateValue
+        },
+        collapseOptionAction: (state, action) => {
+            state.option[action.payload].isCollapse = !state.option[action.payload].isCollapse
+        },
+        removeOptionAction: (state, action) => {
+            console.log('optionIndex ------', action.payload)
+            state.option = state.option.filter((option, index) => index !== action.payload)
+            state.types = state.types.filter((option, index) => index !== action.payload)
         },
         resetOptional: (state) => {
             state = initialState
@@ -80,5 +86,5 @@ const productOptionSlice = createSlice({
     },
 })
 
-export const { createOptionAction, editTypeTitleAction, createItemAction, setOptionValidate, validateFinishOption, resetOptional } = productOptionSlice.actions
+export const { createOptionAction, editTypeTitleAction, createItemAction, setOptionValidate, validateFinishOption, resetOptional, collapseOptionAction, removeOptionAction } = productOptionSlice.actions
 export default productOptionSlice.reducer

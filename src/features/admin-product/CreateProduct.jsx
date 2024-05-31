@@ -4,13 +4,13 @@ import SubmitButton from "../../components/SubmitButton"
 import { useDispatch, useSelector } from "react-redux"
 import { setErrorFormAction, uploadProductAction } from "../../store/slice/productUploadSlice"
 import log from "../../utils/log"
-import { setOptionValidate, validateFinishOption } from "../../store/slice/productOptionSlice"
+import { setOptionValidate } from "../../store/slice/productOptionSlice"
 
 export default function CreateProduct() {
     const dispatch = useDispatch()
     const { handleSubmit } = useCreateProduct()
     const productUploadFormData = useSelector(state => state.productUpload.formData)
-    const productOption = useSelector(state => state.productOption.option)
+    // const productOption = useSelector(state => state.productOption.option)
     const haveImagesData = productUploadFormData.getAll('images').length
 
     const handleSubmitForm = (e) => {
