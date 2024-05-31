@@ -4,16 +4,18 @@ import TextDetail from "../../components/TextDetail";
 import useCreateProduct from "../../hooks/use-createProduct";
 import { changeInputUploadAction } from "../../store/slice/productUploadSlice";
 import useOptionalProduct from "../../hooks/use-optionalProduct";
-import { editTypeTitleAction } from "../../store/slice/productOptionSlice";
+import { editTypeTitleAction, validateFinishOption } from "../../store/slice/productOptionSlice";
 import { useEffect } from "react";
 
 export default function TypeTitle() {
     const { register, errors } = useCreateProduct()
-    const { index } = useOptionalProduct()
-    const dispatch = useDispatch()
+    const { index, validateExistDataActive, optionTypeTitle } = useOptionalProduct()
     const productOptionTypes = useSelector(state => state.productOption.types)
+    const dispatch = useDispatch()
 
-    const name = 'types'
+    const name = `types${index + 1}`
+    const notHaveTitleErrorMessage = (validateExistDataActive && !optionTypeTitle) && 'Plaese fill type title before add new option'
+    const errorMessage = notHaveTitleErrorMessage || errors[name]?.message
 
     const onChange = (data) => {
         dispatch(editTypeTitleAction([index, data.target.value]))
@@ -25,13 +27,16 @@ export default function TypeTitle() {
     }
 
     useEffect(() => {
-        dispatch(changeInputUploadAction({ [name]: productOptionTypes }))
-    }, [productOptionTypes[index]])
+        productOptionTypes.length && dispatch(changeInputUploadAction({ 'types': productOptionTypes }))
+        dispatch(validateFinishOption(index))
+    }, [productOptionTypes[index], validateExistDataActive])
 
     return (
         <div className="w-full px-[3%] flex gap-2 items-center ">
             <TextDetail className={'text-neutral-sub-base font-bold'}>Type{index + 1}</TextDetail>
-            <InputRow className='w-[18vw] max-[765px]:w-[40vw] bg-transparent border-b-[1px] outline-none' register={register} name={name} validateCondition={validateCondition} error={errors[name]?.message} />
+            <div className="flex flex-col">
+                <InputRow className='w-[18vw] max-[765px]:w-[40vw] bg-transparent border-b-[1px] outline-none' register={register} name={name} validateCondition={validateCondition} error={errorMessage} />
+            </div>
         </div>
     )
 }

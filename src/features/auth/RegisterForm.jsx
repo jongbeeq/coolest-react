@@ -74,7 +74,11 @@ export default function RegisterForm() {
                     setKeepPassword(value.target.value)
                 }
             },
-            info: infoPassword
+            info: infoPassword,
+            infoClassName: {
+                iconClassName: 'text-neutral-sub-fade hover:text-neutral-sub-base cursor-pointer',
+                textClassName: "absolute top-[45%] left-[97.5%] shadow-md z-10 w-[180px] h-[46px] text-balance text-[8px] text-neutral-base border border-1 border-neutral-sub-base rounded-md bg-neutral-cross px-2 py-1"
+            }
         },
         {
             name: "confirmPassword", title: "Confirm Password", type: "password",
@@ -110,7 +114,7 @@ export default function RegisterForm() {
         <div className="flex flex-col items-center gap-5">
             <h1 className="font-medium text-4xl">{registerTerm}</h1>
             <form className="flex flex-col gap-2" onSubmit={handleSubmit(handleSubmitForm)}>
-                {registerRows.map(row => <InputRow className={authInputStyle} register={register} key={row.name} name={row.name} title={row.title} type={row.type} validateCondition={row.validateCondition} error={errors[row.name]?.message} info={row.info} />)}
+                {registerRows.map(row => <InputRow className={authInputStyle} register={register} key={row.name} name={row.name} title={row.title} type={row.type} validateCondition={row.validateCondition} error={errors[row.name]?.message} info={row.info} infoClassName={row.infoClassName} />)}
                 <SubmitButton title={registerTerm} />
             </form>
             <div onClick={handleClickSwitch}>

@@ -4,7 +4,7 @@ import { setError } from "../store/slice/errorSlice"
 import TextDetail from "./TextDetail"
 
 export default function InputRow(props) {
-    const { name, title, type, register, validateCondition, error, info, className, borderColor, otherAttributes } = props
+    const { name, title, type, register, validateCondition, error, info, className, borderColor, infoClassName, otherAttributes } = props
     const dispatch = useDispatch()
 
     const errorBorder = error ? "border-error-base" : (borderColor || "border-neutral-base")
@@ -18,7 +18,6 @@ export default function InputRow(props) {
         }
     })
 
-
     return (
         <div className="flex flex-col gap-[3px]">
             <TextDetail className={'text-neutral-sub-base font-bold'}>{title}</TextDetail>
@@ -29,7 +28,7 @@ export default function InputRow(props) {
                         :
                         <textarea {...otherAttributes} type={type} className={errorBorder + " " + className} {...spreadRegister} />
                 }
-                {info && <Info info={info} />}
+                {info && <Info info={info} infoClassName={infoClassName} />}
             </div>
             <TextDetail className={'text-error-base'}>{error}</TextDetail>
         </div>

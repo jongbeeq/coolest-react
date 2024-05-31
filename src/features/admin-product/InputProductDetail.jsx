@@ -1,6 +1,6 @@
 import InputRow from "../../components/InputRow";
 import useCreateProduct from "../../hooks/use-createProduct";
-import AddOptionalItem from "./AddOptionalItem";
+import AddOptionalProduct from "./AddOptionalProduct";
 
 export default function InputProductDetail() {
     const { titleRow, balanceRow, priceRow, descriptioneRow, register, errors } = useCreateProduct()
@@ -13,7 +13,7 @@ export default function InputProductDetail() {
                 <InputRow className={priceRow.className} borderColor={priceRow.borderColor} register={register} key={priceRow.name} name={priceRow.name} title={priceRow.title} type={priceRow.type} validateCondition={priceRow.validateCondition} error={errors[priceRow.name]?.message} info={priceRow.info} otherAttributes={priceRow.otherAttributes} />
             </div>
             <InputRow className={descriptioneRow.className} borderColor={descriptioneRow.borderColor} register={register} key={descriptioneRow.name} name={descriptioneRow.name} title={descriptioneRow.title} type={descriptioneRow.type} validateCondition={descriptioneRow.validateCondition} error={errors[descriptioneRow.name]?.message} info={descriptioneRow.info} otherAttributes={descriptioneRow.otherAttributes} />
-            <AddOptionalItem />
+            <AddOptionalProduct />
         </div>
     )
 }

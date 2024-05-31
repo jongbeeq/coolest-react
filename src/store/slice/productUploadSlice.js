@@ -28,26 +28,31 @@ const productUploadSlice = createSlice({
         changeInputUploadAction: (state, action) => {
             console.log(action.payload)
             const key = Object.keys(action.payload)[0]
-            // if (key === 'images' || key === 'types') {
-            if (key === 'images' || key === 'types') {
-                action.payload[key].length ?
-                    state.formData.append(key, action.payload[key])
-                    :
-                    state.formData.delete(key)
+            if (key === 'images') {
+                console.log('key ', key)
+                state.formData.append(key, action.payload[key])
             } else {
+                console.log('key not img ', key)
                 action.payload[key] ?
                     state.formData.set(key, action.payload[key])
                     :
                     state.formData.delete(key)
             }
+            let formData = {}
             for (let pair of state.formData.entries()) {
                 console.log(pair[0], pair[1])
+                formData[pair[0]] = pair[0] === 'images' ? (formData[pair[0]] ? [...formData[pair[0]], pair[1]] : [pair[1]]) : pair[1]
             }
+            console.log('formData ', formData)
         },
         setErrorFormAction: (state, action) => {
             console.log(action.payload)
             state.error = { ...state.error, ...action.payload }
         },
+        resetProductUpload: (state) => {
+            state = initialState
+            return state
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -73,5 +78,5 @@ const productUploadSlice = createSlice({
     }
 })
 
-export const { changeInputUploadAction, setErrorFormAction } = productUploadSlice.actions
+export const { changeInputUploadAction, setErrorFormAction, resetProductUpload } = productUploadSlice.actions
 export default productUploadSlice.reducer

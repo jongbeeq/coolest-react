@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { switchproductModeAction } from "../store/slice/productModeSlice";
 import { createProductModeTerm, viewProductModeTerm } from "../config/env";
 import CreateProductProvider from "../context/CreateProductContext";
+import { resetOptional } from "../store/slice/productOptionSlice";
+import { resetProductUpload } from "../store/slice/productUploadSlice";
 
 export default function AdminProduct() {
     const dispatch = useDispatch()
@@ -23,6 +25,8 @@ export default function AdminProduct() {
         dispatch(switchproductModeAction(createProductModeTerm))
         return () => {
             dispatch(switchproductModeAction(viewProductModeTerm))
+            dispatch(resetOptional())
+            dispatch(resetProductUpload())
         }
     }, [])
 
