@@ -19,6 +19,9 @@ const newOption = {
         item_price1: false,
         item_balance1: false,
     },
+    // haveSameType: {
+
+    // },
     optionHasData: false,
     isCollapse: false
 }
@@ -99,10 +102,17 @@ const productOptionSlice = createSlice({
             state.option[indexType].optionHasData = Boolean(title) && itemHasDataValue
         },
         insertItemAcion: (state, action) => {
-            console.log(action.payload)
             const [indexType, indexNewItem] = action.payload
-            state.option[indexType].splice(indexNewItem, 0, defaultItemData)
+            state.option[indexType].items.splice(indexNewItem + 1, 0, defaultItemData)
             state.option[indexType].itemHasData = { ...state.option[indexType].itemHasData, ...createErrorHasData(state.option[indexType].items.length) }
+        },
+        removeItemAcion: (state, action) => {
+            const [indexType, indexNewItem] = action.payload
+            if (state.option[indexType].items.length === 1) {
+                state.option[indexType].items[0] = defaultItemData
+            } else {
+                state.option[indexType].items.splice(indexNewItem, 1)
+            }
         },
         resetOptional: (state) => {
             state = initialState
@@ -111,5 +121,5 @@ const productOptionSlice = createSlice({
     },
 })
 
-export const { createOptionAction, editTypeTitleAction, createItemAction, setOptionValidate, validateFinishOption, resetOptional, collapseOptionAction, removeOptionAction, valdateOptionHasDataAction, insertItemAcion } = productOptionSlice.actions
+export const { createOptionAction, editTypeTitleAction, createItemAction, setOptionValidate, validateFinishOption, resetOptional, collapseOptionAction, removeOptionAction, valdateOptionHasDataAction, insertItemAcion, removeItemAcion } = productOptionSlice.actions
 export default productOptionSlice.reducer

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ItemActions from "./ItemActions";
 import useCreateProduct from "../../hooks/use-createProduct";
 import useOptionalProduct from "../../hooks/use-optionalProduct";
@@ -7,15 +6,13 @@ import { createItemAction } from "../../store/slice/productOptionSlice";
 import ItemEntityRow from "./ItemEntityRow";
 
 export default function ItemEntity({ indexItem }) {
-    const [isFocus, setIsFocus] = useState(false)
     const { register, errors, resetField } = useCreateProduct()
-    const { index: indexType, validateExistDataActive } = useOptionalProduct()
+    const { index: indexType, validateExistDataActive, isFocus, setIsFocus } = useOptionalProduct()
     const optionItem = useSelector(state => state.productOption.option[indexType].items[indexItem])
     const dispatch = useDispatch()
 
     const toggleFocus = {
-        // onBlur: () => setIsFocus(false),
-        onFocus: () => setIsFocus(true)
+        onFocus: () => setIsFocus(indexItem)
     }
 
     const errorBeforeCreateNew = (message, ...condition) => {
@@ -42,7 +39,7 @@ export default function ItemEntity({ indexItem }) {
             name: `types${indexType + 1}/item-title${indexItem + 1}`,
             value: optionItem?.title,
             errorKey: 'title',
-            errorValue: [Boolean(!optionItem?.title), isNaN(optionItem?.title)],
+            errorValue: [Boolean(!optionItem?.title)],
             errorBeforeCreateNew: errorBeforeCreateNew,
             validateCondition: {
                 required: 'Item title is required',
@@ -87,7 +84,7 @@ export default function ItemEntity({ indexItem }) {
                 <ItemEntityRow value={col.value} resetField={resetField} key={index} index={index} name={col.name} errorBeforeCreateNew={col.errorBeforeCreateNew} register={register} validateCondition={col.validateCondition} errorKey={col.errorKey} errorValue={col.errorValue} errors={errors} />
             )}
             <div className='absolute right-[-24px]'>
-                {isFocus && <ItemActions indexItem={indexItem} />}
+                {isFocus === indexItem && <ItemActions indexItem={indexItem} />}
             </div>
         </div>
     )

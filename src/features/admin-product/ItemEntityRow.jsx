@@ -17,7 +17,7 @@ export default function ItemEntityRow(props) {
     }
 
     const errorMessage = errors[name]?.message || errorBeforeCreateNew(errorKey, errorValue[0], errorValue[1])
-    const errorStyle = errorMessage && (" " + 'border border-error-base')
+    const errorStyle = errorMessage ? (" " + 'border border-error-base') : ''
 
     useEffect(() => {
         options.length && dispatch(validateFinishOption(indexType))

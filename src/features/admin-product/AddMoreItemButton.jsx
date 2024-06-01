@@ -1,16 +1,19 @@
 import { useDispatch } from "react-redux";
 import { defaultDuration } from "../../config/foundation";
 import useOptionalProduct from "../../hooks/use-optionalProduct";
-import { createItemAction } from "../../store/slice/productOptionSlice";
+import { createItemAction, insertItemAcion } from "../../store/slice/productOptionSlice";
 import { SquarePlusIcon } from "../../utils/Icons";
 
-export default function AddMoreItemButton() {
+export default function AddMoreItemButton({ indexItem }) {
     const { index: indexType, lastIndexItem } = useOptionalProduct()
     const dispatch = useDispatch()
 
     const handleClickAdd = () => {
-        const payload = [indexType, lastIndexItem]
-        dispatch(createItemAction(payload))
+        if (!isNaN(indexItem)) {
+            dispatch(insertItemAcion([indexType, indexItem]))
+        } else {
+            dispatch(createItemAction([indexType, lastIndexItem]))
+        }
     }
 
     return (
