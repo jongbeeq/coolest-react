@@ -9,11 +9,12 @@ export default function OptionalProductProvider(props) {
     const [isFocus, setIsFocus] = useState(false)
     const { title: optionTypeTitle, items: optionItem, finishOption } = useSelector(state => state.productOption.option[index])
     const validateExistDataActive = useSelector(state => state.productOption.validateExistDataActive)
+    const duplicateType = useSelector(state => state.productOption.option[index].duplicateType)
+
+    const isUniqueType = duplicateType !== -1
     const lastIndexItem = optionItem.length === 0 ? 0 : optionItem.length
 
-    const validatefinishOption = validateExistDataActive && finishOption
-
-    const value = { index, setIsFocus, isFocus, lastIndexItem, optionItem, validateExistDataActive, optionTypeTitle, finishOption, validatefinishOption, confirmRemoveOption, setConFirmRemoveOption }
+    const value = { index, setIsFocus, isFocus, isUniqueType, lastIndexItem, optionItem, validateExistDataActive, optionTypeTitle, finishOption, confirmRemoveOption, setConFirmRemoveOption }
 
     return (
         <OptionalProductContext.Provider value={value}>

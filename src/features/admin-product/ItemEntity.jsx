@@ -9,6 +9,7 @@ export default function ItemEntity({ indexItem }) {
     const { register, errors, resetField } = useCreateProduct()
     const { index: indexType, validateExistDataActive, isFocus, setIsFocus } = useOptionalProduct()
     const optionItem = useSelector(state => state.productOption.option[indexType].items[indexItem])
+    const options = useSelector(state => state.productOption.option[indexType]).items
     const dispatch = useDispatch()
 
     const toggleFocus = {
@@ -16,11 +17,15 @@ export default function ItemEntity({ indexItem }) {
     }
 
     const errorBeforeCreateNew = (message, ...condition) => {
+        console.log(condition)
         if (validateExistDataActive && condition[0]) {
             return `Plaese fill item ${message} before add new option`
         }
-        if (validateExistDataActive && condition[1]) {
+        if (condition[1]) {
             return `Item ${message} must be number`
+        }
+        if (condition[2]) {
+            return `Item title '${optionItem[message]}' is already exist. (at 'Item${optionItem?.duplicateItem + 1})`
         }
     }
 
@@ -34,12 +39,17 @@ export default function ItemEntity({ indexItem }) {
     }
 
 
+    const titleIsDuplicate = options.length > 1 && optionItem?.duplicateItem !== -1
+    console.log(options.length)
+    console.log(optionItem?.duplicateItem)
+    console.log(titleIsDuplicate)
+
     const itemDataCols = [
         {
             name: `types${indexType + 1}/item-title${indexItem + 1}`,
             value: optionItem?.title,
             errorKey: 'title',
-            errorValue: [Boolean(!optionItem?.title)],
+            errorValue: [Boolean(!optionItem?.title), null, titleIsDuplicate],
             errorBeforeCreateNew: errorBeforeCreateNew,
             validateCondition: {
                 required: 'Item title is required',

@@ -9,29 +9,20 @@ import { useEffect, useState } from "react";
 
 export default function TypeTitle() {
     const { register, errors, resetField } = useCreateProduct()
-    const [isSameType, setIsSameType] = useState(null)
     const [value, setValue] = useState(null)
-    const { index, validateExistDataActive, optionTypeTitle } = useOptionalProduct()
+    const { index, validateExistDataActive, optionTypeTitle, isUniqueType } = useOptionalProduct()
     const productOptionTypes = useSelector(state => state.productOption.types)
+    const duplicateType = useSelector(state => state.productOption.option[index].duplicateType)
     const dispatch = useDispatch()
 
     const name = `types${index + 1}`
     const notHaveTitleErrorMessage = (validateExistDataActive && !optionTypeTitle) && 'Plaese fill type title before add new option'
-    const errorMessage = errors[name]?.message || notHaveTitleErrorMessage || isSameType
+    const duplicateTypeMessage = isUniqueType && `Type title '${value}' is already exist. (at 'Type${duplicateType + 1}')`
+    const errorMessage = errors[name]?.message || notHaveTitleErrorMessage || duplicateTypeMessage
 
     const onChange = (data) => {
         setValue(data.target.value)
-        const optionTypeIsExist = productOptionTypes.findIndex((type, i) =>
-            i !== index && type === data.target.value
-        )
-        console.log('optionTypeIsExist -------', optionTypeIsExist)
-        const validateExist = productOptionTypes.length && (optionTypeIsExist !== -1)
-        if (validateExist) {
-            const existTypeMessage = `Type title '${data.target.value}' is already exist (at 'Type${optionTypeIsExist + 1}')`
-            return setIsSameType(existTypeMessage)
-        } else {
-            setIsSameType(null)
-        }
+        dispatch(validateFinishOption([index, value]))
         dispatch(editTypeTitleAction([index, data.target.value]))
     }
 
@@ -42,14 +33,14 @@ export default function TypeTitle() {
 
     useEffect(() => {
         productOptionTypes.length && dispatch(changeInputUploadAction({ 'types': productOptionTypes }))
-        dispatch(validateFinishOption(index))
+        dispatch(validateFinishOption([index, value]))
     }, [productOptionTypes[index], validateExistDataActive])
 
     return (
         <div className="w-full px-[3%] flex gap-2 items-center ">
             <TextDetail className={'text-neutral-sub-base font-bold'}>Type{index + 1}</TextDetail>
             <div className="flex flex-col">
-                <InputRow value={value || optionTypeTitle} resetField={resetField} className='w-[18vw] max-[765px]:w-[40vw] bg-transparent border-b-[1px] outline-none' register={register} name={name} validateCondition={validateCondition} error={errorMessage} />
+                <InputRow errorClassName='text-pretty text-[max(0.3vw,10px)]' value={value || optionTypeTitle} resetField={resetField} className='w-[18vw] max-[765px]:w-[40vw] bg-transparent border-b-[1px] outline-none' register={register} name={name} validateCondition={validateCondition} error={errorMessage} />
             </div>
         </div>
     )

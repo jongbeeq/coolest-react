@@ -27,13 +27,10 @@ const productUploadSlice = createSlice({
     initialState,
     reducers: {
         changeInputUploadAction: (state, action) => {
-            log(action.payload)
             const key = Object.keys(action.payload)[0]
             if (key === 'images') {
-                log('key ', key)
                 state.formData.append(key, action.payload[key])
             } else {
-                log('key not img ', key)
                 action.payload[key] ?
                     state.formData.set(key, action.payload[key])
                     :
@@ -41,13 +38,10 @@ const productUploadSlice = createSlice({
             }
             let formData = {}
             for (let pair of state.formData.entries()) {
-                log(pair[0], pair[1])
                 formData[pair[0]] = pair[0] === 'images' ? (formData[pair[0]] ? [...formData[pair[0]], pair[1]] : [pair[1]]) : pair[1]
             }
-            log('formData ', formData)
         },
         setErrorFormAction: (state, action) => {
-            log(action.payload)
             state.error = { ...state.error, ...action.payload }
         },
         resetProductUpload: (state) => {

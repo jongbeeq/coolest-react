@@ -5,7 +5,7 @@ import TextDetail from "./TextDetail"
 import { useEffect } from "react"
 
 export default function InputRow(props) {
-    const { value, resetField, name, title, type, register, validateCondition, error, info, className, borderColor, infoClassName, otherAttributes } = props
+    const { value, resetField, name, title, type, register, validateCondition, error, info, className, borderColor, infoClassName, otherAttributes, errorClassName } = props
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -35,7 +35,7 @@ export default function InputRow(props) {
                 }
                 {info && <Info info={info} infoClassName={infoClassName} />}
             </div>
-            <TextDetail className={'text-error-base'}>{error}</TextDetail>
+            <TextDetail className={'text-error-base' + " " + errorClassName}>{error}</TextDetail>
         </div>
     )
 }
