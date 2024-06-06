@@ -3,6 +3,7 @@ import OptionalType from "./OptionalType";
 import { createOptionAction, setOptionValidate } from "../../store/slice/productOptionSlice";
 import AddOptionalProductButton from "./AddOptionalItemButton";
 import log from "../../utils/log";
+import CombineItem from "./CombineItem";
 
 export default function AddOptionalProduct() {
     const productOption = useSelector(state => state.productOption.option)
@@ -18,6 +19,7 @@ export default function AddOptionalProduct() {
         <div className="flex flex-col gap-2">
             <AddOptionalProductButton onClick={handleClickAddOption} />
             {productOption.map((item, index) => <OptionalType key={index} index={index} />)}
+            {/* <CombineItem /> */}
         </div>
     )
 }

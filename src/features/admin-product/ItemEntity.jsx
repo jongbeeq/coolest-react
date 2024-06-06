@@ -3,11 +3,11 @@ import useCreateProduct from "../../hooks/use-createProduct";
 import useOptionalProduct from "../../hooks/use-optionalProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { createItemAction } from "../../store/slice/productOptionSlice";
-import ItemEntityRow from "./ItemEntityRow";
+import ItemEntityCol from "./ItemEntityCol";
 
 export default function ItemEntity({ indexItem }) {
-    const { register, errors, resetField } = useCreateProduct()
-    const { index: indexType, validateExistDataActive, isFocus, setIsFocus } = useOptionalProduct()
+    const { register, errors, resetField, validateExistDataActive } = useCreateProduct()
+    const { index: indexType, isFocus, setIsFocus } = useOptionalProduct()
     const optionItem = useSelector(state => state.productOption.option[indexType].items[indexItem])
     const options = useSelector(state => state.productOption.option[indexType]).items
     const dispatch = useDispatch()
@@ -17,7 +17,6 @@ export default function ItemEntity({ indexItem }) {
     }
 
     const errorBeforeCreateNew = (message, ...condition) => {
-        console.log(condition)
         if (validateExistDataActive && condition[0]) {
             return `Plaese fill item ${message} before add new option`
         }
@@ -38,11 +37,7 @@ export default function ItemEntity({ indexItem }) {
         return onChange
     }
 
-
     const titleIsDuplicate = options.length > 1 && optionItem?.duplicateItem !== -1
-    console.log(options.length)
-    console.log(optionItem?.duplicateItem)
-    console.log(titleIsDuplicate)
 
     const itemDataCols = [
         {
@@ -91,7 +86,7 @@ export default function ItemEntity({ indexItem }) {
     return (
         <div {...toggleFocus} className="w-full flex items-center gap-[2px] relative text-[max(0.8vw,8px)]">
             {itemDataCols.map((col, index) =>
-                <ItemEntityRow value={col.value} resetField={resetField} key={index} index={index} name={col.name} errorBeforeCreateNew={col.errorBeforeCreateNew} register={register} validateCondition={col.validateCondition} errorKey={col.errorKey} errorValue={col.errorValue} errors={errors} />
+                <ItemEntityCol value={col.value} resetField={resetField} key={index} index={index} name={col.name} errorBeforeCreateNew={col.errorBeforeCreateNew} register={register} validateCondition={col.validateCondition} errorKey={col.errorKey} errorValue={col.errorValue} errors={errors} />
             )}
             <div className='absolute right-[-24px]'>
                 {isFocus === indexItem && <ItemActions indexItem={indexItem} />}

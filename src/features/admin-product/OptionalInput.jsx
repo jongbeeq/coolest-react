@@ -6,14 +6,14 @@ import useOptionalProduct from "../../hooks/use-optionalProduct";
 import { setOptionValidate } from "../../store/slice/productOptionSlice";
 import { useEffect } from "react";
 import ConfirmRemoveOption from "./ConfirmRemoveOption";
+import useCreateProduct from "../../hooks/use-createProduct";
 
 export default function OptionalInput() {
-    const { validateExistDataActive, finishOption, confirmRemoveOption, index } = useOptionalProduct()
+    const { validateExistDataActive } = useCreateProduct()
+    const { finishOption, confirmRemoveOption, index } = useOptionalProduct()
     const optionCollapse = useSelector(state => state.productOption.option[index].isCollapse)
     const optionHasData = useSelector(state => state.productOption.option[index].optionHasData)
     const dispatch = useDispatch()
-
-    console.log(optionHasData)
 
     useEffect(() => { dispatch(setOptionValidate(false)) }, [])
 

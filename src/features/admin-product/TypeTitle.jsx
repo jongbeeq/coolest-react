@@ -8,9 +8,9 @@ import { editTypeTitleAction, validateFinishOption } from "../../store/slice/pro
 import { useEffect, useState } from "react";
 
 export default function TypeTitle() {
-    const { register, errors, resetField } = useCreateProduct()
+    const { register, errors, resetField, validateExistDataActive } = useCreateProduct()
     const [value, setValue] = useState(null)
-    const { index, validateExistDataActive, optionTypeTitle, isUniqueType } = useOptionalProduct()
+    const { index, optionTypeTitle, isUniqueType } = useOptionalProduct()
     const productOptionTypes = useSelector(state => state.productOption.types)
     const duplicateType = useSelector(state => state.productOption.option[index].duplicateType)
     const dispatch = useDispatch()

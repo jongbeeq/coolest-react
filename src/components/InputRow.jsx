@@ -31,7 +31,7 @@ export default function InputRow(props) {
                     type !== 'textarea' ?
                         <input value={value} {...otherAttributes} type={type} className={errorBorder + " " + className} {...spreadRegister} />
                         :
-                        <textarea {...otherAttributes} type={type} className={errorBorder + " " + className} {...spreadRegister} />
+                        <textarea value={value} {...otherAttributes} type={type} className={errorBorder + " " + className} {...spreadRegister} />
                 }
                 {info && <Info info={info} infoClassName={infoClassName} />}
             </div>

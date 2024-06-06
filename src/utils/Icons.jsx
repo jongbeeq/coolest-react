@@ -84,6 +84,17 @@ export function SquarePlusIcon({ className }) {
     )
 }
 
+export function TriangleIcon({ className }) {
+    return (
+        <div className={className}>
+            <i className="fa-solid fa-caret-right"></i>
+        </div>
+    )
+}
+
+
+
+
 
 
 

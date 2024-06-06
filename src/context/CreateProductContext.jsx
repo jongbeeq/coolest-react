@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeInputUploadAction } from "../store/slice/productUploadSlice";
 
 export const CreateProductContext = createContext();
@@ -8,6 +8,8 @@ export const CreateProductContext = createContext();
 export default function CreateProductProvider({ children }) {
     const dispatch = useDispatch()
     const { register, handleSubmit, resetField, formState: { errors } } = useForm()
+    const productOptions = useSelector(state => state.productOption.option)
+    const validateExistDataActive = useSelector(state => state.productOption.validateExistDataActive)
 
     const onChange = (data) => { dispatch(changeInputUploadAction({ [data.target.name]: data.target.value })) }
 
@@ -35,6 +37,10 @@ export default function CreateProductProvider({ children }) {
                 message: 'Balance must be a number'
             },
             onChange
+        },
+        // value: ,
+        otherAttributes: {
+            disabled: Boolean(productOptions.length)
         }
     }
     const priceRow = {
@@ -64,7 +70,7 @@ export default function CreateProductProvider({ children }) {
         }
     }
 
-    const value = { resetField, handleSubmit, register, onChange, errors, titleRow, balanceRow, priceRow, descriptioneRow, createProductStyle }
+    const value = { resetField, handleSubmit, register, onChange, errors, titleRow, balanceRow, priceRow, descriptioneRow, createProductStyle, validateExistDataActive }
 
     return (
         <CreateProductContext.Provider value={value}>

@@ -3,14 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     types: [],
     option: [],
+    combineItem: {},
     validateExistDataActive: false,
     createNewAvailable: true
 }
 
-const defaultItemData = { title: '', price: '', balance: '', duplicateItem: -1 }
+const defaultItemData = { title: '', price: '', balance: '', duplicateItem: -1, combineItems: [] }
 
 const newOption = {
     title: '',
+    balance: 0,
     items: [defaultItemData],
     finishOption: false,
     itemHasData: {
@@ -42,7 +44,6 @@ const productOptionSlice = createSlice({
                 const prevFinishOption = option.length === 1 ? curr?.finishOption : prev && curr?.finishOption
                 return Boolean(prevFinishOption)
             }, true)
-            console.log(state.createNewAvailable)
             if (state.createNewAvailable) {
                 state.option = [...state.option, newOption]
             }
@@ -58,16 +59,20 @@ const productOptionSlice = createSlice({
             state.option[indexType].finishOption = validateValue
         },
         createItemAction: (state, action) => {
-            console.log(action.payload)
             const [indexType, indexItem, itemData] = action.payload
+            const lengthOption = state.option.length
+            const isLastOption = (state.option.length - 1) === indexType
             const haveItemData = itemData || {}
             const prevItemData = state.option[indexType].items[indexItem]
-            const datailTitle = itemData && Object.keys(itemData)[0] === 'title'
+            const isItemTitle = itemData && Object.keys(itemData)[0] === 'title'
+            // const isItemBalance = Object.keys(itemData)[0] === 'balance'
+
             state.option[indexType].items[indexItem] = prevItemData ?
                 { ...prevItemData, ...haveItemData }
                 :
                 { ...defaultItemData, ...haveItemData }
-            if (datailTitle) {
+
+            if (isItemTitle) {
                 const prevIndexSameItem = state.option[indexType].items[indexItem].duplicateItem
                 const indexSameItem = state.option[indexType].items.findIndex((item, index) =>
                     index !== indexItem && item.title === Object.values(itemData)[0]
@@ -79,6 +84,68 @@ const productOptionSlice = createSlice({
                     prevIndexSameItem !== -1 && (state.option[indexType].items[prevIndexSameItem].duplicateItem = -1)
                 }
             }
+
+            if (itemData && lengthOption > 1) {
+                const maxCombineItem = lengthOption - 1
+                console.log(maxCombineItem)
+
+                for (let i = 1; i <= maxCombineItem; i++) {
+                    state.combineItem[`combineItem${i}`] = []
+                }
+                const createCombineItem = (combineItemOrder, indexNextType, prevTitle, prevItem, prevType) => {
+                    if (combineItemOrder > maxCombineItem) return
+                    const maxPairType = state.option.length - (indexNextType + 1)
+
+                    for (let i = 1; i <= maxPairType; i++) {
+                        const indexPair = indexNextType + i
+                        state.option[indexPair].items.forEach((item) => {
+                            const title = `${prevTitle}+${item.title}`
+
+                            let primaryItem = []
+                            if (combineItemOrder === 1) {
+                                const primaryItem1Title = `${prevType.title}-${prevItem.title}`
+                                const primaryItem2Title = `${state.option[indexPair].title}-${item.title}`
+                                primaryItem = [primaryItem1Title, primaryItem2Title]
+                            } else {
+                                const itemsOfCombineItem = title.split('+')
+                                const maxLengthPrimaryItem = itemsOfCombineItem.length - 1
+                                itemsOfCombineItem.forEach((firstItem, firstIndex, combineItem) => {
+                                    const maxPair = combineItem.length - firstIndex
+                                    const canCreatePrimaryItem = maxPair >= maxLengthPrimaryItem
+                                    if (canCreatePrimaryItem) {
+                                        const createPrimaryItem = (initialIndex, initialPrimaryItemData) => {
+                                            for (let i = 1; i <= maxPair - 1 && initialIndex + i < combineItem.length; i++) {
+                                                const nextPrimaryIndex = initialIndex + i
+                                                const primaryItemData = `${initialPrimaryItemData}+${combineItem[nextPrimaryIndex]}`
+                                                console.log('primaryItemData: ', primaryItemData, 'nextPrimaryIndex: ', nextPrimaryIndex)
+                                                const lengthPrimaryItem = primaryItemData.split('+').length
+                                                const isPrimaryItem = lengthPrimaryItem === maxLengthPrimaryItem
+                                                isPrimaryItem ?
+                                                    primaryItem.push(primaryItemData)
+                                                    :
+                                                    createPrimaryItem(nextPrimaryIndex, primaryItemData)
+                                            }
+                                        }
+                                        createPrimaryItem(firstIndex, firstItem)
+                                    }
+                                })
+                            }
+
+                            const combineItemData = { title, price: 0, balance: 0, primaryItem }
+                            state.combineItem[`combineItem${combineItemOrder}`] = [...state.combineItem[`combineItem${combineItemOrder}`], combineItemData]
+                            const nextCombineItemOrder = combineItemOrder + 1
+                            createCombineItem(nextCombineItemOrder, indexPair, title)
+                        })
+                    }
+                }
+
+                state.option.forEach((type, indexType) => {
+                    type.items.forEach((item1) => {
+                        createCombineItem(1, indexType, item1.title, item1, type)
+                    })
+                })
+            }
+
             if (itemData) {
                 const errorKey = 'item_' + Object.keys(itemData)[0] + '-' + (indexItem + 1)
                 state.option[indexType].itemHasData[errorKey] = Object.values(itemData)[0]
@@ -86,10 +153,9 @@ const productOptionSlice = createSlice({
                 const errorKeysNew = createErrorHasData(indexItem)
                 state.option[indexType].itemHasData = { ...state.option[indexType].itemHasData, ...errorKeysNew }
             }
+
             const validateValue = Object.values(state.option[indexType].itemHasData)
                 .reduce((prev, next) => {
-                    console.log(prev)
-                    console.log(next)
                     return Boolean(prev) && Boolean(next)
                 })
             state.option[indexType].finishOption = validateValue
@@ -145,11 +211,6 @@ const productOptionSlice = createSlice({
                 state.option[indexType].items.splice(indexRemoveItem, 1)
             }
             for (let key in state.option[indexType].itemHasData) {
-                console.log(state.option[indexType].itemHasData)
-                console.log(key)
-                console.log(lastItem)
-                console.log(key.split('-')[1])
-                console.log(key.split('-')[1] == lastItem)
                 if (key.split('-')[1] == lastItem) {
                     delete state.option[indexType].itemHasData[key]
                 }

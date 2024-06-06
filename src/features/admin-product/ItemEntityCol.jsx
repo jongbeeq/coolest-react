@@ -4,7 +4,7 @@ import { validateFinishOption } from "../../store/slice/productOptionSlice";
 import useOptionalProduct from "../../hooks/use-optionalProduct";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function ItemEntityRow(props) {
+export default function ItemEntityCol(props) {
     const { value, resetField, errorBeforeCreateNew, name, index, register, validateCondition, errorKey, errorValue, errors } = props
     const { index: indexType } = useOptionalProduct()
     const options = useSelector(state => state.productOption.option)
@@ -18,9 +18,6 @@ export default function ItemEntityRow(props) {
 
     const errorMessage = errors[name]?.message || errorBeforeCreateNew(errorKey, errorValue[0], errorValue[1], errorValue[2])
     const errorStyle = errorMessage ? (" " + 'border border-error-base') : ''
-
-    console.log(name)
-    console.log(errorMessage)
 
     useEffect(() => {
         options.length && dispatch(validateFinishOption([indexType]))
