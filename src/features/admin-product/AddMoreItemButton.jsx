@@ -9,11 +9,12 @@ export default function AddMoreItemButton({ indexItem }) {
     const dispatch = useDispatch()
 
     const handleClickAdd = () => {
-        if (!isNaN(indexItem)) {
-            dispatch(insertItemAcion([indexType, indexItem]))
-        } else {
-            dispatch(createItemAction([indexType, lastIndexItem]))
-        }
+        dispatch(createItemAction([indexType, indexItem]))
+        // if (!isNaN(indexItem)) {
+        //     dispatch(insertItemAcion([indexType, indexItem]))
+        // } else {
+        //     dispatch(createItemAction([indexType, lastIndexItem]))
+        // }
     }
 
     return (

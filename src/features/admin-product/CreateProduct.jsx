@@ -3,7 +3,6 @@ import useCreateProduct from "../../hooks/use-createProduct"
 import SubmitButton from "../../components/SubmitButton"
 import { useDispatch, useSelector } from "react-redux"
 import { setErrorFormAction, uploadProductAction } from "../../store/slice/productUploadSlice"
-import log from "../../utils/log"
 import { setOptionValidate } from "../../store/slice/productOptionSlice"
 
 export default function CreateProduct() {
@@ -28,8 +27,7 @@ export default function CreateProduct() {
     }
 
     const validateImagesData = () => {
-        log(haveImagesData)
-        dispatch(setOptionValidate(true))
+        // dispatch(setOptionValidate(true))
         !haveImagesData && dispatch(setErrorFormAction({ images: 'Product Image/Video is required' }))
     }
 

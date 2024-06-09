@@ -6,18 +6,18 @@ import { useEffect, useState } from "react"
 
 export default function RemoveOptionButton() {
     const { index, confirmRemoveOption, setConFirmRemoveOption } = useOptionalProduct()
-    const [countRender, setCountRender] = useState(1)
+    const [countClick, setCountClick] = useState(1)
     const dispatch = useDispatch()
     const optionHasData = useSelector(state => state.productOption.option[index].optionHasData)
 
     const clickRemove = () => {
         dispatch(valdateOptionHasDataAction(index))
-        setCountRender(countRender + 1)
+        setCountClick(countClick + 1)
         setConFirmRemoveOption(null)
     }
 
     useEffect(() => {
-        if (countRender === 1) {
+        if (countClick === 1) {
             return
         }
         if (optionHasData) {
@@ -25,7 +25,7 @@ export default function RemoveOptionButton() {
         } else {
             dispatch(removeOptionAction(index))
         }
-    }, [optionHasData, countRender, confirmRemoveOption])
+    }, [optionHasData, countClick, confirmRemoveOption])
 
     return (
         <div onClick={clickRemove} className="relative">

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import log from "../../utils/log";
 
 const initialState = {
     data: [],
@@ -42,7 +41,6 @@ const productImageSlice = createSlice({
                     newImagesData = [...newImagesData, item]
                 }
             }
-            log(newImagesData)
             state.data = newImagesData
         }
 

@@ -1,16 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
-import log from "../../utils/log";
 
-const initialState = {}
+const initialState = {
+    fetchData: {},
+    createOrUpdateData: {},
+    deleteData: {}
+}
 
 const productByIdSlice = createSlice({
     name: 'productById',
     initialState,
     reducers: {
         setProductData: (state, action) => {
-            log(action.payload)
             return state = action.payload
-        }
+        },
+        createTitleDescriptionAction: (state, action) => {
+            const prevData = state.createOrUpdateData
+            const newData = action.payload
+            state.createOrUpdateData = { ...prevData, ...newData }
+        },
+        createPriceAction: (state, action) => {
+            const prevData = state.createOrUpdateData
+            const newData = action.payload
+            state.createOrUpdateData = { ...prevData, ...newData }
+        },
+        createBalanceAction: (state, action) => {
+            const prevData = state.createOrUpdateData
+            const newData = action.payload
+            state.createOrUpdateData = { ...prevData, ...newData }
+        },
     },
     // extraReducers: (builder) => {
     //     builder
@@ -30,5 +47,5 @@ const productByIdSlice = createSlice({
     // }
 })
 
-export const { setProductData } = productByIdSlice.actions
+export const { setProductData, createTitleDescriptionAction, createPriceAction, createBalanceAction } = productByIdSlice.actions
 export default productByIdSlice.reducer

@@ -16,7 +16,7 @@ export const setSelectedAction = createAsyncThunk('productSelect/setselectedOpti
         }
         return payload
     } catch (error) {
-        log(error)
+        console.log(error)
     }
 })
 
@@ -36,7 +36,6 @@ const productSelectSlice = createSlice({
             if (!state.isMinAmount) {
                 state.amount = state.amount - 1
             }
-            log(state.amount)
             state.isMaxAmount = state.amount >= state.selectedOption.balance
             state.isMinAmount = state.amount <= 1
         },
@@ -51,7 +50,6 @@ const productSelectSlice = createSlice({
             //     // state.loading = true
             // })
             .addCase(setSelectedAction.fulfilled, (state, action) => {
-                log(action)
                 state.selectedOption = { ...state.selectedOption, ...action.payload.selectedOption }
                 state.isMaxAmount = action.payload.isMaxAmount
                 state.isMinAmount = action.payload.isMinAmount

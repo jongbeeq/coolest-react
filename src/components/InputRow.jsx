@@ -17,6 +17,7 @@ export default function InputRow(props) {
     const spreadRegister = register && register(name, {
         ...validateCondition, onChange: (e) => {
             dispatch(setError(null))
+            console.log(e.target.value)
             if (validateCondition.onChange) {
                 validateCondition.onChange(e)
             }

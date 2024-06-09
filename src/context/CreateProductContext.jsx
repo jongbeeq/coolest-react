@@ -2,6 +2,8 @@ import { createContext } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInputUploadAction } from "../store/slice/productUploadSlice";
+import { createBalanceAction, createPriceAction, createTitleDescriptionAction } from "../store/slice/productByIdSlice";
+import { setDefaultItemData } from "../store/slice/productOptionSlice";
 
 export const CreateProductContext = createContext();
 
@@ -11,7 +13,30 @@ export default function CreateProductProvider({ children }) {
     const productOptions = useSelector(state => state.productOption.option)
     const validateExistDataActive = useSelector(state => state.productOption.validateExistDataActive)
 
-    const onChange = (data) => { dispatch(changeInputUploadAction({ [data.target.name]: data.target.value })) }
+    const onChange = (data) => {
+        const productData = { [data.target.name]: data.target.value }
+        const priceDefault = { [data.target.name]: { defaultPrice: data.target.value } }
+
+        // Assign Product General Data
+        switch (data.target.name) {
+            case 'title':
+            case 'description':
+                // Assign Title or Description
+                dispatch(createTitleDescriptionAction(productData))
+                break;
+            case 'price':
+                // Assign Price
+                dispatch(createPriceAction(productData))
+                // Assign Default Price of Option Items
+                dispatch(setDefaultItemData(priceDefault))
+                break;
+            case 'balance':
+                // Assign Balance
+                dispatch(createBalanceAction(productData))
+                break;
+        }
+        // dispatch(changeInputUploadAction({ [data.target.name]: data.target.value }))
+    }
 
     const createProductStyle = 'w-full rounded-none border border-1 outline-none focus:ring-2 ring-neutral-fade'
 
@@ -38,7 +63,6 @@ export default function CreateProductProvider({ children }) {
             },
             onChange
         },
-        // value: ,
         otherAttributes: {
             disabled: Boolean(productOptions.length)
         }

@@ -3,9 +3,10 @@ import InputRow from "../../components/InputRow";
 import { validateFinishOption } from "../../store/slice/productOptionSlice";
 import useOptionalProduct from "../../hooks/use-optionalProduct";
 import { useDispatch, useSelector } from "react-redux";
+import SwitchPriceItemButton from "./SwitchPriceItemButton";
 
 export default function ItemEntityCol(props) {
-    const { value, resetField, errorBeforeCreateNew, name, index, register, validateCondition, errorKey, errorValue, errors } = props
+    const { defaultValue, value, resetField, errorBeforeCreateNew, name, indexItem, register, validateCondition, errorKey, errorValue, errors } = props
     const { index: indexType } = useOptionalProduct()
     const options = useSelector(state => state.productOption.option)
     const dispatch = useDispatch()
@@ -20,12 +21,13 @@ export default function ItemEntityCol(props) {
     const errorStyle = errorMessage ? (" " + 'border border-error-base') : ''
 
     useEffect(() => {
-        options.length && dispatch(validateFinishOption([indexType]))
-    }, [errorMessage])
+        options.length && dispatch(validateFinishOption(indexType))
+    }, [value])
 
     return (
-        <div key={index} className={"w-[33%] bg-neutral-50" + errorStyle}>
+        <div className={"flex items-center w-[33%] bg-neutral-50" + errorStyle}>
             <InputRow value={value} resetField={resetField} className={itemDataStyle} register={register} name={name} validateCondition={validateCondition} info={errorMessage} infoClassName={infoClassName} />
+            {defaultValue?.defaultPrice && <SwitchPriceItemButton indexType={indexType} indexItem={indexItem} defaultValue={defaultValue?.defaultPrice} />}
         </div>
     )
 }

@@ -22,7 +22,8 @@ export default function TypeTitle() {
 
     const onChange = (data) => {
         setValue(data.target.value)
-        dispatch(validateFinishOption([index, value]))
+        // dispatch(validateFinishOption([index, value]))
+        dispatch(validateFinishOption(index))
         dispatch(editTypeTitleAction([index, data.target.value]))
     }
 
@@ -33,7 +34,8 @@ export default function TypeTitle() {
 
     useEffect(() => {
         productOptionTypes.length && dispatch(changeInputUploadAction({ 'types': productOptionTypes }))
-        dispatch(validateFinishOption([index, value]))
+        // dispatch(validateFinishOption([index, value]))
+        dispatch(validateFinishOption(index))
     }, [productOptionTypes[index], validateExistDataActive])
 
     return (

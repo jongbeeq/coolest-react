@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import asyncThunkPayloadCreator from "../../utils/asyncThunkPayloadCreator";
 import { setProgress } from "./loadingSlice";
-import log from "../../utils/log";
 
 const initialState = {
     formData: new FormData(),
@@ -11,7 +10,6 @@ const initialState = {
 export const uploadProductAction = asyncThunkPayloadCreator('productUpload/createProduct',
     { method: 'post', path: '/product/create' },
     (res) => {
-        log(res)
         return res.data
     }
 )
@@ -51,20 +49,14 @@ const productUploadSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(uploadProductAction.pending, (state, action) => {
-                log(action)
-            })
             .addCase(uploadProductAction.fulfilled, (state, action) => {
-                log(action)
                 state.data = action.payload
                 setProgress(0)
             })
-            .addCase(uploadProductAction.rejected, (state, action) => {
-                log(action)
+            .addCase(uploadProductAction.rejected, () => {
                 setProgress(0)
             })
             .addCase(removeImagesUploadAction.fulfilled, (state, action) => {
-                log(action.payload)
                 action.payload.length ?
                     state.formData.set('images', action.payload)
                     :
