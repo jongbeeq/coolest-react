@@ -19,7 +19,7 @@ export default function AddOptionalProduct() {
     useEffect(() => {
         // Set Combine Item Data , When Option more than 1
         productOption.length > 1 && dispatch(createCombineItemAction())
-    }, [productOption.length])
+    }, [productOption])
 
     return (
         <div className="flex flex-col gap-2">

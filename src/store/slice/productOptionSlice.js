@@ -134,9 +134,9 @@ const productOptionSlice = createSlice({
             //         }
             //         const createCombineItem = (combineItemOrder, indexNextType, keyPrevPrimaryItem, prevTitle, prevItem, prevType,) => {
             //             if (combineItemOrder > maxCombineItem) return
-            //             const maxPairType = state.option.length - (indexNextType + 1)
+            //             const longestCreateCombineItem = state.option.length - (indexNextType + 1)
 
-            //             for (let i = 1; i <= maxPairType; i++) {
+            //             for (let i = 1; i <= longestCreateCombineItem; i++) {
             //                 const indexPair = indexNextType + i
             //                 state.option[indexPair].items.forEach((item, index) => {
             //                     const title = `${prevTitle}+${item.title}`
@@ -248,11 +248,138 @@ const productOptionSlice = createSlice({
         createCombineItemAction: (state, action) => {
             console.log('welcome CombineItem')
             // Create Combine Item
-            // 1.Set Maximum Combine Item
-            const maxCombineItem = state.option.length - 1
-            // 2.Create Each Combine Item Level
-            state.option.forEach((type, indexType) => {
+            // 1.Set Total Combine Item
+            const totalCombineItem = state.option.length - 1
+            // 2.Create Combine Item Levels
+            for (let order = 1; order <= totalCombineItem; order++) {
+                state.combineItem[`combineItem${order}`] = []
+            }
+            const createCombineItem = (combineItemOrder, indexInitialType, initialType, indexInitialItem, initialItem, initialPrimaryItemIndex) => {
+                // 4.Iterate Createing Combine Item Until Last Combine Item Finish
+                // (combineItemOrder Will Increase 1 When Finish Creating Combine Item Level of Each itemInitial)
+                console.log('indexInitialType', indexInitialType)
+                console.log('combineItemOrder', combineItemOrder)
+                console.log('totalCombineItem', totalCombineItem)
+                console.log('combineItemOrder > totalCombineItem', combineItemOrder > totalCombineItem)
+                if (combineItemOrder > totalCombineItem) return
+                // 5.Set Longest Length of Combine Item that Initial Type Can Create
+                const longestCreateAble = state.option.length - indexInitialType
+                console.log('longestCreateAble', longestCreateAble)
+                // 6.Validate Has Enough Initial And Next Type For Create Combine Item
+                const { title: initialItemTitle, price: initialItemPrice } = initialItem
+                const compoundCombineLength = initialItemTitle.split('+').length
+                const canCreateCombineItem = (compoundCombineLength + longestCreateAble) >= combineItemOrder
+                console.log('canCreateCombineItem', canCreateCombineItem)
+                if (canCreateCombineItem) {
+                    // 7.Iterate Type Next Initital Type ,Until Next Type === Last Type
+                    for (let i = 1; i < longestCreateAble; i++) {
+                        const indexNextType = indexInitialType + i
+                        const nextTypeTitle = state.option[indexNextType].title
+                        // 8.Create Combine Items of Initial Item + Each Next Item
+                        state.option[indexNextType].items.forEach((nextItem, indexNextItem) => {
+                            // 8.1.Create Title
+                            console.log('indexNextType', indexNextType)
+                            const title = `${initialItemTitle}+${nextItem.title}`
+                            console.log('title', title)
+                            // 8.2.Create Primary Item
+                            // -Primary Item Structure-
+                            // ex. type0 = [red,...]
+                            //     type1 = [xl,...]
+                            //     type2 = [box,...]
+                            // cbItem1.title = red+xl
+                            // cbItem1.title = 'initialItemTitle + nextItemTitle'
+                            // cbItem1.index = [ {type: 0,item: 0} , {type: 1,item: 0} ]
+                            // cbItem2.title = red+xl+box
+                            // cbItem2.index = [ [{type: 0,item: 0},{type: 1,item: 0}] , [{type: 0,item: 0},{type: 2,item: 0}] , [{type: 1,item: 0},{type: 2,item: 0}]]
+                            const primaryItem = { index: [], title: [] }
+                            initialPrimaryItemIndex = initialPrimaryItemIndex || [{ type: indexInitialType, item: indexInitialItem }]
+                            const nextPrimaryItemIndex = { type: indexNextType, item: indexNextItem }
+                            primaryItem.index = [...initialPrimaryItemIndex, nextPrimaryItemIndex]
 
+                            if (combineItemOrder === 1) {
+                                const { title: initialTypeTitle } = initialType
+                                const initialPrimaryItemTitle = `${initialTypeTitle}-${initialItemTitle}`
+                                const nextPrimaryItemTitle = `${nextTypeTitle}-${nextItem.title}`
+                                primaryItem.title = [initialPrimaryItemTitle, nextPrimaryItemTitle]
+                            } else {
+                                const itemsOfCombineItem = title.split('+')
+                                const lengthPrimaryItem = itemsOfCombineItem.length - 1
+                                itemsOfCombineItem.forEach((initialItem, initialIndex, items) => {
+                                    const longestCreateAble = items.length - initialIndex
+                                    const canCreatePrimaryItem = longestCreateAble >= lengthPrimaryItem
+                                    if (canCreatePrimaryItem) {
+                                        const createPrimaryItem = (initialIndex, initialItemTitle) => {
+                                            const longestInitialCreateAble = items.length - initialIndex
+                                            for (let i = 1; i < longestInitialCreateAble; i++) {
+                                                const nextItemIndex = initialIndex + i
+                                                const compoundPrimaryItemTitle = `${initialItemTitle}+${items[nextItemIndex]}`
+                                                const lengthCompoundPrimaryItem = compoundPrimaryItemTitle.split('+').length
+                                                const isPrimaryItem = lengthCompoundPrimaryItem === lengthPrimaryItem
+                                                isPrimaryItem ?
+                                                    primaryItem.title.push(compoundPrimaryItemTitle)
+                                                    :
+                                                    createPrimaryItem(nextItemIndex, compoundPrimaryItemTitle)
+                                            }
+                                        }
+                                        createPrimaryItem(initialIndex, initialItem)
+                                    }
+                                })
+                            }
+                            // 8.3 Create Price
+                            // 8.3.1 Create Default Price
+                            const defaultPrice = combineItemOrder === 1
+                                ?
+                                primaryItem.index.map((indexPrimary) => {
+                                    const { type, item } = indexPrimary
+                                    const { defaultPrice, specific, isSpecific } = state.option[type].items[item].price
+                                    const price = isSpecific ? specific : defaultPrice
+                                    return price
+                                })
+                                :
+                                primaryItem.title.map((primaryTitle) => {
+                                    const primaryItemOrder = `combineItem${combineItemOrder - 1}`
+                                    console.log(state.combineItem[primaryItemOrder])
+                                    const primaryItem = state.combineItem[primaryItemOrder].find((combineItem) => {
+                                        console.log('combineItem', combineItem)
+                                        console.log('primaryTitle', primaryTitle)
+                                        return combineItem.title === primaryTitle
+                                    })
+                                    console.log('primaryItem', primaryItem)
+                                    if (primaryItem) {
+                                        const { defaultPrice, specific, isDefault } = primaryItem.price
+                                        const price = isDefault ? defaultPrice[isDefault] : specific
+                                        return price
+                                    }
+                                    return primaryItem
+                                })
+                            const price = { defaultPrice, specific: '', isDefault: 0 }
+
+                            const combineItemNo = `combineItem${combineItemOrder}`
+                            const combineItemData = { title, price, balance: 0, primaryItem }
+                            const nextCombineItemOrder = combineItemOrder + 1
+                            state.combineItem[combineItemNo] = [...state.combineItem[combineItemNo], combineItemData]
+                            console.log('combineItemNo', combineItemNo)
+                            console.log('combineItemData', combineItemData)
+                            console.log('state.combineItem[combineItemNo]', { ...state.combineItem[combineItemNo] })
+                            createCombineItem(nextCombineItemOrder, indexNextType, {}, null, combineItemData, primaryItem.index)
+                        })
+                    }
+                }
+            }
+            // -Combine Item Structure-
+            // CombineItem = InitialType.items[n] + NextType.items[n]
+            // Ex. type1 = [red,green,blue]
+            //     type2 = [s,xl]
+            //     type3 = [box,set]
+            //     combineItem1 = [         'type1.items[0]+type2.items[0]'        ,...,         'type2.items[1]+type3.items[1]'       ]
+            //     combineItem1 = [                      red+s                     ,...,                      xl+set                   ]
+            //     combineItem2 = [ 'type1.items[0]+type2.items[0]+type2.items[0]' ,..., 'type1.items[2]+type2.items[1]+type3.items[1]']
+            //     combineItem2 = [                    red+s+set                   ,...,                    blue+xl+set                ]
+            // 3.Order Creating Combine Item By Initial Type
+            state.option.forEach((initialType, indexInitialType) => {
+                initialType.items.forEach((initialItem, indexInitialItem) => {
+                    createCombineItem(1, indexInitialType, initialType, indexInitialItem, initialItem)
+                })
             })
         },
         setOptionValidate: (state, action) => {
